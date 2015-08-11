@@ -29,14 +29,19 @@ var getContents = function(items) {
 };
 
 var addToDatabase = function(url, publisher_id, date, title, full_text) {
-  knex('articles').insert({
+  knex('articles').returning('id').insert({
                            url: url,
                            publisher_id: publisher_id,
                            publication_date: date,
                            title: title,
                            full_text: full_text
                          })
-                         .then(console.log).catch(console.log);
+                         .then(function(id){
+                           knex.transaction(function(trx) {
+                             knex.raw('UPDATE articles SET parsed_text = (SELECT to_tsvector(full_text)) WHERE id = ?', id)
+                             .then(trx.commit);
+                           });
+                         });
 };
 
 request(feedlyurl, function (error, response, body) {
