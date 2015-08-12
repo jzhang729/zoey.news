@@ -1,23 +1,31 @@
 import React from 'react'
 var BarChart = require("react-chartjs").Bar;
 
+var data1BarFill = "blue";
+var data1BarOutline = "blue";
+var data1Highlight = "blue";
+
+var data2BarFill = "yellow";
+var data2BarOutline = "yellow";
+var data2Highlight = "yellow";
+
 var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
         {
             label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
+            fillColor: data1BarFill,
+            strokeColor: data1BarOutline,
+            highlightFill: data1Highlight,
+            highlightStroke: data1Highlight,
             data: [65, 59, 80, 81, 56, 55, 40]
         },
         {
             label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
+            fillColor: data2BarFill,
+            strokeColor: data2BarOutline,
+            highlightFill: data2Highlight,
+            highlightStroke: data2Highlight,
             data: [28, 48, 40, 19, 86, 27, 90]
         }
     ]
