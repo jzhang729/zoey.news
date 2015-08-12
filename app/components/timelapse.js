@@ -1,27 +1,31 @@
 import React from 'react'
 var LineChart = require("react-chartjs").Line;
 
+var dataSet1 = "blue";
+var dataSet2 = "green";
+var highlight = "red";
+
 var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July"],
     datasets: [
         {
             label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.2)",
-            strokeColor: "rgba(220,220,220,1)",
-            pointColor: "rgba(220,220,220,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(220,220,220,1)",
+            fillColor: dataSet1,
+            strokeColor: dataSet1,
+            pointColor: dataSet1,
+            pointStrokeColor: highlight,
+            pointHighlightFill: highlight,
+            pointHighlightStroke: dataSet1,
             data: [65, 59, 80, 81, 56, 55, 40]
         },
         {
             label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.2)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
+            fillColor: dataSet2,
+            strokeColor: dataSet2,
+            pointColor: dataSet2,
+            pointStrokeColor: highlight,
+            pointHighlightFill: highlight,
+            pointHighlightStroke: dataSet2,
             data: [28, 48, 40, 19, 86, 27, 90]
         }
     ]
