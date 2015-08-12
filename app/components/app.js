@@ -9,7 +9,7 @@ export default React.createClass({
       <section className="content">
         
         <Navbar /><br />
-        <div className="visualization">  
+        <div className="visual">  
           <Timelapse /><br />
           <Snapshot />
         </div>

@@ -29,11 +29,11 @@ var data = {
 
 var options = {
 
-    ///Boolean - Whether grid lines are shown across the chart
+    //Boolean - Whether grid lines are shown across the chart
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,200,150,1)",
+    scaleGridLineColor : "rgba(0,0,0,.05)",
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
@@ -66,13 +66,13 @@ var options = {
     datasetStroke : true,
 
     //Number - Pixel width of dataset stroke
-    datasetStrokeWidth : 10,
+    datasetStrokeWidth : 2,
 
     //Boolean - Whether to fill the dataset with a colour
     datasetFill : true,
 
     //String - A legend template
-    legendTemplate : "<ul class=\"  <%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 
 };
 

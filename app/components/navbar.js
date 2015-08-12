@@ -17,11 +17,6 @@ export default React.createClass({
             </DropdownButton>
           </Nav>
         </Navbar>
-
-      // <ul className="navbar">
-      //   <li>Zoey</li>
-      //   <li>Link 2</li>
-      // </ul>
     )
   }
 })
