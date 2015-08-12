@@ -1,0 +1,18 @@
+      # to produce a production bundle of the application #
+  webpack -p --config webpack.production.config.js
+
+      # environment variable NODE_ENV is set to production #
+  NODE_ENV=production webpack -p --config webpack.production.config.js
+
+      # to test this you can run #
+  NODE_ENV=production webpack -p --config webpack.production.config.js
+
+
+  ###
+  When you save a dependency to your package.json file using for example: npm install underscore --save that dependency will always be installed when npm install runs, regardless of the environment.
+  If you save a dependency using: npm install webpack --save-dev that dependency will not be installed in an environment where NODE_ENV is production.
+  So what you want is to only --save dependencies that you need in production, and --save-dev all other dependencies.
+
+
+
+
