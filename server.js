@@ -10,6 +10,7 @@ var app = express();
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
+var queryDetail = require('./sql_builder').queryDetail;
 
 app.use(express.static(publicPath));
 
@@ -19,8 +20,17 @@ app.all('/db/*', function (req, res) {
   });
 });
 
-app.get('/test', function(req, res) {
-  res.send('hello world');
+app.get('/detail', function(req, res) {
+  var keywords = req.query.k;
+  var publishers = req.query.p;
+  var dates = req.query.d;
+
+  queryDetail(keywords, publishers, dates, function(resp) {
+    res.send(resp);
+  });
+
+  
+ 
 });
 
 if (!isProduction) {

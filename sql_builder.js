@@ -1,9 +1,11 @@
+var dbconfig = require('./knexfile')
+var knex = require('knex')(dbconfig);
 
-var queryDetail = function(keywords, publishers, dates) {
+var queryDetail = function(k, p, d, callback) {
   
-  var keywords = ['terrorism', 'mulcair']
-  var publishers = [1, 2]
-  var dates = ['2015-08-10', '2015-08-02']
+  var keywords = k.split(',')
+  var publishers = p.split(',')
+  var dates = d.split(',')
   var sql = ""
 
   publishers.forEach(function(publisher, pi) {
@@ -27,7 +29,8 @@ var queryDetail = function(keywords, publishers, dates) {
     });
   });
   sql += ";"
-  console.log(sql);
+
+  knex.raw(sql).then(callback);
 }
 
 exports.queryDetail = queryDetail;
