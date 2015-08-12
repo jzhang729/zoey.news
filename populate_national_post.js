@@ -4,29 +4,23 @@ var events = require('events');
 var dbconfig = require('./knexfile');
 var knex = require('knex')(dbconfig);
 
-var feedlyurl = "http://feedly.com/v3/streams/contents?streamId=feed/http://www.theglobeandmail.com/news/politics/?service=rss&count=100"
+var feedlyurl = "http://feedly.com/v3/streams/contents?streamId=feed/http://news.nationalpost.com/category/news/canada/canadian-politics/feed&count=200"
 
 var getContents = function(items) {
   items.forEach(function(article) {
-    request(article["originId"], function (error, response, body) {
-        if (error) {
-          console.log(error);
-        };
-        if (!error && response.statusCode == 200) {
-          $ = cheerio.load(body);
-          var url = article["originId"];
-          var publisher_id = 1;
-          var date = new Date(article["published"]).toDateString();
-          var title = article["title"];
-          var full_text = $('.entry-content div > p').map(function() {
-            return $.text([this]);
-          }).get().join(" ");
-        };
-        addToDatabase(url, publisher_id, date, title, full_text);
-      }).setMaxListeners(0);
+    var url = article["originId"];
+    var publisher_id = 2;
+    var date = new Date(article["published"]).toDateString();
+    var title = article["title"];
+    var $ = cheerio.load(article["content"]["content"]);
+    var full_text = $('p').map(function() {
+      return $.text([this]);
+    }).get().join(" ");
+    addToDatabase(url, publisher_id, date, title, full_text);
   });
   setTimeout(process.exit, 3000);
 };
+
 
 var addToDatabase = function(url, publisher_id, date, title, full_text) {
   knex('articles').returning('id').insert({
