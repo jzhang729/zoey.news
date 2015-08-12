@@ -62,7 +62,7 @@ var options = {
 export default React.createClass({
   render: function() {
     return (
-      <BarChart data={data} options={options} width="600" height="250" />
+      <BarChart className="barchart" data={data} options={options} width="600" height="250" />
     )
   }
 })
