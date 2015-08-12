@@ -1,10 +1,12 @@
-var sql = ""
 
-var publishers = [1, 2]
-var dates = ['2015-08-10', '2015-08-02']
-var keywords = ['terrorism', 'mulcair']
+var queryDetail = function(keywords, publishers, dates) {
+  
+  var keywords = ['terrorism', 'mulcair']
+  var publishers = [1, 2]
+  var dates = ['2015-08-10', '2015-08-02']
+  var sql = ""
 
-publishers.forEach(function(publisher, pi) {
+  publishers.forEach(function(publisher, pi) {
     dates.forEach(function(date, di) {
       sql += "SELECT "
       + publisher + " as publisher_id, "
@@ -23,10 +25,12 @@ publishers.forEach(function(publisher, pi) {
         sql += " UNION ";
       }
     });
-});
+  });
+  sql += ";"
   console.log(sql);
+}
 
-
+exports.queryDetail = queryDetail;
 
 
 // SELECT

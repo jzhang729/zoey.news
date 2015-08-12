@@ -19,6 +19,10 @@ app.all('/db/*', function (req, res) {
   });
 });
 
+app.get('/test', function(req, res) {
+  res.send('hello world');
+});
+
 if (!isProduction) {
 
   var bundle = require('./server/bundle.js');
