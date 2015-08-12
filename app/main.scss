@@ -1,30 +1,20 @@
-$primary-color: green;
+$navbar-color: rgba(12,213,248,.1);
 
-h1{
-  color: $primary-color;
-}
+/*@media (min-device-width : 600px) {
+  .navbar > li{
+    flex-direction: column;
+  }
+}*/
 
 p{
   font-family: verdana;
 }
 
 .navbar{
-  display: flex;
-  width: 100%;
+  background-color: $navbar-color;
 }
 
-.navbar > li {
-  list-style-type: none;
-  flex-direction: row;
-  flex-basis: auto auto 20px;
-  background-color: white;
-  font-size: 18pt;
-  font-weight: bold;
-  font-family: serif;
-  padding: 0px 20px;
-}
-
-.visualization {
+.visual {
   display: flex;
   flex-wrap: wrap;
 }
@@ -33,6 +23,6 @@ p{
   width: 700px;
   height: 400px;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 600px;
   padding: 25px;
 }
