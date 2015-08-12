@@ -1,7 +1,6 @@
 $primary-color: blue;
 
 body {
-  margin: 20px;
   background-color: #EFEFEF;
 }
 
@@ -13,7 +12,7 @@ p{
   font-family: verdana;
 }
 
-.barchart{
-  padding: 15px;
-  border: 2px solid #000;
+.barchart, .linechart{
+  padding: 25px;
 }
+

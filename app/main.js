@@ -5,7 +5,6 @@ require('!style!css!sass!./main.scss');
 import React from 'react'
 import App from './components/app.js'
 
-
 // React.render(<Navbar />, document.getElementById('navbar'))
 React.render(<App />, document.getElementById('content'))
 
