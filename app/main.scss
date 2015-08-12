@@ -1,22 +1,38 @@
 $primary-color: green;
 
-body {
-  background-color: #EFEFEF;
-}
-
 h1{
   color: $primary-color;
 }
 
 p{
   font-family: verdana;
-<<<<<<< HEAD
+}
+
+.navbar{
+  display: flex;
+  width: 100%;
+}
+
+.navbar > li {
+  list-style-type: none;
+  flex-direction: row;
+  flex-basis: auto auto 20px;
+  background-color: white;
+  font-size: 18pt;
+  font-weight: bold;
+  font-family: serif;
+  padding: 0px 20px;
+}
+
+.visualization {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .barchart, .linechart{
+  width: 700px;
+  height: 400px;
+  flex-direction: column;
+  flex: 1;
   padding: 25px;
 }
-
-=======
-}
->>>>>>> parent of b3c372c... Added Bootstrap and Navbar

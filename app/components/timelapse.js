@@ -79,7 +79,7 @@ var options = {
 export default React.createClass({
   render: function() {
     return (
-      <LineChart className="linechart" data={data} options={options} width="600" height="250"/>
+      <LineChart className="linechart" data={data} options={options} />
     )
   }
 })
