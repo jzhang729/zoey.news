@@ -1,0 +1,100 @@
+
+$sidebar-color: rgba(12,213,248,.1);
+$link-hover: rgba(12,213,248,1);
+
+@mixin main-font-style{
+  font-family: arial;
+  font-size: 12pt;
+}
+
+@media (min-width : 768px) {
+ 
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content{
+
+}
+
+.header {
+  margin: 0px;
+  padding: 0px;
+}
+
+.footer {
+  margin: 0px;
+  padding: 0px;
+  color: #FFF;
+  background-color: #000000;
+  clear: both;
+  line-height: 3em;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.navbar{
+  margin: 0px;
+  padding: 0px;
+}
+
+.tabs{
+  display: flex;
+  align-content: center;
+  margin: 0px;
+  padding: 0px;
+  color: #FFF;
+  background-color: #000000;
+  display: block;
+  position: relative;
+}
+
+.tab-link{
+  display: flex;
+  align-content: space-around;
+  border: 0px 1px;
+  border-color: #FFF;
+  margin: 0px;
+}
+
+.tab-link > li {
+  flex: 1 1 10%;
+  list-style-type: none;
+  line-height: 3em;
+  text-align: center;
+}
+
+.tab-link > li:hover {
+  color: $link-hover;
+  cursor: pointer;
+}
+
+
+.left-side{
+  background-color: $sidebar-color;
+  height: 100%;
+  width: 25%;
+  padding: 20px;
+  float: left;
+}
+
+.main {
+  padding: 25px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+p{
+  @include main-font-style;
+}
+
+.barchart, .linechart{
+  width: 700px;
+  height: 400px;
+  padding: 25px;
+}

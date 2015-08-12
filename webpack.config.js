@@ -24,6 +24,9 @@ var config = {
     }, {
       test: /\.css$/,
       loader: 'style!css'
+    },{
+      test: /\.scss$/,
+      loader: 'style!css!sass?sourceMap'
     }]
   },
   plugins: [new Webpack.HotModuleReplacementPlugin()]

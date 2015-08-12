@@ -1,15 +1,22 @@
 import React from 'react'
 import Timelapse from './timelapse'
 import Snapshot from './snapshot'
+import Leftbar from './leftbar'
+import Navbar from './navbar'
+import Footer from './footer'
 
 export default React.createClass({
   render: function() {
     return (
-      <div>
-        <h1>Hello world</h1>
-        <Timelapse /><br />
-        <Snapshot />
-      </div>
+      <section className="content">
+      <Navbar />
+        <Leftbar />
+        <div className="main">  
+          <Timelapse />
+          <Snapshot />
+        </div>
+      <Footer />
+      </section>
     )
   }
 })

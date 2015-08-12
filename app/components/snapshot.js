@@ -1,27 +1,73 @@
 import React from 'react'
+
 var BarChart = require("react-chartjs").Bar;
 
+var data1BarFill = "blue";
+var data1BarOutline = "blue";
+var data1Highlight = "blue";
+
+var data2BarFill = "yellow";
+var data2BarOutline = "yellow";
+var data2Highlight = "yellow";
+
+function generateRandom (min,max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function shuffleArray(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
+
 var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: [],
     datasets: [
         {
             label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40]
+            fillColor: data1BarFill,
+            strokeColor: data1BarOutline,
+            highlightFill: data1Highlight,
+            highlightStroke: data1Highlight,
+            data: []
         },
         {
             label: "My Second dataset",
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,0.8)",
-            highlightFill: "rgba(151,187,205,0.75)",
-            highlightStroke: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 86, 27, 90]
+            fillColor: data2BarFill,
+            strokeColor: data2BarOutline,
+            highlightFill: data2Highlight,
+            highlightStroke: data2Highlight,
+            data: []
         }
     ]
 };
+
+var words = "Today I went to the park and I saw a few dogs";
+var wordArray = words.split(" ");
+
+wordArray = shuffleArray(wordArray);
+
+for(var i = 0; i < 10; i++) {
+    data.labels.push(wordArray[i]);
+}
+
+for(var i = 0; i < words.length; i++) {
+    data.datasets[0].data.push(generateRandom(0,100));
+    data.datasets[1].data.push(generateRandom(0,100));
+}
 
 var options = {
 
@@ -62,7 +108,7 @@ var options = {
 export default React.createClass({
   render: function() {
     return (
-      <BarChart data={data} options={options} width="600" height="250" />
+      <BarChart className="barchart" data={data} options={options} />
     )
   }
 })
