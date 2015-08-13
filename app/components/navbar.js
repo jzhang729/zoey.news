@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavItem, DropdownButton, MenuItem } from 'react-bootstrap'
 
 export default React.createClass({
+
   render: function() {
     return (
     <div className="header">

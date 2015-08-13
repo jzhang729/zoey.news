@@ -28,9 +28,6 @@ app.get('/detail', function(req, res) {
   queryDetail(keywords, publishers, dates, function(resp) {
     res.send(resp);
   });
-
-  
- 
 });
 
 if (!isProduction) {

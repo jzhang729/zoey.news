@@ -1,5 +1,7 @@
 import React from 'react'
+import Fluxxor from 'fluxxor'
 
+var FluxMixin = Fluxxor.FluxMixin(React);
 var BarChart = require("react-chartjs").Bar;
 
 var data1BarFill = "blue";
@@ -106,9 +108,24 @@ var options = {
 };
 
 export default React.createClass({
+  mixins: [FluxMixin],
+
+  getInitialState: function() {
+    return { 
+        chartdata: {
+            datasets: [],
+            labels: []
+        }
+    }
+  },
+
+  componentDidMount: function() {
+    this.getFlux().actions.loadChart();
+  },
+
   render: function() {
     return (
-      <BarChart className="barchart" data={data} options={options} />
+      <BarChart className="barchart" data={this.state.chartdata} options={options} />
     )
   }
 })

@@ -4,7 +4,10 @@ require('!style!css!sass!./main.scss');
 
 import React from 'react'
 import App from './components/app.js'
+import Fluxxor from 'fluxxor'
 
-React.render(<App />, document.getElementById('content'))
+var flux = new Fluxxor.Flux({}, {});
+
+React.render(<App flux={flux} />, document.getElementById('content'))
 
 console.log('Application is loaded!');
