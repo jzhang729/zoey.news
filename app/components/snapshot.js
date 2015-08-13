@@ -1,7 +1,6 @@
 import React from 'react'
 
 var BarChart = require("react-chartjs").Bar;
-var TimeSlider = require('react-time-slider');
 
 var data1BarFill = "blue";
 var data1BarOutline = "blue";
