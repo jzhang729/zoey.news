@@ -1,0 +1,7 @@
+{
+  "name": "Zoey.news",
+  "description": "Harper is reaching out for the stars with an empty grin on his face.",
+  "repository": "https://github.com/Araphel/zoey.news",
+  "logo": "https://github.com/Araphel/zoey.news/zoey.svg",
+  "keywords": ["politisc", "node", "express", "webpack", "react", "flux"]
+}

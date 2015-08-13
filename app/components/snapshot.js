@@ -1,4 +1,8 @@
 import React from 'react'
+import Fluxxor from 'fluxxor'
+
+var FluxMixin = Fluxxor.FluxMixin(React),
+    StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var BarChart = require("react-chartjs").Bar;
 
@@ -9,65 +13,6 @@ var data1Highlight = "blue";
 var data2BarFill = "yellow";
 var data2BarOutline = "yellow";
 var data2Highlight = "yellow";
-
-function generateRandom (min,max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function shuffleArray(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
-
-var data = {
-    labels: [],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: data1BarFill,
-            strokeColor: data1BarOutline,
-            highlightFill: data1Highlight,
-            highlightStroke: data1Highlight,
-            data: []
-        },
-        {
-            label: "My Second dataset",
-            fillColor: data2BarFill,
-            strokeColor: data2BarOutline,
-            highlightFill: data2Highlight,
-            highlightStroke: data2Highlight,
-            data: []
-        }
-    ]
-};
-
-var words = "Today I went to the park and I saw a few dogs";
-var wordArray = words.split(" ");
-
-wordArray = shuffleArray(wordArray);
-
-for(var i = 0; i < 10; i++) {
-    data.labels.push(wordArray[i]);
-}
-
-for(var i = 0; i < words.length; i++) {
-    data.datasets[0].data.push(generateRandom(0,100));
-    data.datasets[1].data.push(generateRandom(0,100));
-}
 
 var options = {
 
@@ -106,9 +51,27 @@ var options = {
 };
 
 export default React.createClass({
+  mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
+  getStateFromFlux: function(){
+    var startDate = this.getFlux().store("SnapShotStore").getStartDate()
+    var endDate = this.getFlux().store("SnapShotStore").getEndDate()
+    return {
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot() 
+    }
+  },
+  componentDidMount: function() {
+    this.getFlux().actions.loadChart();
+  },
+  swapChart: function(){
+    this.getFlux().actions.updateChart();
+  },
   render: function() {
+    console.log(this.state.chartdata)
     return (
-      <BarChart className="barchart" data={data} options={options} />
+      <div>
+        <BarChart className="barchart" data={this.state.chartdata} options={options} />
+        <h2 onClick={this.swapChart}>Hello</h2>
+      </div>
     )
   }
 })
