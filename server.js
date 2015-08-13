@@ -26,9 +26,24 @@ app.get('/detail', function(req, res) {
   var dates = req.query.d;
 
   queryDetail(keywords, publishers, dates, function(resp) {
-    res.send(resp);
+    res.send(resp.rows);
   });
 });
+
+app.get('/test', function(req, res) {
+  var payload = {
+    "2015-08-02": {"Globe and Mail": {"ISIS": 16, "terror": 12, "mulcair": 4}, 
+                    "National Post": {"ISIS": 22, "terror": 10, "mulcair": 7}
+    },
+    "2015-08-03": {"Globe and Mail": {"ISIS": 8, "terror": 16, "mulcair": 6}, 
+                    "National Post": {"ISIS": 2, "terror": 8, "mulcair": 5}
+    },
+    "2015-08-04": {"Globe and Mail": {"ISIS": 6, "terror": 4, "mulcair": 7}, 
+                    "National Post": {"ISIS": 27, "terror": 12, "mulcair": 9}
+    }
+  }
+  res.send(payload);
+})
 
 if (!isProduction) {
 

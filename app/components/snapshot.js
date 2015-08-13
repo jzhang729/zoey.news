@@ -12,65 +12,6 @@ var data2BarFill = "yellow";
 var data2BarOutline = "yellow";
 var data2Highlight = "yellow";
 
-function generateRandom (min,max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function shuffleArray(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
-
-var data = {
-    labels: [],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: data1BarFill,
-            strokeColor: data1BarOutline,
-            highlightFill: data1Highlight,
-            highlightStroke: data1Highlight,
-            data: []
-        },
-        {
-            label: "My Second dataset",
-            fillColor: data2BarFill,
-            strokeColor: data2BarOutline,
-            highlightFill: data2Highlight,
-            highlightStroke: data2Highlight,
-            data: []
-        }
-    ]
-};
-
-var words = "Today I went to the park and I saw a few dogs";
-var wordArray = words.split(" ");
-
-wordArray = shuffleArray(wordArray);
-
-for(var i = 0; i < 10; i++) {
-    data.labels.push(wordArray[i]);
-}
-
-for(var i = 0; i < words.length; i++) {
-    data.datasets[0].data.push(generateRandom(0,100));
-    data.datasets[1].data.push(generateRandom(0,100));
-}
-
 var options = {
 
     //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
@@ -112,15 +53,28 @@ export default React.createClass({
 
   getInitialState: function() {
     return { 
-        chartdata: {
-            datasets: [],
-            labels: []
-        }
+      chartdata: {
+          labels: ["ISIS", "terror", "RCMP"],
+          datasets: [
+            {
+                label: "Globe and Mail",
+                data: [10, 20, 30]
+            },
+            {
+                label: "Vancouver Sun",
+                data: [4, 50, 10]
+            },
+            {
+                label: "National Post",
+                data: [12, 15, 40]
+            }
+          ]
+      }
     }
   },
 
   componentDidMount: function() {
-    this.getFlux().actions.loadChart();
+    this.getFlux().actions.loadChart(["ISIS", "terror"], [1, 2], ["2015-08-02", "2015-08-07"]);
   },
 
   render: function() {
