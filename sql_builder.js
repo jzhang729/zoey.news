@@ -28,7 +28,7 @@ var queryDetail = function(k, p, d, callback) {
       }
     });
   });
-  sql += ";"
+  sql += "ORDER BY date;"
 
   knex.raw(sql).then(callback);
 }
