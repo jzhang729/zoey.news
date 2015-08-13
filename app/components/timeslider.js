@@ -1,8 +1,7 @@
 import React from 'react'
+import TimeSlider from 'react-time-slider'
 
-var TimeSlider = require('react-time-slider');
-
-var Example = React.createClass({
+export default React.createClass({
   render: function() {
     var timeSlider = TimeSlider({
       minFrom: 201402,

@@ -1,7 +1,7 @@
 import React from 'react'
+import Timeslider from './timeslider'
 
 var BarChart = require("react-chartjs").Bar;
-var TimeSlider = require('react-time-slider');
 
 var data1BarFill = "blue";
 var data1BarOutline = "blue";
@@ -111,7 +111,7 @@ export default React.createClass({
     return (
     <div>
       <BarChart className="chart" data={data} options={options} />
-      <TimeSlider />
+      <Timeslider />
     </div>
     )
   }
