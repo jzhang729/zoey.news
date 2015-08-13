@@ -39,6 +39,7 @@
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.4",
     "react-chartjs": "^0.6.0",
+    "react-time-slider": "0.0.1",
     "request": "^2.60.0",
     "sass-loader": "^2.0.0",
     "style-loader": "^0.10.2",
