@@ -1,24 +1,42 @@
 
-$sidebar-color: rgba(12,213,248,.1);
+$sidebar-color: rgba(12,213,248,.2);
 $link-hover: rgba(12,213,248,1);
+$footer-color: rgba(0,0,0,0.5);
+$main-bg-color: rgba(153,153,153,0.1);
+
+@mixin chart-sm {
+  width: 400px;
+  height: 300px;
+  padding: 25px;
+}
+
+@mixin chart-md {
+  width: 600px;
+  height: 400px;
+  padding: 25px;
+}
 
 @mixin main-font-style{
   font-family: arial;
   font-size: 12pt;
 }
 
-@media (min-width : 768px) {
- 
+.chart {
+
+  @media (max-width: 767px) {
+    @include chart-sm;
+  }
+
+  @media (min-width: 768px) {
+    @include chart-md;
+  }
+
 }
 
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-.content{
-
+  /*display: flex;*/
+  /*min-height: 100vh;*/
+  /*flex-direction: column;*/
 }
 
 .header {
@@ -30,71 +48,41 @@ body {
   margin: 0px;
   padding: 0px;
   color: #FFF;
-  background-color: #000000;
+  background-color: $footer-color;
   clear: both;
   line-height: 3em;
   text-align: center;
-  margin: 10px 0px;
+  position: relative;
+  top: 10px;
 }
 
 .navbar{
-  margin: 0px;
+  margin-top: 10px;
   padding: 0px;
 }
 
 .tabs{
-  display: flex;
-  align-content: center;
   margin: 0px;
   padding: 0px;
   color: #FFF;
-  background-color: #000000;
-  display: block;
   position: relative;
-}
-
-.tab-link{
-  display: flex;
-  align-content: space-around;
-  border: 0px 1px;
-  border-color: #FFF;
-  margin: 0px;
-}
-
-.tab-link > li {
-  flex: 1 1 10%;
-  list-style-type: none;
-  line-height: 3em;
-  text-align: center;
-}
-
-.tab-link > li:hover {
-  color: $link-hover;
-  cursor: pointer;
 }
 
 
 .left-side{
   background-color: $sidebar-color;
   height: 100%;
-  width: 25%;
+  width: 250px;
+  margin: 20px 0px 20px 0px;
   padding: 20px;
   float: left;
+  border-radius: 0px 30px 30px 0px;
 }
 
 .main {
   padding: 25px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
 p{
   @include main-font-style;
-}
-
-.barchart, .linechart{
-  width: 700px;
-  height: 400px;
-  padding: 25px;
 }

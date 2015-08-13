@@ -69,7 +69,7 @@ export default React.createClass({
     console.log(this.state.chartdata)
     return (
       <div>
-        <BarChart className="barchart" data={this.state.chartdata} options={options} />
+        <BarChart className="chart" data={this.state.chartdata} options={options} />
         <h2 onClick={this.swapChart}>Hello</h2>
       </div>
     )
