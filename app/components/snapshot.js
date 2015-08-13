@@ -1,7 +1,9 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 
-var FluxMixin = Fluxxor.FluxMixin(React);
+var FluxMixin = Fluxxor.FluxMixin(React),
+    StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var BarChart = require("react-chartjs").Bar;
 
 var data1BarFill = "blue";
@@ -49,37 +51,27 @@ var options = {
 };
 
 export default React.createClass({
-  mixins: [FluxMixin],
-
-  getInitialState: function() {
-    return { 
-      chartdata: {
-          labels: ["ISIS", "terror", "RCMP"],
-          datasets: [
-            {
-                label: "Globe and Mail",
-                data: [10, 20, 30]
-            },
-            {
-                label: "Vancouver Sun",
-                data: [4, 50, 10]
-            },
-            {
-                label: "National Post",
-                data: [12, 15, 40]
-            }
-          ]
-      }
+  mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
+  getStateFromFlux: function(){
+    var startDate = this.getFlux().store("SnapShotStore").getStartDate()
+    var endDate = this.getFlux().store("SnapShotStore").getEndDate()
+    return {
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot() 
     }
   },
-
   componentDidMount: function() {
-    this.getFlux().actions.loadChart(["ISIS", "terror"], [1, 2], ["2015-08-02", "2015-08-07"]);
+    this.getFlux().actions.loadChart();
   },
-
+  swapChart: function(){
+    this.getFlux().actions.updateChart();
+  },
   render: function() {
+    console.log(this.state.chartdata)
     return (
-      <BarChart className="barchart" data={this.state.chartdata} options={options} />
+      <div>
+        <BarChart className="barchart" data={this.state.chartdata} options={options} />
+        <h2 onClick={this.swapChart}>Hello</h2>
+      </div>
     )
   }
 })

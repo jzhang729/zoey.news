@@ -6,6 +6,7 @@ import React from 'react'
 import App from './components/app.js'
 import Fluxxor from 'fluxxor'
 import request from 'superagent'
+import SnapShotStore from './stores/snapshotstore'
 var actions = {
   loadChart: function(k,p,d) {
     var route = '/test'
@@ -27,11 +28,39 @@ var actions = {
       .get(route)
       .set('Accept', 'application/json')
       .end(function(err, res){
-        console.log(res);
-      });
+        var data = JSON.parse(res.text);
+        this.dispatch("LOAD_SNAPSHOT",data)
+      }.bind(this));
+  },
+
+  updateChart: function() {
+    var payload =
+    {
+      labels: ["ISIS", "terror", "RCMP"],
+      datasets: [
+        {
+            label: "Globe and Mail",
+            data: [38, 99, 32]
+        },
+        {
+            label: "Vancouver Sun",
+            data: [18, 10, 9]
+        },
+        {
+            label: "National Post",
+            data: [17, 5, 60]
+        }
+      ]
+    }
+    this.dispatch("UPDATE_CHART", payload)
   }
 }
-var flux = new Fluxxor.Flux({}, actions);
+
+
+var stores = {
+  SnapShotStore: new SnapShotStore()
+}
+var flux = new Fluxxor.Flux(stores, actions);
 
 React.render(<App flux={flux} />, document.getElementById('content'))
 
