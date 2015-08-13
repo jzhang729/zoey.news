@@ -3,8 +3,20 @@ $sidebar-color: rgba(12,213,248,.1);
 $link-hover: rgba(12,213,248,1);
 $footer-color: rgba(0,0,0,0.1);
 
+@font-face{
+  font-family: 'Playfair';
+  src: url('../public/playfair-display/PlayfairDisplay-Black.otf');
+}
+
+h3 {
+  font-family: 'Playfair';
+  font-size: 24pt;
+  padding: 10px;
+  letter-spacing: 3pt;
+}
+
 @mixin main-font-style{
-  font-family: arial;
+  font-family: verdana;
   font-size: 12pt;
 }
 
@@ -80,7 +92,6 @@ p{
 }
 
 .chart {
-  width: 700px;
-  height: 400px;
+  min-width: 600px;
   padding: 25px;
 }

@@ -66,11 +66,13 @@ export default React.createClass({
     this.getFlux().actions.updateChart();
   },
   render: function() {
+
     console.log(this.state.chartdata)
     return (
       <div>
         <BarChart className="chart" data={this.state.chartdata} options={options} />
         <h2 onClick={this.swapChart}>Hello</h2>
+        <h3>Testing a custom font</h3>
       </div>
     )
   }

@@ -7,9 +7,10 @@ export default React.createClass({
   render: function() {
     return (
     <div className="header">
-        <Navbar className="navbar" brand='Zoey' toggleNavKey={0}>
+    <h3>Zoey</h3>
+        <Navbar className="navbar" toggleNavKey={0}>
           <Nav right eventKey={0}> {/* This is the eventKey referenced */}
-            <NavItem eventKey={1} href='#'>Link</NavItem>
+            <NavItem eventKey={1} href='#'></NavItem>
             <NavItem eventKey={2} href='#'>Link</NavItem>
             <DropdownButton eventKey={3} title='Dropdown'>
               <MenuItem eventKey='1'>Action</MenuItem>
