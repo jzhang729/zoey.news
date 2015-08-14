@@ -1,7 +1,61 @@
-# webpack-express-boilerplate
-A boilerplate for running a Webpack workflow in Node express
 
-Please read the following article: [The ultimate Webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup) to know more about this boilerplate.
+ZOEY
+----
 
-## Running it on Nitrous Pro
-Change the `webpack.config.js` entry point: `webpack-dev-server/client?http://localhost:8080` to point to your test server, for example: `webpack-dev-server/client?http://test-103403.nitrousapp.com:3000`.  
+Zoey is designed to identify, track and monitor which issues are appearing in
+online news articles covering the 2015 Canadian federal election. It does so by
+scraping news articles from specified sources and analyzing the frequency of
+words appearing in those sources.
+
+This project is a work-in-progress and will be continually updated until the
+federal election on October 19, 2015.
+
+
+SCRAPERS
+--------
+
+Zoey's web scrapers are now built in Ruby. They are far slower than their
+JavaScript predecessors, but with much better consistency, and now incorporate
+error handling, including prevention of duplicate records being inserted.
+
+As well, they are built to easily incorporate any additional
+Feedly feeds, with only minor modifications needed to add articles obtained from
+other sources.
+
+
+SCRAPER FILES
+-------------
+
+Program logic is contained in scraper.rb.
+
+The file 'scrapefeedly.rb' contains the feeds to be scraped. The items_to_scrape
+variable sets how many articles to scrape from each feed, beginning with the
+most recent article. This will ideally be changed to specify a date range in the
+future. Articles already in the database are ignored.
+
+
+SCRAPER USAGE
+-------------
+
+1) Do a bundle install from the Zoey root directory.
+
+2) Create a file named 'dbconfig.rb' in the scrapers directory, and add
+   the following line to this file:
+
+      DATABASE = '<your_database_name'>
+
+3) Perform a knex migrate:rollback, and then a knex migrate:latest to empty your
+   current database. This step is not necessary before performing subsequent
+   scrapes. Note there is no longer any need to run knex seed.
+
+4) In scrapefeedly.rb, change the query parameters as desired. For development
+   purposes, parameters have initially been set to scrape the most recent 200
+   articles for each source. It is also possible - and more practical when in
+   production - to scrape all articles after a certain date. See the comments in
+   scrapefeedly.rb for usage details.
+
+5) Execute the following command:
+
+      ruby scrapefeedly.rb
+
+6) Sit back and watch those articles roll in.
