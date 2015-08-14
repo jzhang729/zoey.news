@@ -50,6 +50,11 @@ var actions = {
     this.dispatch("UPDATE_CHART")
   },
 
+  removePublisher: function(keyword) {
+    this.dispatch("REMOVE_PUBLISHER", keyword)
+    this.dispatch("UPDATE_CHART")
+  },
+
   changeStartDate: function(date) {
     this.dispatch("CHANGE_START_DATE", date)
     this.dispatch("UPDATE_CHART")
