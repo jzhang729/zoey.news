@@ -7,8 +7,20 @@ import App from './components/app.js'
 import Fluxxor from 'fluxxor'
 import request from 'superagent'
 import SnapShotStore from './stores/snapshotstore'
+import PublisherStore from './stores/publisherstore'
 
 var actions = {
+  
+  loadPublishers: function() {
+    request
+      .get('/publishers')
+      .set('Accept', 'application/json')
+      .end(function(err, res){
+        var data = JSON.parse(res.text);
+        this.dispatch("LOAD_PUBLISHERS", data)
+      }.bind(this));
+  },
+
   loadChartData: function(k,p) {
     var route = '/detail?&k=';
     k.forEach(function(word) {
@@ -68,7 +80,8 @@ var actions = {
 
 
 var stores = {
-  SnapShotStore: new SnapShotStore()
+  SnapShotStore: new SnapShotStore(),
+  PublisherStore: new PublisherStore()
 }
 var flux = new Fluxxor.Flux(stores, actions);
 

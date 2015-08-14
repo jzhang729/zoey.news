@@ -11,6 +11,7 @@ var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
 var queryDetail = require('./sql_builder').queryDetail;
+var getPublisherList = require('./sql_builder').getPublisherList;
 
 app.use(express.static(publicPath));
 
@@ -29,38 +30,13 @@ app.get('/detail', function(req, res) {
   });
 });
 
-app.get('/test', function(req, res) {
-  // var payload = {
-  //   "2015-08-02": {"Globe and Mail": {"ISIS": 16, "terror": 12, "mulcair": 4}, 
-  //                   "National Post": {"ISIS": 22, "terror": 10, "mulcair": 7}
-  //   },
-  //   "2015-08-03": {"Globe and Mail": {"ISIS": 8, "terror": 16, "mulcair": 6}, 
-  //                   "National Post": {"ISIS": 2, "terror": 8, "mulcair": 5}
-  //   },
-  //   "2015-08-04": {"Globe and Mail": {"ISIS": 6, "terror": 4, "mulcair": 7}, 
-  //                   "National Post": {"ISIS": 27, "terror": 12, "mulcair": 9}
-  //   }
-  // }
+app.get('/publishers', function(req, res) {
 
-  var payload =
-    {
-      labels: ["ISIS", "terror", "RCMP"],
-      datasets: [
-        {
-            label: "Globe and Mail",
-            data: [18, 2, 32]
-        },
-        {
-            label: "Vancouver Sun",
-            data: [8, 22, 9]
-        },
-        {
-            label: "National Post",
-            data: [17, 5, 30]
-        }
-      ]
-    }
-  res.send(payload);
+  getPublisherList(function(resp) {
+    res.send(resp);
+    console.log(resp);
+  });
+
 })
 
 if (!isProduction) {

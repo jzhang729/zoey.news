@@ -33,33 +33,15 @@ var queryDetail = function(k, p, callback) {
   knex.raw(sql).then(callback);
 }
 
+var getPublisherList = function(callback) {
+  knex.select().from("publishers").then(callback)
+}
+
+var getTopKeywords = function(d, p, callback) {
+  // TODO: return top ten(?) keywords for a given set of publishers and date range
+}
+
+
 exports.queryDetail = queryDetail;
+exports.getPublisherList = getPublisherList;
 
-
-// SELECT
-//   1 as publisher_id,
-//   '2015-08-10' as date,
-//   stat.*
-// FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''2015-08-10'' AND publisher_id = 1') stat
-// WHERE to_tsvector(word) = (to_tsvector('terrorism')) OR to_tsvector(word) = (to_tsvector('Mulcair'))
-// UNION
-// SELECT
-//   1 as publisher_id,
-//   '2015-08-02' as date,
-//   stat.*
-// FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''2015-08-02'' AND publisher_id = 1') stat
-// WHERE to_tsvector(word) = (to_tsvector('terrorism')) OR to_tsvector(word) = (to_tsvector('Mulcair'))
-// UNION
-// SELECT
-//   2 as publisher_id,
-//   '2015-08-10' as date,
-//   stat.*
-// FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''2015-08-10'' AND publisher_id = 2') stat
-// WHERE to_tsvector(word) = (to_tsvector('terrorism')) OR to_tsvector(word) = (to_tsvector('Mulcair'))
-// UNION
-// SELECT
-//   2 as publisher_id,
-//   '2015-08-02' as date,
-//   stat.*
-// FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''2015-08-02'' AND publisher_id = 2') stat
-// WHERE to_tsvector(word) = (to_tsvector('terrorism')) OR to_tsvector(word) = (to_tsvector('Mulcair'));
