@@ -35,7 +35,7 @@ export default Fluxxor.createStore({
     this.emit("change");
   },
   update: function(payload, type){
-    
+
     var dateMatch = function (row) {
       var date = new Date(row.date);
       return ((date >= this.startDate) && (date <= this.endDate))
