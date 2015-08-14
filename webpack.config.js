@@ -27,7 +27,8 @@ var config = {
     },{
       test: /\.scss$/,
       loader: 'style!css!sass?sourceMap'
-    },{
+    },
+    {
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url-loader?limit=8192'
     }]

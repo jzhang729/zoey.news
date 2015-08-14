@@ -1,4 +1,5 @@
 import React from 'react'
+require("font-awesome-webpack");
 
 export default React.createClass({
   getInitialState: function() {
@@ -18,7 +19,7 @@ export default React.createClass({
     return (
       <div className={(this.state.visible ? "visible " : "" ) + "menu"}>
         <div>
-          Link
+          <i className="fa fa-home"></i>
         </div>
         <div>
           Link
