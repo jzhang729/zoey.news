@@ -24,6 +24,7 @@ export default Fluxxor.createStore({
       "LOAD_SNAPSHOT_DATA", this.load,
       "UPDATE_CHART", this.update,
       "ADD_KEYWORD", this.handleAddKeyword,
+      "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "CHANGE_START_DATE", this.handleChangeStartDate,
       "CHANGE_END_DATE", this.handleChangeEndDate
@@ -87,8 +88,12 @@ export default Fluxxor.createStore({
   },
 
   handleAddKeyword: function(payload, type) {
+    // TODO: Don't accept keyword if it's already in array
     this.keywords.push(payload)
     this.update()
+  },
+  handleRemoveKeyword: function(payload, type) {
+    this.keywords.splice(payload, 1)
   },
   handleAddPublisher: function(payload, type) {
     this.publishers.push(payload)

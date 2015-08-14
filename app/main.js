@@ -40,6 +40,11 @@ var actions = {
     this.dispatch("UPDATE_CHART")
   },
 
+  removeKeyword: function(index) {
+    this.dispatch("REMOVE_KEYWORD", index)
+    this.dispatch("UPDATE_CHART")
+  },
+
   addPublisher: function(keyword) {
     this.dispatch("ADD_PUBLISHER", keyword)
     this.dispatch("UPDATE_CHART")
