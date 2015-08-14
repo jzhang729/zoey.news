@@ -83,8 +83,13 @@ var options = {
 export default React.createClass({
   render: function() {
     return (
-      <LineChart className="chart" data={data} options={options} />
+      <div className="chart-container">
+        <span className="chart-title" onClick={this.swapChart}>Line Chart</span>
+        <LineChart className="chart" data={data} options={options} />
+      </div>
     )
   }
 })
 
+
+ 

@@ -75,7 +75,7 @@ export default React.createClass({
         <BarChart className="chart" data={this.state.chartdata} options={options} />
         <div>
           <ul className="collections">
-            <li>{labels}</li>
+            {labels}
           </ul>
         </div>
       </div>

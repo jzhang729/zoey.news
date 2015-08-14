@@ -177,8 +177,8 @@ p{
 }
 
 .chart-container {
-  border: 1px solid #000;
-  border-radius: 10px;
+  border: 2px solid #000;
+  margin: 15px;
 }
 
 @mixin tabstyle {
@@ -194,9 +194,8 @@ p{
        -o-transform: skew(-20deg);
 }
 
-.collections > li {
+.collections {
   list-style-type: square;
-  list-style-color: #000000;
-  display: inline;
+  font-size: 16pt;
   margin: 10px;
 }
