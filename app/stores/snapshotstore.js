@@ -1,5 +1,5 @@
 import Fluxxor from 'fluxxor'
-import ColorRandomizer from '../components/colorrandomizer'
+
 
 export default Fluxxor.createStore({
 
@@ -26,6 +26,7 @@ export default Fluxxor.createStore({
       "ADD_KEYWORD", this.handleAddKeyword,
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
+      "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_START_DATE", this.handleChangeStartDate,
       "CHANGE_END_DATE", this.handleChangeEndDate
 
@@ -94,9 +95,14 @@ export default Fluxxor.createStore({
   },
   handleRemoveKeyword: function(payload, type) {
     this.keywords.splice(payload, 1)
+    this.update()
   },
   handleAddPublisher: function(payload, type) {
     this.publishers.push(payload)
+    this.update()
+  },
+  handleRemovePublisher: function(payload, type) {
+    this.publishers.splice(payload, 1)
     this.update()
   },
   handleChangeStartDate: function(payload, type) {
@@ -112,6 +118,9 @@ export default Fluxxor.createStore({
   },
   getKeywords: function(){
     return this.keywords
+  },
+  getPublishers: function(){
+    return this.publishers
   },
   getStartDate: function(){
     return this.startDate
