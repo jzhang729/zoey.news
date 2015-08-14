@@ -14,6 +14,7 @@ export default React.createClass({
 
   getInitialState: function(){
     return {
+      keywordEntry: "",
       charts: [
               {chartType: "snapshot", data: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"], dates: ["2015-08-03", "2015-08-08"]}},
               {chartType: "timelapse", data: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"], dates: ["2015-08-03", "2015-08-08"]}}
@@ -29,8 +30,8 @@ export default React.createClass({
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
-      <button onClick={this.showMenu}>Click here to open the menu</button>  
-        <div className="main">  
+      <button onClick={this.showMenu}>Click here to open the menu</button>
+        <div className="main">
           <ChartCanvas charts={charts} />
         </div>
       <Footer />
@@ -38,4 +39,3 @@ export default React.createClass({
     )
   }
 })
-

@@ -3,7 +3,7 @@ import Timelapse from './timelapse'
 import Snapshot from './snapshot'
 
 export default React.createClass({
-  
+
   render: function() {
     var charts = this.props.charts.map(function(item, index) {
       if (item.chartType == "snapshot") {
@@ -16,7 +16,6 @@ export default React.createClass({
         )
       }
     });
-    console.log(charts)
     return (
       <div>
         {charts}

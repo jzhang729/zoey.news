@@ -1,6 +1,6 @@
 require './scraper'
 
-items_to_scrape = 200
+items_to_scrape = 50
 
 globeandmail = open("http://feedly.com/v3/streams/contents?streamId=feed/http://www.theglobeandmail.com/news/politics/?service=rss&count=#{items_to_scrape}").read
 nationalpost = open("http://feedly.com/v3/streams/contents?streamId=feed/http://news.nationalpost.com/category/news/canada/canadian-politics/feed/&count=#{items_to_scrape}").read
