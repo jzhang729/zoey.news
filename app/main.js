@@ -27,29 +27,32 @@ var actions = {
       .end(function(err, res){
         var data = JSON.parse(res.text);
         this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("UPDATE_CHART")
       }.bind(this));
   },
 
   updateChart: function() {
-    var payload =
-    {
-      labels: ["ISIS", "terror", "RCMP", "Mulcair"],
-      datasets: [
-        {
-            label: "Globe and Mail",
-            data: [38, 99, 32, 17]
-        },
-        {
-            label: "Vancouver Sun",
-            data: [18, 10, 9, 32]
-        },
-        {
-            label: "National Post",
-            data: [17, 5, 60, 5]
-        }
-      ]
-    }
-    this.dispatch("UPDATE_CHART", payload)
+    this.dispatch("UPDATE_CHART")
+  },
+
+  addKeyword: function(keyword) {
+    this.dispatch("ADD_KEYWORD", keyword)
+    this.dispatch("UPDATE_CHART")
+  },
+
+  addPublisher: function(keyword) {
+    this.dispatch("ADD_PUBLISHER", keyword)
+    this.dispatch("UPDATE_CHART")
+  },
+
+  changeStartDate: function(date) {
+    this.dispatch("CHANGE_START_DATE", date)
+    this.dispatch("UPDATE_CHART")
+  },
+
+  changeEndDate: function(date) {
+    this.dispatch("CHANGE_END_DATE", date)
+    this.dispatch("UPDATE_CHART")
   }
 }
 

@@ -1,10 +1,6 @@
 import Fluxxor from 'fluxxor'
 
 export default Fluxxor.createStore({
-  // actions: {
-  //   "CHANGE_TIME_SCOPE": "handleChangeTimeScope"
-
-  // },
 
   initialize: function(options) {
     this.snapShot =  {
@@ -16,23 +12,29 @@ export default Fluxxor.createStore({
         }
       ]
     }
+
     this.startDate = new Date("2015-08-04")
     this.endDate = new Date("2015-08-05")
-    this.keywords = ["mulcair", "harper"]
-    this.publishers = [1, 2]
+    this.keywords = ["harper", "mulcair"]
+    this.publishers = [1]
     this.datastore = []
 
     this.bindActions(
       "LOAD_SNAPSHOT_DATA", this.load,
-      "UPDATE_CHART", this.update
+      "UPDATE_CHART", this.update,
+      "ADD_KEYWORD", this.handleAddKeyword,
+      "ADD_PUBLISHER", this.handleAddPublisher,
+      "CHANGE_START_DATE", this.handleChangeStartDate,
+      "CHANGE_END_DATE", this.handleChangeEndDate
+
     );
   },
   load: function(payload, type){
     this.datastore = this.datastore.concat(payload)
+    console.log(this.datastore)
     this.emit("change");
   },
   update: function(payload, type){
-    
     
     var dateMatch = function (row) {
       var date = new Date(row.date);
@@ -44,6 +46,7 @@ export default Fluxxor.createStore({
       var contains = false
       this.keywords.forEach(function(w) {
         if (w == keyword) {
+          console.log(row)
           contains = true
         }
       });
@@ -51,7 +54,8 @@ export default Fluxxor.createStore({
     }.bind(this)
 
     var filteredArr = this.datastore.filter(dateMatch).filter(keywordsMatch);
-
+    console.log(this.datastore)
+    console.log(filteredArr)
     var newDatasets = []
 
     this.publishers.forEach(function(p) {
@@ -80,14 +84,22 @@ export default Fluxxor.createStore({
     this.snapShot = newSnapShot
     this.emit("change");
   },
-  addKeyword: function(keyword) {
-    this.keywords.push(keyword)
+
+  handleAddKeyword: function(payload, type) {
+    this.keywords.push(payload)
+    this.update()
   },
-  addPublisher: function(publisher) {
-    this.publishers.push(publisher)
+  handleAddPublisher: function(payload, type) {
+    this.publishers.push(payload)
+    this.update()
   },
-  handleChangeTimeScope: function(payload, type) {
-    console.log()
+  handleChangeStartDate: function(payload, type) {
+    this.startDate = new Date(payload)
+    this.update()
+  },
+  handleChangeEndDate: function(payload, type) {
+    this.endDate = new Date(payload)
+    this.update()
   },
   getSnapShot: function(){
     return this.snapShot
