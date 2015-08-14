@@ -1,11 +1,11 @@
 var dbconfig = require('./knexfile')
 var knex = require('knex')(dbconfig);
 
-var queryDetail = function(k, p, d, callback) {
+var queryDetail = function(k, p, callback) {
   
   var keywords = k.split(',')
   var publishers = p.split(',')
-  var dates = d.split(',')
+  var dates = ["2015-08-02","2015-08-03","2015-08-04","2015-08-05","2015-08-06","2015-08-07","2015-08-08","2015-08-09"]
   var sql = ""
 
   publishers.forEach(function(publisher, pi) {

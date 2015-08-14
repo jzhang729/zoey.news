@@ -23,9 +23,8 @@ app.all('/db/*', function (req, res) {
 app.get('/detail', function(req, res) {
   var keywords = req.query.k;
   var publishers = req.query.p;
-  var dates = req.query.d;
 
-  queryDetail(keywords, publishers, dates, function(resp) {
+  queryDetail(keywords, publishers, function(resp) {
     res.send(resp.rows);
   });
 });

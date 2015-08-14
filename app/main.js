@@ -7,48 +7,45 @@ import App from './components/app.js'
 import Fluxxor from 'fluxxor'
 import request from 'superagent'
 import SnapShotStore from './stores/snapshotstore'
+
 var actions = {
-  loadChart: function(k,p,d) {
-    var route = '/test'
-    // k.forEach(word, index) {
-    //   route += word + ','
-    // }
-    // route = route.slice(0, -1)
-    // route += '&p='
-    // p.forEach(pub, index) {
-    //   route += pub + ','
-    // }
-    // route = route.slice(0, -1)
-    // d.forEach(date, index) {
-    //   route += date + ','
-    // }
-    // route = route.slice(0, -1)
+  loadChartData: function(k,p) {
+    var route = '/detail?&k=';
+    k.forEach(function(word) {
+      route += word + ','
+    });
+    route = route.slice(0, -1)
+    route += '&p='
+    p.forEach(function(pub) {
+      route += pub + ','
+    });
+    route = route.slice(0, -1)
 
     request
       .get(route)
       .set('Accept', 'application/json')
       .end(function(err, res){
         var data = JSON.parse(res.text);
-        this.dispatch("LOAD_SNAPSHOT",data)
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
       }.bind(this));
   },
 
   updateChart: function() {
     var payload =
     {
-      labels: ["ISIS", "terror", "RCMP"],
+      labels: ["ISIS", "terror", "RCMP", "Mulcair"],
       datasets: [
         {
             label: "Globe and Mail",
-            data: [38, 99, 32]
+            data: [38, 99, 32, 17]
         },
         {
             label: "Vancouver Sun",
-            data: [18, 10, 9]
+            data: [18, 10, 9, 32]
         },
         {
             label: "National Post",
-            data: [17, 5, 60]
+            data: [17, 5, 60, 5]
         }
       ]
     }

@@ -60,7 +60,7 @@ export default React.createClass({
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChart();
+    this.getFlux().actions.loadChartData(["Mulcair", "Harper"],[1,2]);
   },
   swapChart: function(){
     this.getFlux().actions.updateChart();
@@ -69,7 +69,7 @@ export default React.createClass({
     console.log(this.state.chartdata)
     return (
       <div>
-        <BarChart className="barchart" data={this.state.chartdata} options={options} />
+        <BarChart className="barchart" data={this.state.chartdata} options={options} redraw />
         <h2 onClick={this.swapChart}>Hello</h2>
       </div>
     )
