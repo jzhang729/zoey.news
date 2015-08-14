@@ -16,7 +16,7 @@ var options = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,0,0,.05)",
+    scaleGridLineColor : "rgba(0,0,0,0.3)",
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
