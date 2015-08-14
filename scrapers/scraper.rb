@@ -35,7 +35,7 @@ def parseArticles(feed)
     url = item["alternate"][0]["href"]
     date = Time.at(item["published"]).to_date.to_s
     title = item["title"]
-    domain = item["alternate"][0]["href"].match(/http.*\.\w{2,3}/)[0].gsub(/^http.?:\/\/www\./, "http://")
+    domain = item["alternate"][0]["href"].match(/\w*\.\w*\//)[0].chop
     if publishers[domain]
       publisher_id = publishers[domain]
     else

@@ -2,7 +2,12 @@ import React from 'react'
 import Fluxxor from 'fluxxor'
 import ColorRandomizer from './colorrandomizer'
 import KeywordList from './keywordlist'
+<<<<<<< HEAD
+import KeywordAdd from './keywordadd'
+
+=======
 import PublisherList from './publisherlist'
+>>>>>>> development
 var BarChart = require("react-chartjs").Bar;
 
 var FluxMixin = Fluxxor.FluxMixin(React),
@@ -85,6 +90,9 @@ export default React.createClass({
             <p onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</p>
           </ul>
           <KeywordList list={this.state.keywordlist} />
+          <div>
+            <KeywordAdd />
+          </div>
           <PublisherList list={this.state.publisherlist} />
       </div>
     )
