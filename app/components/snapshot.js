@@ -1,18 +1,11 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
+import ColorRandomizer from './colorrandomizer'
 
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var BarChart = require("react-chartjs").Bar;
-
-var data1BarFill = "blue";
-var data1BarOutline = "blue";
-var data1Highlight = "blue";
-
-var data2BarFill = "yellow";
-var data2BarOutline = "yellow";
-var data2Highlight = "yellow";
 
 var options = {
 
@@ -23,7 +16,7 @@ var options = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,0,0,.05)",
+    scaleGridLineColor : "rgba(0,0,0,0.3)",
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
@@ -74,16 +67,27 @@ export default React.createClass({
   changeEndDate: function(d){
     this.getFlux().actions.changeEndDate(d);
   },
+  showLeft: function() {
+    this.refs.left.show();
+  },
   render: function() {
 
     return (
-      <div>
+      <div className="chart-container">
         <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-        <h2 onClick={this.addKeyword.bind(this, "terror")}>TERROR</h2>
-        <h2 onClick={this.addPublisher.bind(this, 2)}>add National Post</h2>
-        <h2 onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</h2>
-        <h2 onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</h2>
+          <ul className="collections">
+            <p onClick={this.addKeyword.bind(this, "terror")}>TERROR</p>
+            <p onClick={this.addPublisher.bind(this, 2)}>add National Post</p>
+            <p onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</p>
+            <p onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</p>
+          </ul>
       </div>
     )
   }
 })
+
+// let labels = this.state.chartdata.datasets.map((data) => {
+//   return <li>{data.label}</li>
+// });
+
+// {labels}

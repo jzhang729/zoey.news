@@ -1,4 +1,5 @@
 import Fluxxor from 'fluxxor'
+import ColorRandomizer from '../components/colorrandomizer'
 
 export default Fluxxor.createStore({
 

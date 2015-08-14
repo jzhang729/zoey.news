@@ -37,7 +37,7 @@ var options = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,0,0,.05)",
+    scaleGridLineColor : "rgba(0,0,0,0.3)",
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
@@ -83,8 +83,13 @@ var options = {
 export default React.createClass({
   render: function() {
     return (
-      <LineChart className="chart" data={data} options={options} />
+      <div className="chart-container">
+        <span className="chart-title" onClick={this.swapChart}>Line Chart</span>
+        <LineChart className="chart" data={data} options={options} />
+      </div>
     )
   }
 })
 
+
+ 

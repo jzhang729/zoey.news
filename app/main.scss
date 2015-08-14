@@ -1,6 +1,6 @@
 
-$sidebar-color: rgba(12,213,248,.1);
-$link-hover: rgba(12,213,248,1);
+$hover: rgba(12,213,248,.1);
+$nav-color: rgba(0,0,0,0.1);
 $footer-color: rgba(0,0,0,0.1);
 
 @font-face{
@@ -8,16 +8,24 @@ $footer-color: rgba(0,0,0,0.1);
   src: url('../public/playfair-display/PlayfairDisplay-Black.otf');
 }
 
-h3 {
-  font-family: 'Playfair';
-  font-size: 24pt;
-  padding: 10px;
-  letter-spacing: 3pt;
-}
-
 @mixin main-font-style{
   font-family: verdana;
-  font-size: 12pt;
+  font-size: 10pt;
+}
+
+@mixin menu-link {
+  margin: 10px;
+  padding: 0px;
+  border: 1px solid #000;
+  border-radius: 30px;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: 'Playfair', serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 30pt;
+  line-height: 3em;
+  flex: 1;
 }
 
 @media (max-width : 767px) {
@@ -26,28 +34,36 @@ h3 {
    }
 }
 
+/**** MAIN TAGS ****/
+
 body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
+  
 }
+
+h1 {
+  font-family: 'Playfair', serif;
+  font-size: 60pt;
+  padding: 10px;
+  letter-spacing: 3pt;
+  text-align: center;
+}
+
+
+
+p{
+  @include main-font-style;
+}
+
+
+/**** SECTIONS ****/
 
 .header {
   margin: 0px;
   padding: 0px;
 }
 
-.footer {
-  margin: 0px;
-  padding: 0px;
-  background-color: $footer-color;
-  clear: both;
-  line-height: 3em;
-  text-align: center;
-  margin: 10px 0px;
-}
-
 .navbar{
+  background-color: $nav-color;
   margin: 0px;
   padding: 0px;
 }
@@ -59,39 +75,128 @@ body {
   position: relative;
 }
 
-.left-side{
-  background-color: $sidebar-color;
-  min-height: 100%;
-  width: 150px;
-  margin: 20px 0px;
-  padding: 20px 0px;
+.menu{
+  background-color: #fff;
+  width: 15%;
+  margin: 10px;
   float: left;
-  border-radius: 0px 25px 25px 0px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  display:none;
 }
 
-.left-side > div {
-  flex: 1;
-  margin: 5px 20px;
-  padding: 40px;
-  border: 1px solid $footer-color;
-  border-radius: 30px;
+.visible {
+  display: inline-block;
 }
 
 .main {
+  background-color: #fff;
   padding: 25px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
 
-p{
-  @include main-font-style;
+.footer {
+  width: 100%;
+  height: 50px;
+  padding: 10px; 
+  background-color: $footer-color;
+  clear: both;
+  text-align: center;
+  margin: 10px 0px;
 }
+
+
+/**** TABS ****/
+
+.flex-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: space-between;
+}
+
+.flex-tabs > li:hover {
+  background-color: $hover;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+.flex-tabs > li {
+  @include main-font-style;
+  list-style-type: none;
+  font-weight: bold;
+  flex: auto 25px;
+  align-self: flex-start;
+  border: 2px solid #000;
+  margin: 10px 5px;
+  color: #000;
+  padding: 10px;
+  -webkit-transform: skew(-20deg);
+     -moz-transform: skew(-20deg);
+       -o-transform: skew(-20deg);
+}
+
+.flex-tabs > li:hover {
+  background-color: $hover;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+  left: 1px;
+}
+
+
+/**** SIDE MENU ****/
+
+.menu > div {
+  @include menu-link;
+}
+
+.menu > div:hover {
+  @include menu-link;
+  background-color: $hover;
+  cursor: pointer;
+}
+
+/**** CHARTS ****/
 
 .chart {
-  min-width: 600px;
+  flex: 1 500px;
   padding: 25px;
+  margin: 25px;
+  display: block;
+}
+
+.chart-title{
+  display: block;
+  margin: 20px;
+  font-family: verdana;
+  font-style: italic;
+  font-size: 20pt;
+  text-align: center;
+}
+
+.chart-container {
+  display: flex;
+  border: 2px dashed #000;
+  margin: 15px;
+}
+
+@mixin tabstyle {
+  @include main-font-style;
+  font-weight: bold;
+  margin: 10px 5px;
+  color: #000;
+  padding: 10px;
+  border: 2px solid #000;
+  list-style-type: none;
+  -webkit-transform: skew(-20deg);
+     -moz-transform: skew(-20deg);
+       -o-transform: skew(-20deg);
+}
+
+.collections {
+  list-style-type: square;
+  font-size: 16pt;
+  margin: 10px;
 }
