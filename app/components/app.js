@@ -20,6 +20,9 @@ export default React.createClass({
       ]
     }
   },
+  componentDidMount: function() {
+    this.getFlux().actions.loadPublishers();
+  },
   showMenu: function() {
     this.refs.menu.show();
   },

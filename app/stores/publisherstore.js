@@ -14,5 +14,9 @@ export default Fluxxor.createStore({
     this.publishers = payload
     console.log(this.publishers)
     this.emit("change");
+  },
+
+  getPublishers: function(){
+    return this.publishers
   }
 });
