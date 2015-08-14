@@ -33,10 +33,10 @@ export default React.createClass({
     // var keyword = this.props.keyword
     // var index = this.props.id
     return (
-      <div>
+      <form>
         <InputText onChange={this.handleChange}/>
         <Button value="Submit" onClick={this.handleClick}/>
-      </div>
+      </form>
     )
   }
 })
