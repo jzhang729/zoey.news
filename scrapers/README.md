@@ -22,8 +22,8 @@ most recent article. This will ideally be changed to specify a date range in the
 future. Articles already in the database are ignored.
 
 
-USAGE
------
+IMPLEMENTATION
+--------------
 
 1) Do a bundle install from the Zoey root directory.
 
@@ -36,8 +36,11 @@ USAGE
    current database. This step is not necessary before performing subsequent
    scrapes. Note there is no longer any need to run knex seed.
 
-4) In scrapefeedly.rb, change the items_to_scrape variable as desired (initially
-   set to 200 articles per feed).
+4) In scrapefeedly.rb, change the query parameters as desired. For development
+   purposes, parameters have initially been set to scrape the most recent 200
+   articles for each source. It is also possible - and more practical when in
+   production - to scrape all articles after a certain date. See the comments in
+   scrapefeedly.rb for details.
 
 5) Execute the following command:
 
