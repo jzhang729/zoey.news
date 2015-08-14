@@ -105,6 +105,9 @@ export default Fluxxor.createStore({
   getSnapShot: function(){
     return this.snapShot
   },
+  getKeywords: function(){
+    return this.keywords
+  },
   getStartDate: function(){
     return this.startDate
   },

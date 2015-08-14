@@ -1,11 +1,11 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import ColorRandomizer from './colorrandomizer'
+import KeywordList from './keywordlist'
+var BarChart = require("react-chartjs").Bar;
 
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
-
-var BarChart = require("react-chartjs").Bar;
 
 var options = {
 
@@ -49,7 +49,8 @@ export default React.createClass({
     var startDate = this.getFlux().store("SnapShotStore").getStartDate()
     var endDate = this.getFlux().store("SnapShotStore").getEndDate()
     return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot()
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
+      keywordlist: this.getFlux().store("SnapShotStore").getKeywords()
     }
   },
   componentDidMount: function() {
@@ -81,6 +82,7 @@ export default React.createClass({
             <p onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</p>
             <p onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</p>
           </ul>
+          <KeywordList list={this.state.keywordlist} />
       </div>
     )
   }
