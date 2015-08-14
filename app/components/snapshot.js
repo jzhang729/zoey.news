@@ -1,18 +1,11 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
+import ColorRandomizer from './colorrandomizer'
 
 var FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var BarChart = require("react-chartjs").Bar;
-
-var data1BarFill = "blue";
-var data1BarOutline = "blue";
-var data1Highlight = "blue";
-
-var data2BarFill = "yellow";
-var data2BarOutline = "yellow";
-var data2Highlight = "yellow";
 
 var options = {
 
@@ -65,14 +58,26 @@ export default React.createClass({
   swapChart: function(){
     this.getFlux().actions.updateChart();
   },
+  showLeft: function() {
+    this.refs.left.show();
+  },
   render: function() {
 
-    console.log(this.state.chartdata)
+    console.log(this.state)
+
+    let labels = this.state.chartdata.datasets.map((data) => {
+      return <li>{data.label}</li>
+    });
+
     return (
-      <div>
+      <div className="chart-container">
+        <span className="chart-title" onClick={this.swapChart}>Bar Chart</span>
         <BarChart className="chart" data={this.state.chartdata} options={options} />
-        <h2 onClick={this.swapChart}>Hello</h2>
-        <h3>Testing a custom font</h3>
+        <div>
+          <ul className="collections">
+            <li>{labels}</li>
+          </ul>
+        </div>
       </div>
     )
   }

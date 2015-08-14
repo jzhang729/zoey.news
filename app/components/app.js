@@ -1,7 +1,7 @@
 import React from 'react'
 import Timelapse from './timelapse'
 import Snapshot from './snapshot'
-import Leftbar from './leftbar'
+import Menu from './menu'
 import Navbar from './navbar'
 import Footer from './footer'
 import ChartCanvas from './chartcanvas'
@@ -20,13 +20,16 @@ export default React.createClass({
       ]
     }
   },
-
+  showMenu: function() {
+    this.refs.menu.show();
+  },
   render: function() {
     var charts = this.state.charts
     return (
       <section className="content">
       <Navbar />
-        <Leftbar />
+      <Menu ref="menu" />
+      <button onClick={this.showMenu}>Click here to open the menu</button>  
         <div className="main">  
           <ChartCanvas charts={charts} />
         </div>
