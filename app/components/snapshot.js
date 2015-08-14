@@ -56,23 +56,33 @@ export default React.createClass({
     var startDate = this.getFlux().store("SnapShotStore").getStartDate()
     var endDate = this.getFlux().store("SnapShotStore").getEndDate()
     return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot() 
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot()
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChart();
+    this.getFlux().actions.loadChartData(["Mulcair", "Harper", "terror"],[1,2,3]);
   },
-  swapChart: function(){
-    this.getFlux().actions.updateChart();
+  addKeyword: function(k){
+    this.getFlux().actions.addKeyword(k);
+  },
+  addPublisher: function(k){
+    this.getFlux().actions.addPublisher(k);
+  },
+  changeStartDate: function(d){
+    this.getFlux().actions.changeStartDate(d);
+  },
+  changeEndDate: function(d){
+    this.getFlux().actions.changeEndDate(d);
   },
   render: function() {
 
-    console.log(this.state.chartdata)
     return (
       <div>
-        <BarChart className="chart" data={this.state.chartdata} options={options} />
-        <h2 onClick={this.swapChart}>Hello</h2>
-        <h3>Testing a custom font</h3>
+        <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+        <h2 onClick={this.addKeyword.bind(this, "terror")}>TERROR</h2>
+        <h2 onClick={this.addPublisher.bind(this, 2)}>add National Post</h2>
+        <h2 onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</h2>
+        <h2 onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</h2>
       </div>
     )
   }
