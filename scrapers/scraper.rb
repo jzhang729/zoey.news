@@ -4,6 +4,8 @@ require 'json'
 require 'pg'
 require 'readability'
 require './dbconfig'
+require 'pry'
+require 'byebug'
 
 @conn = PG::Connection.open( dbname: DATABASE )
 
@@ -30,10 +32,10 @@ def parseArticles(feed)
     publishers[hash["domain"]] = hash["id"].to_i
   end
   JSON.parse(feed)["items"].each do |item|
-    url = item["originId"]
+    url = item["alternate"][0]["href"]
     date = Time.at(item["published"]).to_date.to_s
     title = item["title"]
-    domain = item["originId"].match(/http.*\.\w{2,3}/)[0].gsub(/^http.?:\/\/www\./, "http://")
+    domain = item["alternate"][0]["href"].match(/http.*\.\w{2,3}/)[0].gsub(/^http.?:\/\/www\./, "http://")
     if publishers[domain]
       publisher_id = publishers[domain]
     else
