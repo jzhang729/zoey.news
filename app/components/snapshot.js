@@ -2,12 +2,9 @@ import React from 'react'
 import Fluxxor from 'fluxxor'
 import ColorRandomizer from './colorrandomizer'
 import KeywordList from './keywordlist'
-<<<<<<< HEAD
 import KeywordAdd from './keywordadd'
-
-=======
 import PublisherList from './publisherlist'
->>>>>>> development
+
 var BarChart = require("react-chartjs").Bar;
 
 var FluxMixin = Fluxxor.FluxMixin(React),
