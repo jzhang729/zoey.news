@@ -16,8 +16,7 @@ export default React.createClass({
   // },
 
   handleClick: function() {
-    this.getFlux().actions.loadChartData(this.getFlux().store("SnapShotStore").getKeywords().concat(this.state.value),
-                                         this.getFlux().store("SnapShotStore").getPublishers());
+    this.getFlux().actions.addKeyword(this.state.value)                           
   },
 
   getInitialState: function(){
