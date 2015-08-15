@@ -33,7 +33,7 @@ def parseArticles(feed)
   end
   JSON.parse(feed)["items"].each do |item|
     url = item["alternate"][0]["href"]
-    date = Time.at(item["published"]).to_date.to_s
+    date = Time.at(item["published"] / 1000).to_date.to_s
     title = item["title"]
     domain = item["alternate"][0]["href"].match(/\w*\.\w*\//)[0].chop
     if publishers[domain]
