@@ -20,7 +20,6 @@ export default React.createClass({
                                          this.getFlux().store("SnapShotStore").getPublishers());
   },
 
-
   getInitialState: function(){
     return {
       value: ""
@@ -33,10 +32,10 @@ export default React.createClass({
 
   render: function() {
     return (
-      <form>
+      <div>
         <InputText onChange={this.handleChange}/>
         <Button value="Submit" onClick={this.handleClick}/>
-      </form>
+      </div>
     )
   }
 })
