@@ -37,8 +37,8 @@ export default Fluxxor.createStore({
     this.emit("change");
   },
   update: function(payload, type){
-    this.keywords = payload[0]
-    this.publishers = payload[1]
+    // this.keywords = payload[0]
+    // this.publishers = payload[1]
     var dateMatch = function (row) {
       var date = new Date(row.date);
       return ((date >= this.startDate) && (date <= this.endDate))
@@ -49,7 +49,6 @@ export default Fluxxor.createStore({
       var contains = false
       this.keywords.forEach(function(w) {
         if (w == keyword) {
-          console.log(row)
           contains = true
         }
       });
@@ -57,8 +56,6 @@ export default Fluxxor.createStore({
     }.bind(this)
 
     var filteredArr = this.datastore.filter(dateMatch).filter(keywordsMatch);
-    console.log(this.datastore)
-    console.log(filteredArr)
     var newDatasets = []
 
     this.publishers.forEach(function(p) {
@@ -89,8 +86,8 @@ export default Fluxxor.createStore({
   },
 
   handleAddKeyword: function(payload, type) {
-    // TODO: Don't accept keyword if it's already in array
     this.keywords.push(payload)
+    this.update()
   },
   handleRemoveKeyword: function(payload, type) {
     this.keywords.splice(payload, 1)

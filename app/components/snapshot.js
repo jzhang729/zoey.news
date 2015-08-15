@@ -60,11 +60,11 @@ export default React.createClass({
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.state.keywordlist, this.state.publisherlist);
   },
-  addKeyword: function(k){
-    this.getFlux().actions.loadChartData(this.state.keywordlist.concat(k), this.state.publisherlist);
+  addKeyword: function(keyword){
+    this.getFlux().actions.addKeyword(keyword);
   },
-  addPublisher: function(k){
-    this.getFlux().actions.addPublisher(k);
+  addPublisher: function(publisher){
+    this.getFlux().actions.addPublisher(publisher);
   },
   changeStartDate: function(d){
     this.getFlux().actions.changeStartDate(d);

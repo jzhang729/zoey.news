@@ -5,42 +5,30 @@ require('!style!css!sass!./main.scss');
 import React from 'react'
 import App from './components/app.js'
 import Fluxxor from 'fluxxor'
-import request from 'superagent'
 import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
+import routeService from './services/routeservice'
+import requestManager from './services/requestManager'
 
 var actions = {
 
   loadPublishers: function() {
-    request
-      .get('/publishers')
-      .set('Accept', 'application/json')
-      .end(function(err, res){
-        var data = JSON.parse(res.text);
+    var route = '/publishers'
+    var success = function(err, resp){
+        var data = JSON.parse(resp.text);
         this.dispatch("LOAD_PUBLISHERS", data)
-      }.bind(this));
+      }.bind(this)
+    requestManager.get(route, success)
   },
 
-  loadChartData: function(k,p) {
-    var route = '/detail?&k=';
-    k.forEach(function(word) {
-      route += word + ','
-    });
-    route = route.slice(0, -1)
-    route += '&p='
-    p.forEach(function(pub) {
-      route += pub + ','
-    });
-    route = route.slice(0, -1)
-
-    request
-      .get(route)
-      .set('Accept', 'application/json')
-      .end(function(err, res){
-        var data = JSON.parse(res.text);
-        this.dispatch("LOAD_SNAPSHOT_DATA", data)
-        this.dispatch("UPDATE_CHART", [k, p])
-      }.bind(this));
+  loadChartData: function(keywords, publishers) {
+    var route = routeService.apiUrl(keywords, publishers)
+    var success = function(err, resp) {
+      var data = JSON.parse(resp.text);
+      this.dispatch("LOAD_SNAPSHOT_DATA", data)
+      this.dispatch("UPDATE_CHART")
+    }.bind(this)
+    requestManager.get(route, success)
   },
 
   updateChart: function() {
@@ -48,13 +36,22 @@ var actions = {
   },
 
   addKeyword: function(keyword) {
-    this.dispatch("ADD_KEYWORD", keyword)
-    this.dispatch("UPDATE_CHART")
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
+    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+    
+    if (keywordsList.indexOf(keyword) < 0) {
+      var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
+      var success = function(err, resp) {
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("ADD_KEYWORD", keyword)
+      }.bind(this)
+      requestManager.get(route, success)
+    }
   },
 
   removeKeyword: function(index) {
-    this.dispatch("REMOVE_KEYWORD", index)
-    this.dispatch("UPDATE_CHART")
+      this.dispatch("REMOVE_KEYWORD", index)
   },
 
   addPublisher: function(keyword) {
