@@ -20,7 +20,6 @@ export default React.createClass({
                                          this.getFlux().store("SnapShotStore").getPublishers());
   },
 
-
   getInitialState: function(){
     return {
       value: ""
