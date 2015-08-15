@@ -1,7 +1,5 @@
 require './scraper'
 
-items_to_scrape = 200
-
 # QUERY Parameters
 # ----------------
 #
