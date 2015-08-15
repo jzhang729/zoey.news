@@ -1,6 +1,5 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import ColorRandomizer from './colorrandomizer'
 import KeywordList from './keywordlist'
 import KeywordAdd from './keywordadd'
 import PublisherList from './publisherlist'
