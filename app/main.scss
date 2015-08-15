@@ -178,14 +178,6 @@ h1.title {
   padding: 5px;
   border: 2px outset;
   display: inline-block;
-
-  &:hover{
-    position: relative;
-    cursor: pointer;
-    background-color: $hover;
-    top: 1px;
-    left: 1px;
-  }
 }
 
 .keyword-list i {

@@ -84,7 +84,7 @@ export default React.createClass({
         <li onClick={this.addKeyword.bind(this, "terror")}>TERROR</li>
         <li onClick={this.addPublisher.bind(this, 2)}>add National Post</li>
         <li onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</li>
-        <li onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</li>
+        <li onClick={this.changeEndDate.bind(this, "2015-08-10")}>end is Aug 6</li>
       </ul>
       </div>
     )
