@@ -1,5 +1,5 @@
 import Fluxxor from 'fluxxor'
-
+import color from '../services/color'
 
 export default Fluxxor.createStore({
 
@@ -58,7 +58,7 @@ export default Fluxxor.createStore({
     var filteredArr = this.datastore.filter(dateMatch).filter(keywordsMatch);
     var newDatasets = []
 
-    this.publishers.forEach(function(p) {
+    this.publishers.forEach(function(p, index) {
       var pub = p
       var wordcount = this.keywords.map(function(w) {
         var word = w
@@ -72,7 +72,11 @@ export default Fluxxor.createStore({
       })
       var dataset = {
         label: pub.toString(),
-        data: wordcount
+        data: wordcount,
+        fillColor: color.Fill[index],
+        strokeColor: color.Stroke[index],
+        highlightFill: color.HighlightFill[index],
+        highlightStroke: color.HighlightStroke[index]
       }
       newDatasets.push(dataset)
     }.bind(this));
