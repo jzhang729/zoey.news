@@ -74,22 +74,26 @@ export default React.createClass({
     this.refs.left.show();
   },
   render: function() {
-
     return (
+      <div>
       <div className="chart-container">
-        <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-          <ul className="collections">
-            <p onClick={this.addKeyword.bind(this, "terror")}>TERROR</p>
-            <p onClick={this.addPublisher.bind(this, 2)}>add National Post</p>
-            <p onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</p>
-            <p onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</p>
-          </ul>
-          <KeywordList list={this.state.keywordlist} />
-          <PublisherList list={this.state.publisherlist} />
+      <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+      <KeywordList className="keyword-list" list={this.state.keywordlist} />
+      </div>
+      <ul>
+        <li onClick={this.addKeyword.bind(this, "terror")}>TERROR</li>
+        <li onClick={this.addPublisher.bind(this, 2)}>add National Post</li>
+        <li onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</li>
+        <li onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</li>
+      </ul>
       </div>
     )
   }
 })
+
+// <PublisherList list={this.state.publisherlist} />
+
+// <span className="chart-title">Bar Chart</span>
 
 // let labels = this.state.chartdata.datasets.map((data) => {
 //   return <li>{data.label}</li>

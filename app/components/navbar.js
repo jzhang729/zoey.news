@@ -7,8 +7,7 @@ export default React.createClass({
   render: function() {
     return (
       <div className="header">
-      <h1>Zoey</h1>
-        <div className="navbar">
+      <h1 className="title">Zoey</h1>
           <div className="flex-wrapper">
             <ul className="flex-tabs">
               <li>Donald Trump</li>
@@ -21,7 +20,6 @@ export default React.createClass({
               <li>Terrorism</li>
             </ul>
           </div>
-        </div>     
       </div>
     )
   }

@@ -22,9 +22,12 @@ export default React.createClass({
   },
   componentDidMount: function() {
     this.getFlux().actions.loadPublishers();
-  },
+  },  
   showMenu: function() {
     this.refs.menu.show();
+  },
+  hideMenu: function() {
+    this.refs.menu.hide();
   },
   render: function() {
     var charts = this.state.charts
@@ -32,13 +35,14 @@ export default React.createClass({
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
-      <button onClick={this.showMenu}>Click here to open the menu</button>  
-        <div className="main">  
-          <ChartCanvas charts={charts} />
+        <div className="main">
+        <ChartCanvas charts={charts} />
         </div>
       <Footer />
       </section>
     )
   }
 })
+
+// onMouseEnter={this.showMenu} onMouseLeave={this.hideMenu}
 
