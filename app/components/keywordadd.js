@@ -32,8 +32,6 @@ export default React.createClass({
   },
 
   render: function() {
-    // var keyword = this.props.keyword
-    // var index = this.props.id
     return (
       <form>
         <InputText onChange={this.handleChange}/>

@@ -33,7 +33,6 @@ export default Fluxxor.createStore({
     );
   },
   load: function(payload, type){
-    // this.datastore = this.datastore.concat(payload)
     this.datastore = payload
     this.emit("change");
   },
@@ -92,7 +91,6 @@ export default Fluxxor.createStore({
   handleAddKeyword: function(payload, type) {
     // TODO: Don't accept keyword if it's already in array
     this.keywords.push(payload)
-    // this.update()
   },
   handleRemoveKeyword: function(payload, type) {
     this.keywords.splice(payload, 1)
