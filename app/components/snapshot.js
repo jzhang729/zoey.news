@@ -58,10 +58,10 @@ export default React.createClass({
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(["Mulcair", "Harper", "terror"],[1,2,3]);
+    this.getFlux().actions.loadChartData(this.state.keywordlist, this.state.publisherlist);
   },
   addKeyword: function(k){
-    this.getFlux().actions.addKeyword(k);
+    this.getFlux().actions.loadChartData(this.state.keywordlist.concat(k), this.state.publisherlist);
   },
   addPublisher: function(k){
     this.getFlux().actions.addPublisher(k);
