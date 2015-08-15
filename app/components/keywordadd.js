@@ -33,10 +33,10 @@ export default React.createClass({
 
   render: function() {
     return (
-      <form>
+      <div>
         <InputText onChange={this.handleChange}/>
         <Button value="Submit" onClick={this.handleClick}/>
-      </form>
+      </div>
     )
   }
 })
