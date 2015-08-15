@@ -16,8 +16,10 @@ export default React.createClass({
   // },
 
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.state.value)
+    this.getFlux().actions.loadChartData(this.getFlux().store("SnapShotStore").getKeywords().concat(this.state.value),
+                                         this.getFlux().store("SnapShotStore").getPublishers());
   },
+
 
   getInitialState: function(){
     return {
@@ -30,8 +32,6 @@ export default React.createClass({
   },
 
   render: function() {
-    // var keyword = this.props.keyword
-    // var index = this.props.id
     return (
       <form>
         <InputText onChange={this.handleChange}/>

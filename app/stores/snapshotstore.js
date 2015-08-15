@@ -16,8 +16,8 @@ export default Fluxxor.createStore({
 
     this.startDate = new Date("2015-08-04")
     this.endDate = new Date("2015-08-05")
-    this.keywords = ["harper", "mulcair"]
-    this.publishers = [1]
+    this.keywords = ["harper", "mulcair", "trudeau"]
+    this.publishers = [1, 2, 3]
     this.datastore = []
 
     this.bindActions(
@@ -33,12 +33,12 @@ export default Fluxxor.createStore({
     );
   },
   load: function(payload, type){
-    this.datastore = this.datastore.concat(payload)
-    console.log(this.datastore)
+    this.datastore = payload
     this.emit("change");
   },
   update: function(payload, type){
-
+    this.keywords = payload[0]
+    this.publishers = payload[1]
     var dateMatch = function (row) {
       var date = new Date(row.date);
       return ((date >= this.startDate) && (date <= this.endDate))
@@ -91,7 +91,6 @@ export default Fluxxor.createStore({
   handleAddKeyword: function(payload, type) {
     // TODO: Don't accept keyword if it's already in array
     this.keywords.push(payload)
-    this.update()
   },
   handleRemoveKeyword: function(payload, type) {
     this.keywords.splice(payload, 1)

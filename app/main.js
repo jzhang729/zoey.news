@@ -10,7 +10,7 @@ import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
 
 var actions = {
-  
+
   loadPublishers: function() {
     request
       .get('/publishers')
@@ -39,7 +39,7 @@ var actions = {
       .end(function(err, res){
         var data = JSON.parse(res.text);
         this.dispatch("LOAD_SNAPSHOT_DATA", data)
-        this.dispatch("UPDATE_CHART")
+        this.dispatch("UPDATE_CHART", [k, p])
       }.bind(this));
   },
 
