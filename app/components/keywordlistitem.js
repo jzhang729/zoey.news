@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 var FluxMixin = Fluxxor.FluxMixin(React)
+require("font-awesome-webpack");
 
 export default React.createClass({
   mixins: [FluxMixin],
@@ -12,9 +13,7 @@ export default React.createClass({
     var keyword = this.props.keyword
     var index = this.props.id
     return (
-      <li className="keyword-list-item">
-        {keyword} | <a onClick={this.handleRemoveKeyword.bind(this, index)}>Remove</a>
-      </li>
+        <li className="keyword-list-item">{keyword} &nbsp;<i className="fa fa-lg fa-times-circle-o" onClick={this.handleRemoveKeyword.bind(this, index)}></i></li>
     )
   }
 })

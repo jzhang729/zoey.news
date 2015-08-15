@@ -11,7 +11,7 @@ export default React.createClass({
     }.bind(this))
     return (
       <ul className="publisher-list">
-        {publisherList}
+        <li>{publisherList}</li>
       </ul>
     )
   }
