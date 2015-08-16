@@ -29,8 +29,7 @@ export default Fluxxor.createStore({
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
-      "CHANGE_START_DATE", this.handleChangeStartDate,
-      "CHANGE_END_DATE", this.handleChangeEndDate
+      "CHANGE_DATE_RANGE", this.handleChangeDateRange
 
     );
   },
@@ -98,12 +97,9 @@ export default Fluxxor.createStore({
     this.publishers.splice(payload, 1)
     this.update()
   },
-  handleChangeStartDate: function(payload, type) {
-    this.startDate = new Date(payload)
-    this.update()
-  },
-  handleChangeEndDate: function(payload, type) {
-    this.endDate = new Date(payload)
+  handleChangeDateRange: function(payload, type) {
+    this.startDate = payload[0]
+    this.endDate = payload[1]
     this.update()
   },
   getSnapShot: function(){

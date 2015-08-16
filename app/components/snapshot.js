@@ -2,6 +2,7 @@ import React from 'react'
 import Fluxxor from 'fluxxor'
 import KeywordList from './keywordlist'
 import PublisherList from './publisherlist'
+import Slider from './slider'
 
 var BarChart = require("react-chartjs").Bar;
 
@@ -51,9 +52,9 @@ export default React.createClass({
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
       keywordlist: this.getFlux().store("SnapShotStore").getKeywords(),
       publisherlist: this.getFlux().store("SnapShotStore").getPublishers(),
-      startDate = this.getFlux().store("SnapShotStore").getStartDate(),
-      endDate = this.getFlux().store("SnapShotStore").getEndDate(),
-      allDates = this.getFlux().store("SnapShotStore").getAllDates()
+      startDate: this.getFlux().store("SnapShotStore").getStartDate(),
+      endDate: this.getFlux().store("SnapShotStore").getEndDate(),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   componentDidMount: function() {
@@ -77,16 +78,11 @@ export default React.createClass({
   render: function() {
     return (
       <div>
-      <div className="chart-container">
-        <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-        <KeywordList className="keyword-list" list={this.state.keywordlist} />
-      </div>
-      <ul>
-        <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
-        <button onClick={this.addPublisher.bind(this, 2)}>add National Post</button><br />
-        <button onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</button><br />
-        <button onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</button>
-      </ul>
+        <div className="chart-container">
+          <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+          <KeywordList className="keyword-list" list={this.state.keywordlist} />
+        </div>
+        <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
       </div>
     )
   }
