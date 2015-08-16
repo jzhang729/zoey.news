@@ -36,6 +36,8 @@
     "font-awesome": "^4.4.0",
     "font-awesome-webpack": "0.0.3",
     "http-proxy": "^1.10.1",
+    "image-webpack-loader": "^1.6.1",
+    "imagemin": "^3.2.0",
     "knex": "^0.8.6",
     "node-sass": "^3.2.0",
     "pg": "^4.4.1",

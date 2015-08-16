@@ -43,19 +43,8 @@ export default Fluxxor.createStore({
       var date = new Date(row.date);
       return ((date >= this.startDate) && (date <= this.endDate))
     }.bind(this)
-
-    var keywordsMatch = function (row) {
-      var keyword = row.word
-      var contains = false
-      this.keywords.forEach(function(w) {
-        if (w == keyword) {
-          contains = true
-        }
-      });
-      return contains
-    }.bind(this)
-
-    var filteredArr = this.datastore.filter(dateMatch).filter(keywordsMatch);
+    
+    var filteredArr = this.datastore.filter(dateMatch);
     var newDatasets = []
 
     this.publishers.forEach(function(p) {
