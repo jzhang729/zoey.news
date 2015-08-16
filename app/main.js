@@ -1,6 +1,7 @@
 var css = require('!css!sass!./main.scss');
 // => returns compiled css code from file.scss, resolves imports and url(...)s
 require('!style!css!sass!./main.scss');
+require('!style!css!./slider.css')
 
 import React from 'react'
 import App from './components/app.js'
@@ -51,28 +52,35 @@ var actions = {
   },
 
   removeKeyword: function(index) {
-      this.dispatch("REMOVE_KEYWORD", index)
+    this.dispatch("REMOVE_KEYWORD", index)
   },
 
-  addPublisher: function(keyword) {
-    this.dispatch("ADD_PUBLISHER", keyword)
-    this.dispatch("UPDATE_CHART")
+  addPublisher: function(publisher) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
+    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+    
+    if (publishersList.indexOf(publisher) < 0) {
+      var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
+      var success = function(err, resp) {
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("ADD_PUBLISHER", publisher)
+      }.bind(this)
+      requestManager.get(route, success)
+    }
   },
 
-  removePublisher: function(keyword) {
-    this.dispatch("REMOVE_PUBLISHER", keyword)
-    this.dispatch("UPDATE_CHART")
+  removePublisher: function(publisher) {
+    this.dispatch("REMOVE_PUBLISHER", publisher)
   },
 
-  changeStartDate: function(date) {
-    this.dispatch("CHANGE_START_DATE", date)
-    this.dispatch("UPDATE_CHART")
-  },
-
-  changeEndDate: function(date) {
-    this.dispatch("CHANGE_END_DATE", date)
-    this.dispatch("UPDATE_CHART")
+  // this takes an array of index values
+  // ie [0, 2] which corresponds to the first
+  // and third dates in the store's list
+  changeDateRange: function(dates) {
+    this.dispatch("CHANGE_DATE_RANGE", dates)
   }
+
 }
 
 

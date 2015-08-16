@@ -2,6 +2,7 @@ import React from 'react'
 import Fluxxor from 'fluxxor'
 import KeywordList from './keywordlist'
 import PublisherList from './publisherlist'
+import Slider from './slider'
 
 var BarChart = require("react-chartjs").Bar;
 
@@ -60,12 +61,13 @@ export default React.createClass({
   },
 
   getStateFromFlux: function(){
-    var startDate = this.getFlux().store("SnapShotStore").getStartDate()
-    var endDate = this.getFlux().store("SnapShotStore").getEndDate()
     return {
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
       keywordlist: this.getFlux().store("SnapShotStore").getKeywords(),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers()
+      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(),
+      startDate: this.getFlux().store("SnapShotStore").getStartDate(),
+      endDate: this.getFlux().store("SnapShotStore").getEndDate(),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   componentDidMount: function() {
@@ -86,11 +88,12 @@ export default React.createClass({
   render: function() {
     return (
       <div>
+
       <div className="chart-container">
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
         <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
         <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
-        
+        <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
       </div>
       <ul>
         <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
