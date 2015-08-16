@@ -174,22 +174,27 @@ h5 {
   text-align: center;
 }
 
-
-
 .chart-container {
   display: -webkit-box;
     display: -moz-box;      
       display: -ms-flexbox;     
         display: -webkit-flex;     
           display: flex;
+  flex-direction: row;
 }
 
-.chart-menu{
-  display: block;
-  float: right;
-  margin: 0px 10px;
-  flex: auto 50px;
-  order: 2;
+.chart-label-y {
+  font: {
+    family: verdana;
+    size: 10pt;
+    weight: bold;
+  }
+  transform: rotate(270deg);
+  transform-origin: left top 0;
+  white-space: nowrap;
+  flex: 0 0 30px;
+  order: 0;
+  align-self: center;
 }
 
 .chart {
@@ -198,6 +203,15 @@ h5 {
   width: 700px;
   height: 500px;
   order: 1;
+}
+
+.chart-menu{
+  display: block;
+  float: right;
+  margin: 0px 10px;
+  flex: auto 50px;
+  order: 2;
+  align-self: flex-start;
 }
 
 /**** KEYWORD LIST ****/
@@ -224,6 +238,7 @@ h5 {
             -ms-flex-direction: column;
               flex-direction: column;
   order: 3;
+  align-self: stretch;
 }
 
 .keyword-list-item {
