@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import KeywordListItem from './keywordlistitem'
+import KeywordAdd from './keywordadd'
 
 export default React.createClass({
   render: function() {
@@ -11,6 +12,8 @@ export default React.createClass({
     }.bind(this))
     return (
       <ul className="keyword-list">
+        <h5>Keywords</h5>
+        <KeywordAdd />
         {keywordList}
       </ul>
     )

@@ -19,21 +19,26 @@ export default React.createClass({
     return (
       <div className={(this.state.visible ? "visible " : "" ) + "menu"}>
         <div>
-          <i className="fa fa-3x fa-home"></i>
+          <i className="fa fa-2x fa-bars"></i>
         </div>
         <div>
-          Link
+          <i className="fa fa-2x fa-home"></i>
         </div>
         <div>
-          Link
+          <i className="fa fa-2x fa-cog"></i>
         </div>
         <div>
-          Link
+          <i className="fa fa-2x fa-sign-in"></i>
         </div>
-
+        <div>
+          <i className="fa fa-2x fa-bar-chart"></i>
+        </div>
+        <div>
+          <i className="fa fa-2x fa-line-chart"></i>
+        </div>
       </div>
     )
-  }
+  } 
 })
 
 
