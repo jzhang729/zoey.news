@@ -26,9 +26,8 @@ var config = {
       loader: 'style!css'
     },{
       test: /\.scss$/,
-      loader: 'style!css!sass?sourceMap'
-    },
-    {
+      loader: 'style!css!sass!autoprefixer-loader?browsers=last 2 versions'
+    },{
       test: /\.(otf|eot|svg|ttf|woff)/,
       loader: 'url-loader?limit=8192'
     },
