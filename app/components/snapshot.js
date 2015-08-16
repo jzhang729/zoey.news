@@ -46,6 +46,19 @@ var options = {
 
 export default React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
+  
+  getInitialState: function() {
+    return {
+      hidden: false
+    }
+  },
+
+  toggleHidden: function() {
+    this.setState({
+      hidden: !(this.state.hidden)
+    })
+  },
+
   getStateFromFlux: function(){
     var startDate = this.getFlux().store("SnapShotStore").getStartDate()
     var endDate = this.getFlux().store("SnapShotStore").getEndDate()
@@ -70,15 +83,14 @@ export default React.createClass({
   changeEndDate: function(d){
     this.getFlux().actions.changeEndDate(d);
   },
-  showLeft: function() {
-    this.refs.left.show();
-  },
   render: function() {
     return (
       <div>
       <div className="chart-container">
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
         <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-        <KeywordList className="keyword-list" list={this.state.keywordlist} />
+        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
+        
       </div>
       <ul>
         <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
