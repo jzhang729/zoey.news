@@ -88,7 +88,10 @@ export default React.createClass({
       <div>
       <div className="chart-container">
         <div className="chart-label-y">Keyword Frequency</div>
-        <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+        <div className="chart-main">
+          <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+          <div className="chart-label-x">TESTING</div>
+        </div>
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
         <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
         
