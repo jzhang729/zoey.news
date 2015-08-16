@@ -93,21 +93,9 @@ h5 {
 }
 
 .flex-tabs {
-  display: -webkit-box;
-    display: -moz-box;      
-      display: -ms-flexbox;     
-        display: -webkit-flex;     
-          display: flex;
-  -webkit-box-wrap: wrap;
-    -moz-box-wrap: wrap;
-      -ms-flex-wrap: wrap;
-        -webkit-flex-wrap: wrap;
-          flex: wrap;
-    -webkit-box-direction: row;
-      -moz-box-direction: row;
-        -ms-flex-direction: row;
-          -webkit-flex-direction: row;
-            flex-direction: row;
+  display: flex;
+  flex: wrap;
+  flex-direction: row;
   align-items: space-between;
 }
 
@@ -122,14 +110,8 @@ h5 {
   color: #000;
   background-color: #FFF;
   padding: 10px;
-  -webkit-transform: skew(-20deg);
-     -moz-transform: skew(-20deg);
-       -o-transform: skew(-20deg);
-  -webkit-box-flex: auto 25px;
-    -moz-box-flex: auto 25px;
-      -webkit-flex: auto 25px;
-        -ms-flex: auto 25px;
-            flex: auto 25px;
+  transform: skew(-20deg);
+  flex: auto 25px;
 
   &:hover {
     background-color: #000;
@@ -174,12 +156,8 @@ h5 {
   text-align: center;
 }
 
-.chart-container {
-  display: -webkit-box;
-    display: -moz-box;      
-      display: -ms-flexbox;     
-        display: -webkit-flex;     
-          display: flex;
+.chart-container {    
+  display: flex;
   flex-direction: row;
 }
 
@@ -191,8 +169,6 @@ h5 {
   }
   transform: rotate(270deg);
   transform-origin: left top 0;
-  -webkit-transform: rotate(270deg);
-  -webkit-transform-origin: left top 0;
   white-space: nowrap;
   flex: 0 0 30px;
   order: 0;
@@ -237,24 +213,10 @@ h5 {
 .keyword-list {
   padding: 20px 10px 0px 10px;
   /*white-space: nowrap;*/
-  border: 1px solid $border-color;
-  display: -webkit-box;
-    display: -moz-box;      
-      display: -ms-flexbox;     
-        display: -webkit-flex;     
-          display: flex;
-  -webkit-box-wrap: wrap;
-    -moz-box-wrap: wrap;
-      -ms-flex-wrap: wrap;
-        -webkit-flex-wrap: wrap;
-          flex: wrap;
-  -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-      -webkit-box-direction: normal;
-        -moz-box-direction: normal;
-          -webkit-flex-direction: column;
-            -ms-flex-direction: column;
-              flex-direction: column;
+  border: 1px solid $border-color;  
+  display: flex;
+  flex: wrap;
+  flex-direction: column;
   order: 3;
   align-self: stretch;
 }
@@ -301,5 +263,3 @@ h5 {
   font-size: 8pt;
   margin: 10px;
 }
-
-
