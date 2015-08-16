@@ -16,7 +16,7 @@ export default React.createClass({
     // var keyword = this.props.keyword
     // var index = this.props.id
     return (
-      <input type="button" value="search" onClick={this.handleClick}></input>
+      <i className="fa fa-2x fa-plus-square" onClick={this.handleClick}></i>
     )
   }
 })

@@ -24,14 +24,14 @@ export default React.createClass({
       value: ""
     }
   },
-
+  
   handleChange: function() {
     this.setState({value: event.target.value});
   },
 
   render: function() {
     return (
-      <div>
+      <div className="keyword-add">
         <InputText onChange={this.handleChange}/>
         <Button value="Submit" onClick={this.handleClick}/>
       </div>

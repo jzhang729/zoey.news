@@ -1,7 +1,6 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import KeywordList from './keywordlist'
-import KeywordAdd from './keywordadd'
 import PublisherList from './publisherlist'
 
 var BarChart = require("react-chartjs").Bar;
@@ -78,12 +77,10 @@ export default React.createClass({
     return (
       <div>
       <div className="chart-container">
-
-      <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-      <KeywordList className="keyword-list" list={this.state.keywordlist} />
+        <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+        <KeywordList className="keyword-list" list={this.state.keywordlist} />
       </div>
       <ul>
-        <KeywordAdd />
         <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
         <button onClick={this.addPublisher.bind(this, 2)}>add National Post</button><br />
         <button onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</button><br />
