@@ -1,6 +1,6 @@
 var dbconfig = require('./knexfile')
 var knex = require('knex')(dbconfig);
-var makeDates = require('.app/services/makeDates').makeDates
+var makeDates = require('./makeDates').makeDates
 var escapeString = require('./escapeString').escapeString
 
 var queryDetail = function(k, p, callback) {
