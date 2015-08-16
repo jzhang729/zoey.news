@@ -48,8 +48,8 @@ h1.title {
   display: block;
 }
 
-.visible {
-  display: inline-block;
+.hidden {
+  display: none;
 }
 
 .main {
@@ -142,11 +142,15 @@ h5 {
 
 /**** SIDE MENU ****/
 
-.menu{
-  background-color: #fff;
+.menu {
   width: 100px;
   margin: 10px;
   float: left;
+
+  @media (max-width: 767px) {
+    width: 85%;
+    margin: auto;
+  }
 }
 
 .menu > div {
@@ -170,11 +174,7 @@ h5 {
   text-align: center;
 }
 
-.chart-title{
-  display: block;
-  margin: 20px;
-  @include font-chart-title;
-}
+
 
 .chart-container {
   display: -webkit-box;
@@ -184,11 +184,20 @@ h5 {
           display: flex;
 }
 
+.chart-menu{
+  display: block;
+  float: right;
+  margin: 0px 10px;
+  flex: auto 50px;
+  order: 2;
+}
+
 .chart {
   padding: 10px;
   margin: 10px;
   width: 700px;
   height: 500px;
+  order: 1;
 }
 
 /**** KEYWORD LIST ****/
@@ -214,12 +223,12 @@ h5 {
           -webkit-flex-direction: column;
             -ms-flex-direction: column;
               flex-direction: column;
+  order: 3;
 }
 
 .keyword-list-item {
   list-style-type: none;
   font-size: 14pt;
-  /*border: 1px solid $border-color;*/
   border-radius: 7px;
   margin: 2px 0px;
   padding: 2px;
