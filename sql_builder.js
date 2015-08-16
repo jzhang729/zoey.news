@@ -1,37 +1,13 @@
 var dbconfig = require('./knexfile')
 var knex = require('knex')(dbconfig);
-
-var escape_string = function (str) {
-  return str.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
-    switch (char) {
-    case "\0":
-      return "\\0";
-    case "\x08":
-      return "\\b";
-    case "\x09":
-      return "\\t";
-    case "\x1a":
-      return "\\z";
-    case "\n":
-      return "\\n";
-    case "\r":
-      return "\\r";
-    case "\"":
-    case "'":
-    case "\\":
-    case "%":
-      return "\\"+char; // prepends a backslash to backslash, percent,
-                          // and double/single quotes
-    }
-  });
-}
-
+var makeDates = require('./makeDates').makeDates
+var escapeString = require('./escapeString').escapeString
 
 var queryDetail = function(k, p, callback) {
   
-  var keywords = escape_string(k).split(',')
-  var publishers = escape_string(p).split(',')
-  var dates = ["2015-08-02","2015-08-03","2015-08-04","2015-08-05","2015-08-06","2015-08-07","2015-08-08","2015-08-09"]
+  var keywords = escapeString(k).split(',')
+  var publishers = escapeString(p).split(',')
+  var dates = makeDates()
   var sql = ""
 
   var params = []
