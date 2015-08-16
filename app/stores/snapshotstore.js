@@ -1,5 +1,6 @@
 import Fluxxor from 'fluxxor'
 import color from '../services/color'
+import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
 
@@ -14,8 +15,9 @@ export default Fluxxor.createStore({
       ]
     }
 
-    this.startDate = new Date("2015-08-04")
-    this.endDate = new Date("2015-08-05")
+    this.dates = makeDates()
+    this.startDate = 0
+    this.endDate = (this.dates.length -1)
     this.keywords = ["harper", "mulcair", "trudeau"]
     this.publishers = [1, 2, 3]
     this.datastore = []
@@ -27,8 +29,7 @@ export default Fluxxor.createStore({
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
-      "CHANGE_START_DATE", this.handleChangeStartDate,
-      "CHANGE_END_DATE", this.handleChangeEndDate
+      "CHANGE_DATE_RANGE", this.handleChangeDateRange
 
     );
   },
@@ -41,7 +42,9 @@ export default Fluxxor.createStore({
     // this.publishers = payload[1]
     var dateMatch = function (row) {
       var date = new Date(row.date);
-      return ((date >= this.startDate) && (date <= this.endDate))
+      var startDate = new Date(this.dates[this.startDate])
+      var endDate = new Date(this.dates[this.endDate])
+      return ((date >= startDate) && (date <= endDate))
     }.bind(this)
     
     var filteredArr = this.datastore.filter(dateMatch);
@@ -94,12 +97,9 @@ export default Fluxxor.createStore({
     this.publishers.splice(payload, 1)
     this.update()
   },
-  handleChangeStartDate: function(payload, type) {
-    this.startDate = new Date(payload)
-    this.update()
-  },
-  handleChangeEndDate: function(payload, type) {
-    this.endDate = new Date(payload)
+  handleChangeDateRange: function(payload, type) {
+    this.startDate = payload[0]
+    this.endDate = payload[1]
     this.update()
   },
   getSnapShot: function(){
@@ -117,4 +117,8 @@ export default Fluxxor.createStore({
   getEndDate: function(){
     return this.endDate
   },
+  getAllDates: function(){
+    return this.dates
+  },
+
 });
