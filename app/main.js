@@ -1,6 +1,7 @@
 var css = require('!css!sass!./main.scss');
 // => returns compiled css code from file.scss, resolves imports and url(...)s
 require('!style!css!sass!./main.scss');
+require('!style!css!./slider.css')
 
 import React from 'react'
 import App from './components/app.js'

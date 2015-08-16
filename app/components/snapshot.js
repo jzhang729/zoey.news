@@ -3,6 +3,7 @@ import Fluxxor from 'fluxxor'
 import KeywordList from './keywordlist'
 import KeywordAdd from './keywordadd'
 import PublisherList from './publisherlist'
+import Slider from './slider'
 
 var BarChart = require("react-chartjs").Bar;
 
@@ -77,8 +78,8 @@ export default React.createClass({
   render: function() {
     return (
       <div>
+      <Slider />
       <div className="chart-container">
-
       <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
       <KeywordList className="keyword-list" list={this.state.keywordlist} />
       </div>
