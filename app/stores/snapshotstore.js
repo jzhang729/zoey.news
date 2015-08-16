@@ -1,5 +1,6 @@
 import Fluxxor from 'fluxxor'
 import color from '../services/color'
+import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
 
@@ -14,8 +15,9 @@ export default Fluxxor.createStore({
       ]
     }
 
-    this.startDate = new Date("2015-08-04")
-    this.endDate = new Date("2015-08-05")
+    this.dates = makeDates()
+    this.startDate = 0
+    this.endDate = (this.dates.length -1)
     this.keywords = ["harper", "mulcair", "trudeau"]
     this.publishers = [1, 2, 3]
     this.datastore = []
@@ -41,7 +43,9 @@ export default Fluxxor.createStore({
     // this.publishers = payload[1]
     var dateMatch = function (row) {
       var date = new Date(row.date);
-      return ((date >= this.startDate) && (date <= this.endDate))
+      var startDate = new Date(this.dates[this.startDate])
+      var endDate = new Date(this.dates[this.endDate])
+      return ((date >= startDate) && (date <= endDate))
     }.bind(this)
     
     var filteredArr = this.datastore.filter(dateMatch);
@@ -117,4 +121,8 @@ export default Fluxxor.createStore({
   getEndDate: function(){
     return this.endDate
   },
+  getAllDates: function(){
+    return this.dates
+  },
+
 });

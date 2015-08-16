@@ -47,12 +47,13 @@ var options = {
 export default React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
   getStateFromFlux: function(){
-    var startDate = this.getFlux().store("SnapShotStore").getStartDate()
-    var endDate = this.getFlux().store("SnapShotStore").getEndDate()
     return {
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
       keywordlist: this.getFlux().store("SnapShotStore").getKeywords(),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers()
+      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(),
+      startDate = this.getFlux().store("SnapShotStore").getStartDate(),
+      endDate = this.getFlux().store("SnapShotStore").getEndDate(),
+      allDates = this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   componentDidMount: function() {
