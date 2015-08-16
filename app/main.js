@@ -1,64 +1,93 @@
-var css = require('!css!sass!./main.scss');
+var css = require('!css!sass!autoprefixer!./main.scss');
 // => returns compiled css code from file.scss, resolves imports and url(...)s
-require('!style!css!sass!./main.scss');
+// require('!style!css!sass!./main.scss');
+require('!style!css!sass!autoprefixer!./main.scss');
+require('!style!css!./slider.css')
 
 import React from 'react'
 import App from './components/app.js'
 import Fluxxor from 'fluxxor'
-import request from 'superagent'
 import SnapShotStore from './stores/snapshotstore'
-var actions = {
-  loadChart: function(k,p,d) {
-    var route = '/test'
-    // k.forEach(word, index) {
-    //   route += word + ','
-    // }
-    // route = route.slice(0, -1)
-    // route += '&p='
-    // p.forEach(pub, index) {
-    //   route += pub + ','
-    // }
-    // route = route.slice(0, -1)
-    // d.forEach(date, index) {
-    //   route += date + ','
-    // }
-    // route = route.slice(0, -1)
+import PublisherStore from './stores/publisherstore'
+import routeService from './services/routeservice'
+import requestManager from './services/requestManager'
 
-    request
-      .get(route)
-      .set('Accept', 'application/json')
-      .end(function(err, res){
-        var data = JSON.parse(res.text);
-        this.dispatch("LOAD_SNAPSHOT",data)
-      }.bind(this));
+var actions = {
+
+  loadPublishers: function() {
+    var route = '/publishers'
+    var success = function(err, resp){
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_PUBLISHERS", data)
+      }.bind(this)
+    requestManager.get(route, success)
+  },
+
+  loadChartData: function(keywords, publishers) {
+    var route = routeService.apiUrl(keywords, publishers)
+    var success = function(err, resp) {
+      var data = JSON.parse(resp.text);
+      this.dispatch("LOAD_SNAPSHOT_DATA", data)
+      this.dispatch("UPDATE_CHART")
+    }.bind(this)
+    requestManager.get(route, success)
   },
 
   updateChart: function() {
-    var payload =
-    {
-      labels: ["ISIS", "terror", "RCMP"],
-      datasets: [
-        {
-            label: "Globe and Mail",
-            data: [38, 99, 32]
-        },
-        {
-            label: "Vancouver Sun",
-            data: [18, 10, 9]
-        },
-        {
-            label: "National Post",
-            data: [17, 5, 60]
-        }
-      ]
+    this.dispatch("UPDATE_CHART")
+  },
+
+  addKeyword: function(keyword) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
+    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+    
+    if (keywordsList.indexOf(keyword) < 0) {
+      var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
+      var success = function(err, resp) {
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("ADD_KEYWORD", keyword)
+      }.bind(this)
+      requestManager.get(route, success)
     }
-    this.dispatch("UPDATE_CHART", payload)
+  },
+
+  removeKeyword: function(index) {
+    this.dispatch("REMOVE_KEYWORD", index)
+  },
+
+  addPublisher: function(publisher) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
+    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+    
+    if (publishersList.indexOf(publisher) < 0) {
+      var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
+      var success = function(err, resp) {
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("ADD_PUBLISHER", publisher)
+      }.bind(this)
+      requestManager.get(route, success)
+    }
+  },
+
+  removePublisher: function(publisher) {
+    this.dispatch("REMOVE_PUBLISHER", publisher)
+  },
+
+  // this takes an array of index values
+  // ie [0, 2] which corresponds to the first
+  // and third dates in the store's list
+  changeDateRange: function(dates) {
+    this.dispatch("CHANGE_DATE_RANGE", dates)
   }
+
 }
 
 
 var stores = {
-  SnapShotStore: new SnapShotStore()
+  SnapShotStore: new SnapShotStore(),
+  PublisherStore: new PublisherStore()
 }
 var flux = new Fluxxor.Flux(stores, actions);
 

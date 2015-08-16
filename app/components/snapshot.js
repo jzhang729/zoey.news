@@ -1,18 +1,13 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-
-var FluxMixin = Fluxxor.FluxMixin(React),
-    StoreWatchMixin = Fluxxor.StoreWatchMixin;
+import KeywordList from './keywordlist'
+import PublisherList from './publisherlist'
+import Slider from './slider'
 
 var BarChart = require("react-chartjs").Bar;
 
-var data1BarFill = "blue";
-var data1BarOutline = "blue";
-var data1Highlight = "blue";
-
-var data2BarFill = "yellow";
-var data2BarOutline = "yellow";
-var data2Highlight = "yellow";
+var FluxMixin = Fluxxor.FluxMixin(React),
+    StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var options = {
 
@@ -23,7 +18,7 @@ var options = {
     scaleShowGridLines : true,
 
     //String - Colour of the grid lines
-    scaleGridLineColor : "rgba(0,0,0,.05)",
+    scaleGridLineColor : "rgba(0,0,0,0.3)",
 
     //Number - Width of the grid lines
     scaleGridLineWidth : 1,
@@ -52,26 +47,76 @@ var options = {
 
 export default React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
-  getStateFromFlux: function(){
-    var startDate = this.getFlux().store("SnapShotStore").getStartDate()
-    var endDate = this.getFlux().store("SnapShotStore").getEndDate()
+  
+  getInitialState: function() {
     return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot() 
+      hidden: false
+    }
+  },
+
+  toggleHidden: function() {
+    this.setState({
+      hidden: !(this.state.hidden)
+    })
+  },
+
+  getStateFromFlux: function(){
+    return {
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
+      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(),
+      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(),
+      startDate: this.getFlux().store("SnapShotStore").getStartDate(),
+      endDate: this.getFlux().store("SnapShotStore").getEndDate(),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChart();
+    this.getFlux().actions.loadChartData(this.state.keywordlist, this.state.publisherlist);
   },
-  swapChart: function(){
-    this.getFlux().actions.updateChart();
+  addKeyword: function(keyword){
+    this.getFlux().actions.addKeyword(keyword);
+  },
+  addPublisher: function(publisher){
+    this.getFlux().actions.addPublisher(publisher);
+  },
+  changeStartDate: function(d){
+    this.getFlux().actions.changeStartDate(d);
+  },
+  changeEndDate: function(d){
+    this.getFlux().actions.changeEndDate(d);
   },
   render: function() {
-    console.log(this.state.chartdata)
     return (
       <div>
-        <BarChart className="barchart" data={this.state.chartdata} options={options} />
-        <h2 onClick={this.swapChart}>Hello</h2>
+      <div className="chart-container">
+        <div className="chart-label-y">Keyword Frequency</div>
+        <div className="chart-main">
+          <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
+          <div className="chart-label-x">TESTING</div>
+          <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
+        </div>
+        
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
+        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />  
+      </div>
       </div>
     )
   }
 })
+
+// <PublisherList list={this.state.publisherlist} />
+
+// <span className="chart-title">Bar Chart</span>
+
+// let labels = this.state.chartdata.datasets.map((data) => {
+//   return <li>{data.label}</li>
+// });
+
+// {labels}\
+
+// <ul>
+//         <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
+//         <button onClick={this.addPublisher.bind(this, 2)}>add National Post</button><br />
+//         <button onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</button><br />
+//         <button onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</button>
+//       </ul>
