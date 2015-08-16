@@ -51,27 +51,34 @@ var actions = {
   },
 
   removeKeyword: function(index) {
-      this.dispatch("REMOVE_KEYWORD", index)
+    this.dispatch("REMOVE_KEYWORD", index)
   },
 
-  addPublisher: function(keyword) {
-    this.dispatch("ADD_PUBLISHER", keyword)
-    this.dispatch("UPDATE_CHART")
+  addPublisher: function(publisher) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
+    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+    
+    if (publishersList.indexOf(publisher) < 0) {
+      var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
+      var success = function(err, resp) {
+        var data = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", data)
+        this.dispatch("ADD_PUBLISHER", publisher)
+      }.bind(this)
+      requestManager.get(route, success)
+    }
   },
 
-  removePublisher: function(keyword) {
-    this.dispatch("REMOVE_PUBLISHER", keyword)
-    this.dispatch("UPDATE_CHART")
+  removePublisher: function(publisher) {
+    this.dispatch("REMOVE_PUBLISHER", publisher)
   },
 
   changeStartDate: function(date) {
     this.dispatch("CHANGE_START_DATE", date)
-    this.dispatch("UPDATE_CHART")
   },
 
   changeEndDate: function(date) {
     this.dispatch("CHANGE_END_DATE", date)
-    this.dispatch("UPDATE_CHART")
   }
 }
 
