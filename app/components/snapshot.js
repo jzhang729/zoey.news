@@ -47,6 +47,19 @@ var options = {
 
 export default React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
+  
+  getInitialState: function() {
+    return {
+      hidden: false
+    }
+  },
+
+  toggleHidden: function() {
+    this.setState({
+      hidden: !(this.state.hidden)
+    })
+  },
+
   getStateFromFlux: function(){
     return {
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
@@ -72,17 +85,20 @@ export default React.createClass({
   changeEndDate: function(d){
     this.getFlux().actions.changeEndDate(d);
   },
-  showLeft: function() {
-    this.refs.left.show();
-  },
   render: function() {
     return (
       <div>
-        <div className="chart-container">
+      <div className="chart-container">
+        <div className="chart-label-y">Keyword Frequency</div>
+        <div className="chart-main">
           <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-          <KeywordList className="keyword-list" list={this.state.keywordlist} />
+          <div className="chart-label-x">TESTING</div>
+          <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
-        <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
+        
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
+        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />  
+      </div>
       </div>
     )
   }
@@ -97,3 +113,10 @@ export default React.createClass({
 // });
 
 // {labels}\
+
+// <ul>
+//         <button onClick={this.addKeyword.bind(this, "terror")}>TERROR</button><br />
+//         <button onClick={this.addPublisher.bind(this, 2)}>add National Post</button><br />
+//         <button onClick={this.changeStartDate.bind(this, "2015-08-02")}>start is Aug 2</button><br />
+//         <button onClick={this.changeEndDate.bind(this, "2015-08-06")}>end is Aug 6</button>
+//       </ul>
