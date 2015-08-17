@@ -29,8 +29,6 @@ var actions = {
     })
     var route = routeService.apiUrl(keywords, publisherIds)
     var success = function(err, resp) {
-      console.log("here's the database response")
-      console.log(resp)
       var data = JSON.parse(resp.text);
       this.dispatch("LOAD_SNAPSHOT_DATA", data)
       this.dispatch("UPDATE_CHART")
