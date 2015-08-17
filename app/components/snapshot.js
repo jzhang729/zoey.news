@@ -47,7 +47,7 @@ var options = {
 
 export default React.createClass({
   mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
-  
+
   getInitialState: function() {
     return {
       hidden: false
@@ -95,9 +95,11 @@ export default React.createClass({
           <div className="chart-label-x">TESTING</div>
           <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
-        
+
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
-        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />  
+          <PublisherList className={'publisher-list'} list={this.state.publisherlist} />
+          <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
+
       </div>
       </div>
     )

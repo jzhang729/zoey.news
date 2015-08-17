@@ -4,16 +4,19 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({
   mixins: [FluxMixin],
-  handleRemovePublisher: function(i) {
-    this.getFlux().actions.removePublisher(i);
+  handleRemovePublisher: function(publisherIndex) {
+    this.getFlux().actions.removePublisher(publisherIndex);
   },
 
   render: function() {
+    console.log("publisherlistitem this.props.publisher")
+    console.log(this.props.publisher)
     var publisher = this.props.publisher
-    var index = this.props.id
+    var publisherIndex = this.props.publisherIndex
     return (
       <li className="publisher-list-item">
-        {publisher} | <a onClick={this.handleRemovePublisher.bind(this, index)}>Remove</a>
+        {publisher} &nbsp;
+        <a onClick={this.handleRemovePublisher.bind(this, publisherIndex)}>Remove</a>
       </li>
     )
   }

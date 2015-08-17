@@ -18,9 +18,9 @@ export default React.createClass({
     this.setState({ visible: false });
   },
   render: function() {
-    var keywordList = this.props.list.map(function(k, i){
+    var keywordList = this.props.list.map(function(keyword){
       return (
-        <KeywordListItem keyword={k} id={i} />
+        <KeywordListItem keyword={keyword} />
       )
     }.bind(this))
     return (
