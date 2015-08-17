@@ -71,7 +71,8 @@ export default React.createClass({
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(this.props.chartID, this.state.keywordlist, this.state.publisherlist);
+    console.log(this.props.params.publishers)
+    this.getFlux().actions.loadChartData(this.props.chartID, this.props.params.keywords, this.props.params.publishers);
   },
   addKeyword: function(keyword){
     this.getFlux().actions.addKeyword(this.props.chartID, keyword);
@@ -90,10 +91,11 @@ export default React.createClass({
           <Slider chartID={this.props.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
 
-        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+        <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <KeywordList chartID={this.props.chartID} className={'keyword-list'} list={this.state.keywordlist} />
           <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} />
-          <KeywordList chartID={this.props.chartID} className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
-
+        </div>
       </div>
       </div>
     )

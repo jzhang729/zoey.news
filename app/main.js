@@ -9,6 +9,8 @@ import App from './components/app.js'
 import Fluxxor from 'fluxxor'
 import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
+import ChartStore from './stores/chartstore'
+
 import routeService from './services/routeservice'
 import requestManager from './services/requestManager'
 
@@ -21,6 +23,26 @@ var actions = {
         this.dispatch("LOAD_PUBLISHERS", data)
       }.bind(this)
     requestManager.get(route, success)
+  },
+
+  loadCharts: function() {
+    var charts = 
+    [ {chartID: 0, 
+      chartType: "snapshot", 
+      params: {title: "Leaders", 
+              keywords: ["Mulcair", "Trudeau", "Harper"],
+              publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+              }
+      },
+      {chartID: 1, 
+      chartType: "snapshot", 
+      params: {title: "Security", 
+              keywords: ["ISIS", "Terrorism", "RCMP"],
+              publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+              }
+      }
+    ]
+    this.dispatch("LOAD_CHARTS", charts)
   },
 
   loadChartData: function(chartID, keywords, publishers) {
@@ -91,7 +113,8 @@ var actions = {
 
 var stores = {
   SnapShotStore: new SnapShotStore(),
-  PublisherStore: new PublisherStore()
+  PublisherStore: new PublisherStore(),
+  ChartStore: new ChartStore()
 }
 var flux = new Fluxxor.Flux(stores, actions);
 

@@ -14,7 +14,7 @@ export default React.createClass({
     return (
       <li className="keyword-list-item">
         {keyword} &nbsp;
-        <a className="fa fa-lg fa-times-circle-o" onClick={this.handleRemoveKeyword.bind(this, this.props.id)}></a>
+        <i className="fa fa-times-circle-o" onClick={this.handleRemoveKeyword.bind(this, keyword)}></i>
       </li>
     )
   }
