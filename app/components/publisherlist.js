@@ -10,7 +10,8 @@ export default React.createClass({
       )
     }.bind(this))
     return (
-      <ul className="publisher-list">
+      <ul className={this.props.className}>
+        <h5>Publishers</h5>
         {publisherList}
       </ul>
     )

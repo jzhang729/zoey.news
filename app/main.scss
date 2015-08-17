@@ -199,7 +199,7 @@ h5 {
   flex-direction: column;
 }
 
-.chart-menu{
+.chart-options{
   display: block;
   float: right;
   margin: 0px 10px;
@@ -208,20 +208,24 @@ h5 {
   align-self: flex-start;
 }
 
+.chart-menu {
+  padding: 20px 10px 0px 10px;
+  border: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  order: 3;
+}
+
 /**** KEYWORD LIST ****/
 
 .keyword-list {
-  padding: 20px 10px 0px 10px;
-  /*white-space: nowrap;*/
-  border: 1px solid $border-color;  
   display: flex;
   flex: wrap;
   flex-direction: column;
-  order: 3;
   align-self: stretch;
 }
 
-.keyword-list-item {
+.keyword-list-item, .publisher-list-item {
   list-style-type: none;
   font-size: 14pt;
   border-radius: 7px;
@@ -231,6 +235,13 @@ h5 {
 }
 
 .keyword-list i {
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.publisher-list i {
   &:hover{
     cursor: pointer;
     color: red;
@@ -256,10 +267,4 @@ h5 {
       color: rgba(47,255,38,1);
     }
   }
-}
-
-.publications li {
-  list-style-type: square;
-  font-size: 8pt;
-  margin: 10px;
 }

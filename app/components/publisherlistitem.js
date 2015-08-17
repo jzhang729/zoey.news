@@ -14,7 +14,7 @@ export default React.createClass({
     return (
       <li className="publisher-list-item">
         {publisher} &nbsp;
-        <a onClick={this.handleRemovePublisher.bind(this, publisherIndex)}>Remove</a>
+        <i className="fa fa-lg fa-times-circle-o" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
       </li>
     )
   }
