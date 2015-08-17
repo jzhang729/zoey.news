@@ -5,12 +5,10 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 export default React.createClass({
   mixins: [FluxMixin],
   handleRemovePublisher: function(publisherIndex) {
-    this.getFlux().actions.removePublisher(publisherIndex);
+    this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
   },
 
   render: function() {
-    console.log("publisherlistitem this.props.publisher")
-    console.log(this.props.publisher)
     var publisher = this.props.publisher
     var publisherIndex = this.props.publisherIndex
     return (

@@ -5,8 +5,8 @@ require("font-awesome-webpack");
 
 export default React.createClass({
   mixins: [FluxMixin],
-  handleRemoveKeyword: function(keyword) {
-    this.getFlux().actions.removeKeyword(keyword);
+  handleRemoveKeyword: function(keywordIndex) {
+    this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
   },
 
   render: function() {

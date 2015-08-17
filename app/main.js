@@ -23,66 +23,68 @@ var actions = {
     requestManager.get(route, success)
   },
 
-  loadChartData: function(keywords, publishers) {
+  loadChartData: function(chartID, keywords, publishers) {
     var publisherIds = publishers.map(function(publisher) {
       return publisher.id
     })
     var route = routeService.apiUrl(keywords, publisherIds)
     var success = function(err, resp) {
-      var data = JSON.parse(resp.text);
-      this.dispatch("LOAD_SNAPSHOT_DATA", data)
-      this.dispatch("UPDATE_CHART")
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
+      this.dispatch("UPDATE_CHART", chartID)
     }.bind(this)
     requestManager.get(route, success)
   },
 
-  updateChart: function() {
-    this.dispatch("UPDATE_CHART")
+  updateChart: function(chartID) {
+    this.dispatch("UPDATE_CHART", chartID)
   },
 
-  addKeyword: function(keyword) {
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
-    var publishersList = this.flux.store("SnapShotStore").getPublishers()
-
+  addKeyword: function(chartID, keyword) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
+      return publisher.id
+    })
     if (keywordsList.indexOf(keyword) < 0) {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
-        var data = JSON.parse(resp.text);
-        this.dispatch("LOAD_SNAPSHOT_DATA", data)
-        this.dispatch("ADD_KEYWORD", keyword)
+        var dataRows = JSON.parse(resp.text);
+        console.log(dataRows)
+        this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
+        this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
       }.bind(this)
       requestManager.get(route, success)
     }
   },
 
-  removeKeyword: function(index) {
-    this.dispatch("REMOVE_KEYWORD", index)
+  removeKeyword: function(chartID, keywordIndex) {
+    this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
   },
 
-  addPublisher: function(publisher) {
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords()
-    var publishersList = this.flux.store("SnapShotStore").getPublishers()
+  addPublisher: function(chartID, publisher) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
 
     if (publishersList.indexOf(publisher) < 0) {
       var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
       var success = function(err, resp) {
-        var data = JSON.parse(resp.text);
-        this.dispatch("LOAD_SNAPSHOT_DATA", data)
-        this.dispatch("ADD_PUBLISHER", publisher)
+        var dataRows = JSON.parse(resp.text);
+        this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
+        this.dispatch("ADD_PUBLISHER", {id: chartID, data: publisher})
       }.bind(this)
       requestManager.get(route, success)
     }
   },
 
-  removePublisher: function(publisher) {
-    this.dispatch("REMOVE_PUBLISHER", publisher)
+  removePublisher: function(chartID, publisher) {
+    this.dispatch("REMOVE_PUBLISHER", {id: chartID, data: publisher})
   },
 
   // this takes an array of index values
   // ie [0, 2] which corresponds to the first
   // and third dates in the store's list
-  changeDateRange: function(dates) {
-    this.dispatch("CHANGE_DATE_RANGE", dates)
+  changeDateRange: function(chartID, dates) {
+    this.dispatch("CHANGE_DATE_RANGE", {id: chartID, data: dates})
   }
 
 }

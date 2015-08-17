@@ -15,7 +15,7 @@ export default React.createClass({
   },
 
   handleDateChange: function() {
-    this.getFlux().actions.changeDateRange(this.state.value)
+    this.getFlux().actions.changeDateRange(this.props.chartID, this.state.value)
   },
 
   render: function() {

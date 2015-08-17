@@ -16,7 +16,7 @@ export default React.createClass({
   // },
 
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.state.value)                           
+    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)                           
   },
 
   getInitialState: function(){
@@ -24,7 +24,7 @@ export default React.createClass({
       value: ""
     }
   },
-  
+
   handleChange: function() {
     this.setState({value: event.target.value});
   },
