@@ -5,22 +5,14 @@ import makeDates from '../services/makeDates'
 export default Fluxxor.createStore({
 
   initialize: function(options) {
-    this.snapShot =  [{
-      labels: [],
-      datasets: [
-        {
-            label: "",
-            data: []
-        }
-      ]
-    }]
+    this.snapShot = []
 
     this.dates = makeDates()
-    this.startDate = [0]
-    this.endDate = [(this.dates.length -1)]
-    this.keywords = [["harper", "mulcair", "trudeau"]]
-    this.publishers = [[{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]]
-    this.datastore = [[]]
+    this.startDate = []
+    this.endDate = []
+    this.keywords = []
+    this.publishers = []
+    this.datastore = []
 
     this.bindActions(
       "LOAD_SNAPSHOT_DATA", this.load,
@@ -29,9 +21,26 @@ export default Fluxxor.createStore({
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
-      "CHANGE_DATE_RANGE", this.handleChangeDateRange
-
+      "CHANGE_DATE_RANGE", this.handleChangeDateRange,
+      "LOAD_CHARTS", this.handleLoadCharts
     );
+  },
+  handleLoadCharts: function(charts) {
+    this.keywords = charts.map(function(chart) {
+      return chart.params.keywords
+    })
+    this.publishers = charts.map(function(chart) {
+      return chart.params.publishers
+    })
+    this.datastore = charts.map(function(chart) {
+      return []
+    })
+    this.startDate = charts.map(function(chart) {
+      return 0
+    })
+    this.endDate = charts.map(function(chart) {
+      return (this.dates.length -1)
+    }.bind(this))
   },
   load: function(payload, type){
     var id = payload.id
@@ -49,9 +58,11 @@ export default Fluxxor.createStore({
 
     var filteredArr = this.datastore[id].filter(dateMatch);
     var newDatasets = []
+    console.log(this.datastore[id])
 
     this.publishers[id].forEach(function(publisher, index) {
       var wordcount = this.keywords[id].map(function(keyword) {
+        console.log(keyword)
         var sum = 0
         filteredArr.forEach(function(row) {
           if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
@@ -111,7 +122,17 @@ export default Fluxxor.createStore({
     this.update(id)
   },
   getSnapShot: function(id){
-    return this.snapShot[id]
+    if (this.snapShot[id]) {
+      return this.snapShot[id]
+    } else {
+      return {
+        labels: [],
+        datasets: [{
+          label: "",
+          data: []
+        }]
+      }
+    }
   },
   getKeywords: function(id){
     return this.keywords[id]
@@ -127,6 +148,6 @@ export default Fluxxor.createStore({
   },
   getAllDates: function(id){
     return this.dates[id]
-  },
+  }
 
 });

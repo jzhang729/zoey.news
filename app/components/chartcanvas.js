@@ -5,14 +5,14 @@ import Snapshot from './snapshot'
 export default React.createClass({
 
   render: function() {
-    var charts = this.props.charts.map(function(item, index) {
-      if (item.chartType == "snapshot") {
+    var charts = this.props.charts.map(function(chart, index) {
+      if (chart.chartType == "snapshot") {
         return (
-          <Snapshot chartID={item.chartID} />
+          <Snapshot chartID={chart.chartID} params={chart.params} />
         )
-      } else if (item.chartType == "timelapse") {
+      } else if (chart.chartType == "timelapse") {
         return (
-          <Timelapse chartID={item.chartID} />
+          <Timelapse chartID={chart.chartID} params={chart.params} />
         )
       }
     });
