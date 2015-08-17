@@ -16,8 +16,8 @@ export default React.createClass({
     return {
       keywordEntry: "",
       charts: [
-              {chartType: "snapshot", data: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"], dates: ["2015-08-03", "2015-08-08"]}},
-              {chartType: "timelapse", data: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"], dates: ["2015-08-03", "2015-08-08"]}}
+              {chartID: 0, chartType: "snapshot", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}},
+              {chartID: 1, chartType: "timelapse", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}}
       ]
     }
   },

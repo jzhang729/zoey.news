@@ -4,14 +4,14 @@ import PublisherListItem from './publisherlistitem'
 
 export default React.createClass({
   render: function() {
-    var publisherList = this.props.list.map(function(p, i){
+    var publisherList = this.props.list.map(function(publisher, index){
       return (
-        <PublisherListItem publisher={p} id={i} />
+        <PublisherListItem chartID={this.props.chartID} publisher={publisher.domain} publisherIndex={index}/>
       )
     }.bind(this))
     return (
       <ul className="publisher-list">
-        <li>{publisherList}</li>
+        {publisherList}
       </ul>
     )
   }
