@@ -3,10 +3,10 @@
   margin: 10px;
   float: left;
 
-  @media (max-width: 767px) {
+/*  @media (max-width: 767px) {
     width: 85%;
     margin: auto;
-  }
+  }*/
 }
 
 .menu > div {
@@ -16,8 +16,8 @@
   text-align: center;
   line-height: 3em;
 
-  &:hover{
-    background-color: $hover;
+  &:hover {
+    background-color: $menu-hover-color;
     cursor: pointer;
   }
 }

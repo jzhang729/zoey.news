@@ -1,9 +1,9 @@
 span.navbar-brand {
-  font-family: 'Playfair';
+  font-family: 'Playfair', $primary-font;
   font-size: 30pt;
 }
 
-.flex-tabs {
+/*.flex-tabs {
   display: flex;
   flex: wrap;
   flex-direction: row;
@@ -44,8 +44,8 @@ h1.title {
    -webkit-text-stroke-color: black;
 }
 
-.tabs{  
+.tabs {  
   margin: 20px 0px;
   padding: 0px;
   display: block;
-}
+}*/

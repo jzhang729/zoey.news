@@ -1,57 +1,57 @@
+@mixin keyword-publisher-section {
+  /*width: 250px;*/
+  padding: 0px;
+  white-space: nowrap;
+}
+
+@mixin keyword-publisher-list-item {
+  list-style-type: none;
+  font-size: 12pt;
+}
+
+@mixin keyword-publisher-hover {
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
 .hidden {
   display: none;
 }
 
 h5 {
-  color: rgba(0,0,0,0.7);
-  font-size: 14pt;
-  text-align: left;
+  @include chart-menu-section-label;
 }
 
 .keyword-list {
-  min-width: 250px;
-  padding: 0px;
+  @include keyword-publisher-section;
 }
 
 .publisher-list {
-  min-width: 250px;
-  padding: 0px;
+  @include keyword-publisher-section;
 }
 
 .keyword-list-item {
-  list-style-type: none;
-  font-size: 12pt;
-  margin: 2px 0px;
-  padding: 2px;
+  @include keyword-publisher-list-item;
   text-align: right;
+  margin-right: 20px;
 }
 
 .publisher-list-item {
-  list-style-type: none;
-  font-size: 12pt;
-  text-align: right;
-  margin: 2px 0px 10px 0px;
-  padding: 2px;
+  @include keyword-publisher-list-item;
+  margin-bottom: 10px;
 }
 
 .keyword-list i {
-
-  &:hover{
-    cursor: pointer;
-    color: red;
-  }
+  @include keyword-publisher-hover;
 }
 
 .publisher-list i {
-
-  &:hover{
-    cursor: pointer;
-    color: red;
-  }
+  @include keyword-publisher-hover; 
 }
 
 .keyword-add {
-  
   margin-left: 20px;
   
   input {
@@ -62,7 +62,7 @@ h5 {
     color: rgba(44,149,36,1);
     background: none;
     border: 0px;
-    margin-top: 6px;
+    margin-top: 10px;
     padding: 5px;
 
     &:hover{

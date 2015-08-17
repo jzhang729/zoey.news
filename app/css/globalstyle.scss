@@ -1,13 +1,25 @@
-/* COLORS */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
-$hover: rgba(12,213,248,0.2);
-$nav-color: rgba(0,0,0,0.1);
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+/* COLORS */
+$menu-hover-color: rgba(12,213,248,0.2);
 $footer-color: rgba(0,0,0,0.1);
 $border-color: rgba(0,0,0,0.1);
+$chart-menu-bg-color: rgba(0,0,0,0.05);
+$chart-menu-section-color: rgba(0,0,0,0.7);
 
 /* FONTS & FONT STYLES */
 
-$font-label: arial;
+$primary-font: arial;
 
 @font-face{
   font-family: 'Playfair';
@@ -19,14 +31,9 @@ $font-label: arial;
   font-size: 10pt;
 }
 
-@mixin font-chart-title {
-  font-family: 'Playfair', verdana;
-  font-size: 28pt;
-  text-align: center;
-}
-
+/*
 @mixin tabstyle {
-  @include main-font-style;
+  font-family: $primary-font;
   font-weight: bold;
   margin: 10px 5px;
   color: #000;
@@ -36,12 +43,7 @@ $font-label: arial;
   -webkit-transform: skew(-20deg);
      -moz-transform: skew(-20deg);
        -o-transform: skew(-20deg);
-}
+}*/
 
 /* MEDIA QUERIES */
 
-@media (max-width : 767px) {
-   .left-side {
-    display: none;
-   }
-}

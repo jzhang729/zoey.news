@@ -28,7 +28,6 @@ export default React.createClass({
   }
 })
 
-
   // show: function() {
   //   this.setState({ visible: true });
   //   document.addEventListener("click", this.hide.bind(this));
