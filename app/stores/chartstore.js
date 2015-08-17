@@ -6,7 +6,8 @@ export default Fluxxor.createStore({
     this.charts = []
 
     this.bindActions(
-      "LOAD_CHARTS", this.load
+      "LOAD_CHARTS", this.load,
+      "ADD_CHART", this.addChart
     )
   },
 
@@ -17,24 +18,8 @@ export default Fluxxor.createStore({
   getCharts: function() {
     return this.charts
   },
-  getChartIDs: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.chartID
-    })
-  },
-  getKeywords: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.keywords
-    })
-  },
-  getTitles: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.title
-    })
-  },
-  getChartTypes: function() {
-    return this.charts.map(function(chart) {
-      return chart.chartType
-    })
+
+  addChart: function(chart) {
+    this.charts.push(chart)
   }
 });

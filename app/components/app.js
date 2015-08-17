@@ -31,12 +31,16 @@ export default React.createClass({
   hideMenu: function() {
     this.refs.menu.hide();
   },
+  handleAddChart: function() {
+    this.getFlux().actions.addChart("snapshot")
+  },
   render: function() {
     return (
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
+        <a href="#" onClick={this.handleAddChart}>Add Snapshot</a>
         <ChartCanvas charts={this.state.charts} />
         </div>
       <Footer />

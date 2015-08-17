@@ -45,6 +45,18 @@ var actions = {
     this.dispatch("LOAD_CHARTS", charts)
   },
 
+  addChart: function(type) {
+    var chart = {
+      chartID: 3,
+      chartType: type,
+      params: {
+        keywords: ["election"],
+        publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+      }
+    }
+    this.dispatch("ADD_CHART", chart)
+  },
+
   loadChartData: function(chartID, keywords, publishers) {
     var publisherIds = publishers.map(function(publisher) {
       return publisher.id

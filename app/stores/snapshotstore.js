@@ -22,7 +22,8 @@ export default Fluxxor.createStore({
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
-      "LOAD_CHARTS", this.handleLoadCharts
+      "LOAD_CHARTS", this.handleLoadCharts,
+      "ADD_CHART", this.handleAddChart
     );
   },
   handleLoadCharts: function(charts) {
@@ -41,6 +42,15 @@ export default Fluxxor.createStore({
     this.endDate = charts.map(function(chart) {
       return (this.dates.length -1)
     }.bind(this))
+  },
+  handleAddChart: function(chart) {
+    console.log(chart)
+    this.keywords.push(chart.params.keywords)
+    this.publishers.push(chart.params.publishers)
+    this.datastore.push([])
+    this.startDate.push(0)
+    this.endDate.push(this.dates.length -1)
+    this.emit("change");
   },
   load: function(payload, type){
     var id = payload.id
@@ -135,10 +145,18 @@ export default Fluxxor.createStore({
     }
   },
   getKeywords: function(id){
-    return this.keywords[id]
+    if (this.keywords[id]) {
+      return this.keywords[id]
+    } else {
+      return []
+    }
   },
   getPublishers: function(id){
-    return this.publishers[id]
+    if (this.publishers[id]) {
+      return this.publishers[id]
+    } else {
+      return []
+    }
   },
   getStartDate: function(id){
     return this.startDate[id]
@@ -147,7 +165,7 @@ export default Fluxxor.createStore({
     return this.endDate[id]
   },
   getAllDates: function(id){
-    return this.dates[id]
+    return this.dates
   }
 
 });
