@@ -31,6 +31,9 @@ query_parameters = "&count=200"
 globeandmail = open("http://feedly.com/v3/streams/contents?streamId=feed/http://www.theglobeandmail.com/news/politics/?service=rss#{query_parameters}").read
 nationalpost = open("http://feedly.com/v3/streams/contents?streamId=feed/http://news.nationalpost.com/category/news/canada/canadian-politics/feed/#{query_parameters}").read
 cbc =          open("http://feedly.com/v3/streams/contents?streamId=feed/http://rss.cbc.ca/lineup/politics.xml#{query_parameters}").read
+vancouversun = open("http://feedly.com/v3/streams/contents?streamId=feed/http://rss.canada.com/get/?F7431#{query_parameters}").read
+torontostar = open("http://feedly.com/v3/streams/contents?streamId=feed/http://www.thestar.com/feeds.articles.news.canada.rss#{query_parameters}").read
+
 
 puts "\n"
 puts "Scraping Globe and Mail"
@@ -41,4 +44,10 @@ parseArticles(nationalpost)
 puts "\n"
 puts "Scraping CBC"
 parseArticles(cbc)
+puts "\n"
+puts "Scraping Vancouver Sun"
+parseArticles(vancouversun)
+puts "\n"
+puts "Scraping Toronto Star"
+parseArticles(torontostar)
 puts "\n** Scraping complete **\n "
