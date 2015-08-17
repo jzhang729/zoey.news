@@ -5,74 +5,77 @@ import makeDates from '../services/makeDates'
 export default Fluxxor.createStore({
 
   initialize: function(options) {
-    this.snapShot = []
-
+    this.charts = []
     this.dates = makeDates()
-    this.startDate = []
-    this.endDate = []
-    this.keywords = []
-    this.publishers = []
-    this.datastore = []
+
+    // var chart = {
+    //   chartID:
+    //   chartType:
+    //   keywords: []
+    //   publishers: [{},{}]
+    //   datastore: []
+    //   snapShot: []
+    // }
 
     this.bindActions(
-      "LOAD_SNAPSHOT_DATA", this.load,
+      "LOAD_CHART_DATA", this.loadChartData,
       "UPDATE_CHART", this.update,
       "ADD_KEYWORD", this.handleAddKeyword,
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
-      "LOAD_CHARTS", this.handleLoadCharts,
-      "ADD_CHART", this.handleAddChart
+      "LOAD_CHARTS", this.handleLoadCharts
     );
   },
-  handleLoadCharts: function(charts) {
-    this.keywords = charts.map(function(chart) {
-      return chart.params.keywords
+  _byChartID: function(id) {
+    var found = {}
+    this.charts.forEach(function(chart) {
+      if (chart.chartID == id) {
+        found = chart
+      }
     })
-    this.publishers = charts.map(function(chart) {
-      return chart.params.publishers
-    })
-    this.datastore = charts.map(function(chart) {
-      return []
-    })
-    this.startDate = charts.map(function(chart) {
-      return 0
-    })
-    this.endDate = charts.map(function(chart) {
-      return (this.dates.length -1)
+    return found
+  },
+  handleLoadCharts: function(newCharts) {
+    newCharts = newCharts.map(function(chart) {
+      chart.startDate = 0
+      chart.endDate = (this.dates.length -1)
+      chart.datastore = []
+      chart.snapShot = {
+        labels: [],
+        datasets: [{
+          label: "",
+          data: []
+        }]
+      }
+      return chart
     }.bind(this))
+    this.charts = this.charts.concat(newCharts)
+    console.log(this.charts)
+    this.emit("change")
   },
-  handleAddChart: function(chart) {
-    console.log(chart)
-    this.keywords.push(chart.params.keywords)
-    this.publishers.push(chart.params.publishers)
-    this.datastore.push([])
-    this.startDate.push(0)
-    this.endDate.push(this.dates.length -1)
-    this.emit("change");
-  },
-  load: function(payload, type){
+  loadChartData: function(payload, type){
     var id = payload.id
     var data = payload.data
-    this.datastore[id] = data
+    this._byChartID(id).datastore = data
     this.emit("change");
   },
-  update: function(id){
+  update: function(chartID){
+    var currentChart = this._byChartID(chartID)
+
     var dateMatch = function (row) {
       var date = new Date(row.date);
-      var startDate = new Date(this.dates[this.startDate[id]])
-      var endDate = new Date(this.dates[this.endDate[id]])
+      var startDate = new Date(this.dates[currentChart.startDate])
+      var endDate = new Date(this.dates[currentChart.endDate])
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
 
-    var filteredArr = this.datastore[id].filter(dateMatch);
+    var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-    console.log(this.datastore[id])
-
-    this.publishers[id].forEach(function(publisher, index) {
-      var wordcount = this.keywords[id].map(function(keyword) {
-        console.log(keyword)
+    console.log(filteredArr)
+    currentChart.publishers.forEach(function(publisher, index) {
+      var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
         filteredArr.forEach(function(row) {
           if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
@@ -93,47 +96,47 @@ export default Fluxxor.createStore({
     }.bind(this));
 
     var newSnapShot = {
-      labels: this.keywords[id],
+      labels: currentChart.keywords,
       datasets: newDatasets
     }
-    this.snapShot[id] = newSnapShot
+    this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
 
   handleAddKeyword: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.keywords[id].push(data)
-    this.update(id)
+    this._byChartID(chartID).keywords.push(data)
+    this.update(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.keywords[id].splice(data, 1)
-    this.update(id)
+    this._byChartID(chartID).keywords.splice(data, 1)
+    this.update(chartID)
   },
   handleAddPublisher: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.publishers[id].push(data)
-    this.update(id)
+    this._byChartID(chartID).publishers.push(data)
+    this.update(chartID)
   },
   handleRemovePublisher: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.publishers[id].splice(data, 1)
-    this.update(id)
+    this._byChartID(chartID).publishers.splice(data, 1)
+    this.update(chartID)
   },
   handleChangeDateRange: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.startDate[id] = data[0]
-    this.endDate[id] = data[1]
-    this.update(id)
+    this._byChartID(chartID).startDate = data[0]
+    this._byChartID(chartID).endDate = data[1]
+    this.update(chartID)
   },
-  getSnapShot: function(id){
-    if (this.snapShot[id]) {
-      return this.snapShot[id]
+  getSnapShot: function(chartID){
+    if (this._byChartID(chartID).snapShot) {
+      return this._byChartID(chartID).snapShot
     } else {
       return {
         labels: [],
@@ -144,27 +147,27 @@ export default Fluxxor.createStore({
       }
     }
   },
-  getKeywords: function(id){
-    if (this.keywords[id]) {
-      return this.keywords[id]
+  getKeywords: function(chartID){
+    if (this._byChartID(chartID).keywords) {
+      return this._byChartID(chartID).keywords
     } else {
       return []
     }
   },
-  getPublishers: function(id){
-    if (this.publishers[id]) {
-      return this.publishers[id]
+  getPublishers: function(chartID){
+    if (this._byChartID(chartID).publishers) {
+      return this._byChartID(chartID).publishers
     } else {
       return []
     }
   },
-  getStartDate: function(id){
-    return this.startDate[id]
+  getStartDate: function(chartID){
+    return this._byChartID(chartID).startDate
   },
-  getEndDate: function(id){
-    return this.endDate[id]
+  getEndDate: function(chartID){
+    return this._byChartID(chartID).endDate
   },
-  getAllDates: function(id){
+  getAllDates: function(){
     return this.dates
   }
 

@@ -33,6 +33,7 @@ export default React.createClass({
   },
   handleAddChart: function() {
     this.getFlux().actions.addChart("snapshot")
+    console.log("app.js")
   },
   render: function() {
     return (

@@ -62,23 +62,23 @@ export default React.createClass({
 
   getStateFromFlux: function(){
     return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartID),
-      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartID),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartID),
-      startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartID),
-      endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartID),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartID)
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
+      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
+      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
+      startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartParams.chartID),
+      endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartParams.chartID),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartParams.chartID)
     }
   },
   componentDidMount: function() {
-    console.log(this.props.params.publishers)
-    this.getFlux().actions.loadChartData(this.props.chartID, this.props.params.keywords, this.props.params.publishers);
+    console.log(this.props.chartParams)
+    this.getFlux().actions.loadChartData(this.props.chartParams.chartID, this.props.chartParams.keywords, this.props.chartParams.publishers);
   },
   addKeyword: function(keyword){
-    this.getFlux().actions.addKeyword(this.props.chartID, keyword);
+    this.getFlux().actions.addKeyword(this.props.chartParams.chartID, keyword);
   },
   addPublisher: function(publisher){
-    this.getFlux().actions.addPublisher(this.props.chartID, publisher);
+    this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
   render: function() {
     return (
@@ -88,13 +88,13 @@ export default React.createClass({
         <div className="chart-main">
           <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
           <div className="chart-label-x">TESTING</div>
-          <Slider chartID={this.props.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
+          <Slider chartID={this.props.chartParams.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
 
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
         <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
-          <KeywordList chartID={this.props.chartID} className={'keyword-list'} list={this.state.keywordlist} />
-          <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} />
+          <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.state.keywordlist} />
+          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.state.publisherlist} />
         </div>
       </div>
       </div>
