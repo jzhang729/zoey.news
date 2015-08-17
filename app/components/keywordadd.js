@@ -16,7 +16,7 @@ export default React.createClass({
   // },
 
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)                           
+    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
   },
 
   getInitialState: function(){
@@ -32,7 +32,7 @@ export default React.createClass({
   render: function() {
     return (
       <div className="keyword-add">
-        <InputText onChange={this.handleChange}/>
+        <InputText onChange={this.handleChange} chartID={this.props.chartID}/>
         <Button value="Submit" onClick={this.handleClick}/>
       </div>
     )

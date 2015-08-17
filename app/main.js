@@ -49,7 +49,6 @@ var actions = {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
-        console.log(dataRows)
         this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
       }.bind(this)

@@ -16,11 +16,17 @@ export default React.createClass({
     this.props.onChange(this.state.value);
   },
 
+  handleKeyDown: function(event) {
+    if (event.which == 13) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+    }
+  },
+
   render: function() {
     // var keyword = this.props.keyword
     // var index = this.props.id
     return (
-        <input type="text" value={this.state.value} onChange={this.handleChange}></input>
+        <input type="text" value={this.state.value} onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
     )
   }
 })
