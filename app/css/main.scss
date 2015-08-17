@@ -11,3 +11,17 @@
   display: flex;
 }
 
+.chart-label-x {
+  @include chart-axis-label;
+  display: flex;
+    display: -webkit-flex;
+  flex-direction: row;
+    -webkit-flex-direction: row;
+  align-items: space-around;
+}
+
+.date-slider-label {
+  flex: 1 1 20px;
+  font-size: 8pt;
+  align-self: baseline;
+}
