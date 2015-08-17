@@ -50,40 +50,34 @@ export default React.createClass({
   
   getInitialState: function() {
     return {
-      hidden: false
+      hiddenSettings: false
     }
   },
 
   toggleHidden: function() {
     this.setState({
-      hidden: !(this.state.hidden)
+      hiddenSettings: !(this.state.hiddenSettings)
     })
   },
 
   getStateFromFlux: function(){
     return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(),
-      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(),
-      startDate: this.getFlux().store("SnapShotStore").getStartDate(),
-      endDate: this.getFlux().store("SnapShotStore").getEndDate(),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates()
+      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartID),
+      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartID),
+      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartID),
+      startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartID),
+      endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartID),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartID)
     }
   },
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(this.state.keywordlist, this.state.publisherlist);
+    this.getFlux().actions.loadChartData(this.props.chartID, this.state.keywordlist, this.state.publisherlist);
   },
   addKeyword: function(keyword){
-    this.getFlux().actions.addKeyword(keyword);
+    this.getFlux().actions.addKeyword(this.props.chartID, keyword);
   },
   addPublisher: function(publisher){
-    this.getFlux().actions.addPublisher(publisher);
-  },
-  changeStartDate: function(d){
-    this.getFlux().actions.changeStartDate(d);
-  },
-  changeEndDate: function(d){
-    this.getFlux().actions.changeEndDate(d);
+    this.getFlux().actions.addPublisher(this.props.chartID, publisher);
   },
   render: function() {
     return (
@@ -93,11 +87,11 @@ export default React.createClass({
         <div className="chart-main">
           <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
           <div className="chart-label-x">TESTING</div>
-          <Slider dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
+          <Slider chartID={this.props.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
         
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
-        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />  
+        <KeywordList chartID={this.props.chartID} className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />  
       </div>
       </div>
     )

@@ -5,7 +5,7 @@ import makeDates from '../services/makeDates'
 export default Fluxxor.createStore({
 
   initialize: function(options) {
-    this.snapShot =  {
+    this.snapShot =  [{
       labels: [],
       datasets: [
         {
@@ -13,14 +13,14 @@ export default Fluxxor.createStore({
             data: []
         }
       ]
-    }
+    }]
 
     this.dates = makeDates()
-    this.startDate = 0
-    this.endDate = (this.dates.length -1)
-    this.keywords = ["harper", "mulcair", "trudeau"]
-    this.publishers = [1, 2, 3]
-    this.datastore = []
+    this.startDate = [0]
+    this.endDate = [(this.dates.length -1)]
+    this.keywords = [["harper", "mulcair", "trudeau"]]
+    this.publishers = [[1, 2, 3]]
+    this.datastore = [[]]
 
     this.bindActions(
       "LOAD_SNAPSHOT_DATA", this.load,
@@ -34,25 +34,28 @@ export default Fluxxor.createStore({
     );
   },
   load: function(payload, type){
-    this.datastore = payload
+    var id = payload.id
+    var data = payload.data
+    this.datastore[id] = data
     this.emit("change");
   },
-  update: function(payload, type){
-    // this.keywords = payload[0]
-    // this.publishers = payload[1]
+  update: function(id){
+    console.log("update id=" + id)
     var dateMatch = function (row) {
       var date = new Date(row.date);
-      var startDate = new Date(this.dates[this.startDate])
-      var endDate = new Date(this.dates[this.endDate])
+      var startDate = new Date(this.dates[this.startDate[id]])
+      console.log(startDate)
+      var endDate = new Date(this.dates[this.endDate[id]])
+      console.log(endDate)
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
     
-    var filteredArr = this.datastore.filter(dateMatch);
+    var filteredArr = this.datastore[id].filter(dateMatch);
     var newDatasets = []
 
-    this.publishers.forEach(function(p, index) {
+    this.publishers[id].forEach(function(p, index) {
       var pub = p
-      var wordcount = this.keywords.map(function(w) {
+      var wordcount = this.keywords[id].map(function(w) {
         var word = w
         var sum = 0
         filteredArr.forEach(function(row) {
@@ -74,51 +77,62 @@ export default Fluxxor.createStore({
     }.bind(this));
 
     var newSnapShot = {
-      labels: this.keywords,
+      labels: this.keywords[id],
       datasets: newDatasets
     }
-    this.snapShot = newSnapShot
+    this.snapShot[id] = newSnapShot
+    console.log(newSnapShot)
     this.emit("change");
   },
 
   handleAddKeyword: function(payload, type) {
-    this.keywords.push(payload)
-    this.update()
+    var id = payload.id
+    var data = payload.data
+    this.keywords[id].push(data)
+    this.update(id)
   },
   handleRemoveKeyword: function(payload, type) {
-    this.keywords.splice(payload, 1)
-    this.update()
+    var id = payload.id
+    var data = payload.data
+    this.keywords[id].splice(data, 1)
+    this.update(id)
   },
   handleAddPublisher: function(payload, type) {
-    this.publishers.push(payload)
-    this.update()
+    var id = payload.id
+    var data = payload.data
+    this.publishers[id].push(data)
+    this.update(id)
   },
   handleRemovePublisher: function(payload, type) {
-    this.publishers.splice(payload, 1)
-    this.update()
+    var id = payload.id
+    var data = payload.data
+    this.publishers[id].splice(data, 1)
+    this.update(id)
   },
   handleChangeDateRange: function(payload, type) {
-    this.startDate = payload[0]
-    this.endDate = payload[1]
-    this.update()
+    var id = payload.id
+    var data = payload.data
+    this.startDate[id] = data[0]
+    this.endDate[id] = data[1]
+    this.update(id)
   },
-  getSnapShot: function(){
-    return this.snapShot
+  getSnapShot: function(id){
+    return this.snapShot[id]
   },
-  getKeywords: function(){
-    return this.keywords
+  getKeywords: function(id){
+    return this.keywords[id]
   },
-  getPublishers: function(){
-    return this.publishers
+  getPublishers: function(id){
+    return this.publishers[id]
   },
-  getStartDate: function(){
-    return this.startDate
+  getStartDate: function(id){
+    return this.startDate[id]
   },
-  getEndDate: function(){
-    return this.endDate
+  getEndDate: function(id){
+    return this.endDate[id]
   },
-  getAllDates: function(){
-    return this.dates
+  getAllDates: function(id){
+    return this.dates[id]
   },
 
 });
