@@ -86,6 +86,8 @@ export default React.createClass({
     this.getFlux().actions.changeEndDate(d);
   },
   render: function() {
+    console.log("logging snapshot.js this.state.publisherList")
+    console.log(this.state.publisherlist)
     return (
       <div>
       <div className="chart-container">
@@ -97,7 +99,9 @@ export default React.createClass({
         </div>
 
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
-        <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
+          <PublisherList className={'publisher-list'} list={this.state.publisherlist} />
+          <KeywordList className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
+
       </div>
       </div>
     )
