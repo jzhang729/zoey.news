@@ -1,0 +1,47 @@
+/* COLORS */
+
+$hover: rgba(12,213,248,0.2);
+$nav-color: rgba(0,0,0,0.1);
+$footer-color: rgba(0,0,0,0.1);
+$border-color: rgba(0,0,0,0.1);
+
+/* FONTS & FONT STYLES */
+
+$font-label: arial;
+
+@font-face{
+  font-family: 'Playfair';
+  src: url('../../public/playfair-display/PlayfairDisplay-Black.otf');
+}
+
+@mixin main-font-style{
+  font-family: arial;
+  font-size: 10pt;
+}
+
+@mixin font-chart-title {
+  font-family: 'Playfair', verdana;
+  font-size: 28pt;
+  text-align: center;
+}
+
+@mixin tabstyle {
+  @include main-font-style;
+  font-weight: bold;
+  margin: 10px 5px;
+  color: #000;
+  padding: 10px;
+  border: 2px solid #000;
+  list-style-type: none;
+  -webkit-transform: skew(-20deg);
+     -moz-transform: skew(-20deg);
+       -o-transform: skew(-20deg);
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width : 767px) {
+   .left-side {
+    display: none;
+   }
+}
