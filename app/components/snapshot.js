@@ -86,7 +86,6 @@ export default React.createClass({
         <div className="chart-label-y">Keyword Frequency</div>
         <div className="chart-main">
           <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-          <div className="chart-label-x">TESTING</div>
           <Slider chartID={this.props.chartParams.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
 

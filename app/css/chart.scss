@@ -1,7 +1,7 @@
 @mixin chart-menu-section-label {
   color: $chart-menu-section-color;
   font-family: $primary-font;
-  font-size: 14pt;
+  font-size: 10pt;
   text-align: left;
 }
 
@@ -74,9 +74,7 @@
     -webkit-align-self: center;
 }
 
-.chart-label-x {
-  @include chart-axis-label;
-}
+
 
 .chart {
   padding: 10px;
