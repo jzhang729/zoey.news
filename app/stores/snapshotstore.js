@@ -52,14 +52,11 @@ export default Fluxxor.createStore({
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
-    console.log(this.charts)
-    this.emit("change")
   },
   loadChartData: function(payload, type){
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
-    this.emit("change");
   },
   update: function(chartID){
     var currentChart = this._byChartID(chartID)
@@ -73,7 +70,6 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-    console.log(filteredArr)
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0

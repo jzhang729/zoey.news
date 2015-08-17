@@ -71,7 +71,6 @@ export default React.createClass({
     }
   },
   componentDidMount: function() {
-    console.log(this.props.chartParams)
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID, this.props.chartParams.keywords, this.props.chartParams.publishers);
   },
   addKeyword: function(keyword){

@@ -6,20 +6,17 @@ export default Fluxxor.createStore({
     this.charts = []
 
     this.bindActions(
-      "LOAD_CHARTS", this.load,
-      "ADD_CHART", this.addChart
+      "LOAD_CHARTS", this.load
     )
   },
 
-  load: function(charts) {
-    this.charts = charts
+  load: function(newCharts) {
+    this.charts = this.charts.concat(newCharts)
+    this.emit("change")
   },
 
   getCharts: function() {
     return this.charts
-  },
-
-  addChart: function(chart) {
-    this.charts.push(chart)
   }
+
 });

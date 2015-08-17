@@ -44,19 +44,30 @@ var actions = {
   },
 
   addChart: function(type) {
-    console.log("main.js")
     var chart = {
       chartID: 3,
       chartType: type,
       keywords: ["election"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
     }
-    console.log(chart)
     this.dispatch("LOAD_CHARTS", [chart])
+
+    var chartID = chart.chartID
+    var keywordsList = chart.keywords
+    var publishersList = chart.publishers 
+    var publisherIds = publishersList.map(function(publisher) {
+      return publisher.id
+    })
+    var route = routeService.apiUrl(keywordsList, publisherIds)
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("UPDATE_CHART", chartID)
+    }.bind(this)
+    requestManager.get(route, success)
   },
 
   loadChartData: function(chartID) {
-    console.log("loadChartData, chartID: "+chartID)
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID) 
     var publisherIds = publishersList.map(function(publisher) {
@@ -65,8 +76,6 @@ var actions = {
     var route = routeService.apiUrl(keywordsList, publisherIds)
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
-      console.log("datarows")
-      console.log(dataRows)
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
       this.dispatch("UPDATE_CHART", chartID)
     }.bind(this)
