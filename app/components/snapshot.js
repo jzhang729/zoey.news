@@ -86,8 +86,6 @@ export default React.createClass({
     this.getFlux().actions.changeEndDate(d);
   },
   render: function() {
-    console.log("logging snapshot.js this.state.publisherList")
-    console.log(this.state.publisherlist)
     return (
       <div>
       <div className="chart-container">
