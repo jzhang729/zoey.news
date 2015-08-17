@@ -1,0 +1,13 @@
+@import 'globalstyle';
+@import 'navbar';
+@import 'menu';
+@import 'chart';
+@import 'keywords_publishers';
+@import 'slider';
+@import 'footer';
+
+.main {
+  background-color: #fff;
+  display: flex;
+}
+

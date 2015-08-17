@@ -1,8 +1,7 @@
-var css = require('!css!sass!autoprefixer!./main.scss');
+var css = require('!css!sass!autoprefixer!./css/main.scss');
 // => returns compiled css code from file.scss, resolves imports and url(...)s
 // require('!style!css!sass!./main.scss');
-require('!style!css!sass!autoprefixer!./main.scss');
-require('!style!css!./slider.css')
+require('!style!css!sass!autoprefixer!./css/main.scss');
 
 import React from 'react'
 import App from './components/app.js'
@@ -10,7 +9,6 @@ import Fluxxor from 'fluxxor'
 import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
 import ChartStore from './stores/chartstore'
-
 import routeService from './services/routeservice'
 import requestManager from './services/requestManager'
 
@@ -109,7 +107,6 @@ var actions = {
   }
 
 }
-
 
 var stores = {
   SnapShotStore: new SnapShotStore(),

@@ -11,7 +11,6 @@ export default React.createClass({
             <Nav right eventKey={0}> {/* This is the eventKey referenced */}
               <NavItem eventKey={1} href='#'>Sign Up</NavItem>
               <NavItem eventKey={2} href='#'>Log In</NavItem>
-              
             </Nav>
           </Navbar>
       </div>

@@ -1,0 +1,72 @@
+.hidden {
+  display: none;
+}
+
+h5 {
+  color: rgba(0,0,0,0.7);
+  font-size: 14pt;
+  text-align: left;
+}
+
+.keyword-list {
+  min-width: 250px;
+  padding: 0px;
+}
+
+.publisher-list {
+  min-width: 250px;
+  padding: 0px;
+}
+
+.keyword-list-item {
+  list-style-type: none;
+  font-size: 12pt;
+  margin: 2px 0px;
+  padding: 2px;
+  text-align: right;
+}
+
+.publisher-list-item {
+  list-style-type: none;
+  font-size: 12pt;
+  text-align: right;
+  margin: 2px 0px 10px 0px;
+  padding: 2px;
+}
+
+.keyword-list i {
+
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.publisher-list i {
+
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.keyword-add {
+  
+  margin-left: 20px;
+  
+  input {
+    margin: 10px;
+  }
+
+  i {
+    color: rgba(44,149,36,1);
+    background: none;
+    border: 0px;
+    margin-top: 6px;
+    padding: 5px;
+
+    &:hover{
+      color: rgba(47,255,38,0.5);
+    }
+  }
+}

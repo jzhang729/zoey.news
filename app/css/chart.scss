@@ -1,0 +1,60 @@
+.chart-container {    
+  display: flex;
+  flex-direction: row;
+}
+
+.chart-label-y {
+  font: {
+    family: $font-label;
+    size: 10pt;
+    weight: bold;
+  }
+  transform: rotate(270deg);
+  transform-origin: left top 0;
+  white-space: nowrap;
+  flex: 0 0 30px;
+  order: 0;
+  align-self: center;
+}
+
+.chart-label-x {
+   font: {
+    family: $font-label;
+    size: 10pt;
+    weight: bold;
+  }
+  
+  text-align: center;
+
+}
+
+.chart {
+  padding: 10px;
+  margin: 10px;
+  width: 700px;
+  height: 500px;
+}
+
+.chart-main {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-options{
+  display: block;
+  margin: 0px 10px;
+  order: 2;
+  align-self: flex-start;
+}
+
+.chart-menu {
+  background-color: rgba(0,0,0,0.05);
+  padding: 20px 10px;
+  border: 1px solid $border-color;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-direction: column;
+  order: 3;
+}
