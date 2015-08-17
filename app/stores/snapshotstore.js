@@ -46,7 +46,7 @@ export default Fluxxor.createStore({
       var endDate = new Date(this.dates[this.endDate])
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
-    
+
     var filteredArr = this.datastore.filter(dateMatch);
     var newDatasets = []
 
@@ -86,7 +86,7 @@ export default Fluxxor.createStore({
     this.update()
   },
   handleRemoveKeyword: function(payload, type) {
-    this.keywords.splice(payload, 1)
+    this.keywords.splice(this.keywords.indexOf(payload), 1)
     this.update()
   },
   handleAddPublisher: function(payload, type) {

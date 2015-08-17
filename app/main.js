@@ -40,7 +40,7 @@ var actions = {
   addKeyword: function(keyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords()
     var publishersList = this.flux.store("SnapShotStore").getPublishers()
-    
+
     if (keywordsList.indexOf(keyword) < 0) {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
@@ -59,7 +59,7 @@ var actions = {
   addPublisher: function(publisher) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords()
     var publishersList = this.flux.store("SnapShotStore").getPublishers()
-    
+
     if (publishersList.indexOf(publisher) < 0) {
       var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
       var success = function(err, resp) {
@@ -92,5 +92,3 @@ var stores = {
 var flux = new Fluxxor.Flux(stores, actions);
 
 React.render(<App flux={flux} />, document.getElementById('content'))
-
-console.log('Application is loaded!');
