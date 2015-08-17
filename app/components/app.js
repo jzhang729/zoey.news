@@ -8,22 +8,23 @@ import ChartCanvas from './chartcanvas'
 import Fluxxor from 'fluxxor'
 
 var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 export default React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, StoreWatchMixin("PublisherStore", "ChartStore")],
 
   getInitialState: function(){
-    return {
-      keywordEntry: "",
-      charts: [
-              {chartID: 0, chartType: "snapshot", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}},
-              {chartID: 1, chartType: "timelapse", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}}
-      ]
-    }
   },
   componentDidMount: function() {
     this.getFlux().actions.loadPublishers();
+    this.getFlux().actions.loadCharts();
   },  
+  getStateFromFlux: function(){
+    return {
+      charts: this.getFlux().store("ChartStore").getCharts(),
+      publishers: this.getFlux().store("PublisherStore").getPublishers()
+    }
+  },
   showMenu: function() {
     this.refs.menu.show();
   },
@@ -31,13 +32,12 @@ export default React.createClass({
     this.refs.menu.hide();
   },
   render: function() {
-    var charts = this.state.charts
     return (
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <ChartCanvas charts={charts} />
+        <ChartCanvas charts={this.state.charts} />
         </div>
       <Footer />
       </section>
