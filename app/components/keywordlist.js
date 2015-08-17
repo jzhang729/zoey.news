@@ -18,7 +18,7 @@ export default React.createClass({
     return (
       <ul className={this.props.className}>
         <h5>Keywords</h5>
-        <KeywordAdd />
+        <KeywordAdd chartID={this.props.chartID} />
         {keywordList}
       </ul>
     )
