@@ -43,9 +43,7 @@ export default Fluxxor.createStore({
     var dateMatch = function (row) {
       var date = new Date(row.date);
       var startDate = new Date(this.dates[this.startDate[id]])
-      console.log(startDate)
       var endDate = new Date(this.dates[this.endDate[id]])
-      console.log(endDate)
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
 
@@ -82,7 +80,6 @@ export default Fluxxor.createStore({
   },
 
   handleAddKeyword: function(payload, type) {
-    console.log("payload:" + payload)
     var id = payload.id
     var data = payload.data
     this.keywords[id].push(data)

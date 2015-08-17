@@ -91,8 +91,8 @@ export default React.createClass({
         </div>
 
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-        <div className="chart-menu">
-          <KeywordList chartID={this.props.chartID} className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
+        <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <KeywordList chartID={this.props.chartID} className={'keyword-list'} list={this.state.keywordlist} />
           <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} />
         </div>
       </div>
