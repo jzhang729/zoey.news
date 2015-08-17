@@ -24,7 +24,7 @@ export default React.createClass({
       value: ""
     }
   },
-  
+
   handleChange: function() {
     this.setState({value: event.target.value});
   },

@@ -19,7 +19,7 @@ export default Fluxxor.createStore({
     this.startDate = [0]
     this.endDate = [(this.dates.length -1)]
     this.keywords = [["harper", "mulcair", "trudeau"]]
-    this.publishers = [[1, 2, 3]]
+    this.publishers = [[{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]]
     this.datastore = [[]]
 
     this.bindActions(
@@ -40,7 +40,6 @@ export default Fluxxor.createStore({
     this.emit("change");
   },
   update: function(id){
-    console.log("update id=" + id)
     var dateMatch = function (row) {
       var date = new Date(row.date);
       var startDate = new Date(this.dates[this.startDate[id]])
@@ -49,24 +48,22 @@ export default Fluxxor.createStore({
       console.log(endDate)
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
-    
+
     var filteredArr = this.datastore[id].filter(dateMatch);
     var newDatasets = []
 
-    this.publishers[id].forEach(function(p, index) {
-      var pub = p
-      var wordcount = this.keywords[id].map(function(w) {
-        var word = w
+    this.publishers[id].forEach(function(publisher, index) {
+      var wordcount = this.keywords[id].map(function(keyword) {
         var sum = 0
         filteredArr.forEach(function(row) {
-          if ( (pub == row.publisher_id) && (word == row.word) ) {
+          if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
             sum += row.nentry
           }
         })
         return sum
       })
       var dataset = {
-        label: pub.toString(),
+        label: publisher.domain,
         data: wordcount,
         fillColor: color.Fill[index],
         strokeColor: color.Stroke[index],
@@ -81,11 +78,11 @@ export default Fluxxor.createStore({
       datasets: newDatasets
     }
     this.snapShot[id] = newSnapShot
-    console.log(newSnapShot)
     this.emit("change");
   },
 
   handleAddKeyword: function(payload, type) {
+    console.log("payload:" + payload)
     var id = payload.id
     var data = payload.data
     this.keywords[id].push(data)

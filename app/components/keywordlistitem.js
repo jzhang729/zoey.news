@@ -11,9 +11,11 @@ export default React.createClass({
 
   render: function() {
     var keyword = this.props.keyword
-    var index = this.props.id
     return (
-        <li className="keyword-list-item">{keyword} &nbsp;<i className="fa fa-lg fa-times-circle-o" onClick={this.handleRemoveKeyword.bind(this, index)}></i></li>
+      <li className="keyword-list-item">
+        {keyword} &nbsp;
+        <a className="fa fa-lg fa-times-circle-o" onClick={this.handleRemoveKeyword.bind(this, keyword)}></a>
+      </li>
     )
   }
 })

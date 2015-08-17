@@ -4,7 +4,7 @@ var makeDates = require('./makeDates').makeDates
 var escapeString = require('./escapeString').escapeString
 
 var queryDetail = function(k, p, callback) {
-  
+
   var keywords = escapeString(k).split(',')
   var publishers = escapeString(p).split(',')
   var dates = makeDates()
@@ -20,7 +20,7 @@ var queryDetail = function(k, p, callback) {
         + publisher + " AS publisher_id, "
         + "'" + date + "' AS date,"
         + " stat.word AS lexeme, stat.ndoc, stat.nentry "
-        + "FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''" + date 
+        + "FROM ts_stat('SELECT parsed_text FROM articles WHERE publication_date = ''" + date
         + "'' AND publisher_id = " + publisher + "') stat"
         + " WHERE"
         + " to_tsvector(word) = (to_tsvector('" + keyword + "'))"
@@ -46,4 +46,3 @@ var getTopKeywords = function(d, p, callback) {
 
 exports.queryDetail = queryDetail;
 exports.getPublisherList = getPublisherList;
-

@@ -24,7 +24,10 @@ var actions = {
   },
 
   loadChartData: function(chartID, keywords, publishers) {
-    var route = routeService.apiUrl(keywords, publishers)
+    var publisherIds = publishers.map(function(publisher) {
+      return publisher.id
+    })
+    var route = routeService.apiUrl(keywords, publisherIds)
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
@@ -39,12 +42,14 @@ var actions = {
 
   addKeyword: function(chartID, keyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
-    
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
+      return publisher.id
+    })
     if (keywordsList.indexOf(keyword) < 0) {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
+        console.log(dataRows)
         this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
       }.bind(this)
@@ -59,7 +64,7 @@ var actions = {
   addPublisher: function(chartID, publisher) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
-    
+
     if (publishersList.indexOf(publisher) < 0) {
       var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
       var success = function(err, resp) {
@@ -92,5 +97,3 @@ var stores = {
 var flux = new Fluxxor.Flux(stores, actions);
 
 React.render(<App flux={flux} />, document.getElementById('content'))
-
-console.log('Application is loaded!');
