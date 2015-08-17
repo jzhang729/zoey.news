@@ -52,8 +52,6 @@ export default Fluxxor.createStore({
     var dateMatch = function (row) {
       var date = new Date(row.date);
       var startDate = new Date(this.dates[this.startDate[id]])
-      console.log(this.dates)
-      console.log(this.startDate[id])
       var endDate = new Date(this.dates[this.endDate[id]])
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)

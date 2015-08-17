@@ -91,10 +91,11 @@ export default React.createClass({
           <Slider chartID={this.props.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
 
-        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-menu"></i>
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+        <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <KeywordList chartID={this.props.chartID} className={'keyword-list'} list={this.state.keywordlist} />
           <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} />
-          <KeywordList chartID={this.props.chartID} className={(this.state.hidden ? 'hidden ' : '') + 'keyword-list'} list={this.state.keywordlist} />
-
+        </div>
       </div>
       </div>
     )

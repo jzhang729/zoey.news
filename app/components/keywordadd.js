@@ -7,16 +7,9 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({
   mixins: [FluxMixin],
-  // handleRemoveKeyword: function(i) {
-  //   this.getFlux().actions.removeKeyword(i);
-  // },
-
-  // handleSubmit: function() {
-  //   console.log("submitted")
-  // },
 
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)                           
+    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
   },
 
   getInitialState: function(){
