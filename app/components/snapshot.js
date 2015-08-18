@@ -29,7 +29,8 @@ export default React.createClass({
     return {
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
       keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
+      publisherlist: this.getFlux().store("PublisherStore").getPublishers(),
+      activepublisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
       startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartParams.chartID),
       endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartParams.chartID),
       allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartParams.chartID)
@@ -54,11 +55,10 @@ export default React.createClass({
           <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
           <Slider chartID={this.props.chartParams.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
-
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
         <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
           <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.state.keywordlist} />
-          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.state.publisherlist} />
+          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.state.publisherlist} activelist={this.state.activepublisherlist}/>
         </div>
       </div>
       </div>

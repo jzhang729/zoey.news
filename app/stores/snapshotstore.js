@@ -7,16 +7,6 @@ export default Fluxxor.createStore({
   initialize: function(options) {
     this.charts = []
     this.dates = makeDates()
-
-    // var chart = {
-    //   chartID:
-    //   chartType:
-    //   keywords: []
-    //   publishers: [{},{}]
-    //   datastore: []
-    //   snapShot: []
-    // }
-
     this.bindActions(
       "LOAD_CHART_DATA", this.loadChartData,
       "UPDATE_CHART", this.handleUpdateChart,
@@ -113,6 +103,7 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
+
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
@@ -155,10 +146,8 @@ export default Fluxxor.createStore({
     this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
-    var chartID = payload.id
-    var data = payload.data
-    this._byChartID(chartID).publishers.push(data)
-    this.handleUpdateChart(chartID)
+    this._byChartID(payload.id).publishers.push(payload.data)
+    this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
