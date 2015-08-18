@@ -1,6 +1,6 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import Color from '../services/color.js'
+import Color from '../services/barchartcolor.js'
 var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({

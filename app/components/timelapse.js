@@ -7,14 +7,14 @@ var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var options = {
     scaleShowGridLines : true,
-    scaleGridLineColor : "rgba(0,0,0,0.3)",
+    scaleGridLineColor : "rgba(0,0,0,0.05)",
     scaleGridLineWidth : 1,
     scaleShowHorizontalLines: true,
     scaleShowVerticalLines: true,
     bezierCurve : true,
     bezierCurveTension : 0.4,
     pointDot : true,
-    pointDotRadius : 4,
+    pointDotRadius : 2,
     pointDotStrokeWidth : 1,
     pointHitDetectionRadius : 20,
     datasetStroke : true,

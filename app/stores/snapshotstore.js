@@ -1,5 +1,6 @@
 import Fluxxor from 'fluxxor'
-import color from '../services/color'
+import barchartcolor from '../services/barchartcolor'
+import linechartcolor from '../services/linechartcolor'
 import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
@@ -75,10 +76,13 @@ export default Fluxxor.createStore({
       var dataset = {
         label: keyword,
         data: dailyCount,
-        fillColor: color.Fill[index],
-        strokeColor: color.Stroke[index],
-        highlightFill: color.HighlightFill[index],
-        highlightStroke: color.HighlightStroke[index]
+        fillColor: linechartcolor.Fill[index],
+        strokeColor: linechartcolor.Stroke[index],
+        pointColor: linechartcolor.Point[index],
+        pointStrokeColor: linechartcolor.PointStroke[index],
+        pointHighlightFill: linechartcolor.PointHighlightFill[index],
+        pointHighlightStroke: linechartcolor.PointHighlightStroke[index]
+
       }
       newDatasets.push(dataset)
     }.bind(this));
@@ -117,10 +121,10 @@ export default Fluxxor.createStore({
       var dataset = {
         label: publisher.domain,
         data: wordcount,
-        fillColor: color.Fill[index],
-        strokeColor: color.Stroke[index],
-        highlightFill: color.HighlightFill[index],
-        highlightStroke: color.HighlightStroke[index]
+        fillColor: barchartcolor.Fill[index],
+        strokeColor: barchartcolor.Stroke[index],
+        highlightFill: barchartcolor.HighlightFill[index],
+        highlightStroke: barchartcolor.HighlightStroke[index]
       }
       newDatasets.push(dataset)
     }.bind(this));
