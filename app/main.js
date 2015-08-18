@@ -24,32 +24,36 @@ var actions = {
   },
 
   loadCharts: function() {
-    var charts = 
-    [ {chartID: 0, 
-      chartType: "snapshot", 
-      title: "Leaders", 
-      keywords: ["Mulcair", "Trudeau", "Harper"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-      },
-      {chartID: 12, 
-      chartType: "snapshot", 
-      title: "Security", 
-      keywords: ["ISIS", "Terrorism", "RCMP"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-      },
-      {chartID: 34, 
-      chartType: "timelapse", 
-      title: "Economy", 
-      keywords: ["Taxes", "economy"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-      }
-    ]
-    this.dispatch("LOAD_CHARTS", charts)
+    var route = '/users/1/charts'
+    var success = function(err, resp){
+      var charts = JSON.parse(resp.text).map(function(chart) {
+        var publishersWithNames = this.flux.store("PublisherStore").getPublishers().map(function(pub) {
+          var pub = pub;
+          var found;
+          chart.chart_params.publishers.forEach(function(pubID) {
+            if (pubID = pub.id) {
+              found = pub
+            }
+          })
+          return pub
+        })
+        return {
+          chartID: chart.id, 
+          chartType: chart.chart_params.chart_type,
+          title: chart.chart_params.title, 
+          keywords: chart.chart_params.keywords, 
+          publishers: publishersWithNames
+        }
+      }.bind(this))
+
+      this.dispatch("LOAD_CHARTS", charts)
+    }.bind(this)
+    requestManager.get(route, success)
   },
 
   addChart: function(type) {
     var chart = {
-      chartID: 3,
+      chartID: 8,
       title: "Election",
       chartType: type,
       keywords: ["election"],

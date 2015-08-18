@@ -41,6 +41,7 @@ export default Fluxxor.createStore({
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
+    console.log(this.charts)
   },
   loadChartData: function(payload, type) {
     var id = payload.id
