@@ -33,7 +33,7 @@ export default React.createClass({
     }.bind(this))
 
     return (
-      <ul className={this.props.className}>
+      <ul className="publisher-list">
         <h5>Publishers</h5>
         {activePublisherList}
         <div className="publisher-add">

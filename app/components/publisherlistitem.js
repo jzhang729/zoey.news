@@ -15,7 +15,8 @@ export default React.createClass({
     var divStyle = [{
       borderBottomColor: Color.Fill[0],
       borderBottomWidth: '8px',
-      borderBottomStyle: 'solid'
+      borderBottomStyle: 'solid',
+      listStyleType: 'none'
     },{
       borderBottomColor: Color.Fill[1],
       borderBottomWidth: '8px',
