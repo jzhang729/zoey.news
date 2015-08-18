@@ -9,7 +9,7 @@ export default Fluxxor.createStore({
     this.dates = makeDates()
     this.bindActions(
       "LOAD_CHART_DATA", this.loadChartData,
-      "UPDATE_CHART", this.update,
+      "UPDATE_CHART", this.handleUpdateChart,
       "ADD_KEYWORD", this.handleAddKeyword,
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
@@ -43,12 +43,55 @@ export default Fluxxor.createStore({
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
   },
-  loadChartData: function(payload, type){
+  loadChartData: function(payload, type) {
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
   },
-  update: function(chartID){
+  handleUpdateChart: function(chartID) {
+    switch (this._byChartID(chartID).chartType) {
+      case "snapshot":
+        this.updateSnapShot(chartID)
+        break
+      case "timelapse":
+        this.updateTimeLapse(chartID)
+        break
+    }
+  },
+  updateTimeLapse: function(chartID) {
+    var currentChart = this._byChartID(chartID)
+    var newDatasets = []
+    
+    currentChart.keywords.forEach(function(keyword, index) {
+      var dailyCount = this.dates.map(function(date) {
+        var sum = 0
+        currentChart.datastore.forEach(function(row) {
+          if ( (date == row.date) && (keyword == row.word) ) {
+            sum += row.nentry
+          }
+        })
+        return sum
+      })
+      var dataset = {
+        label: keyword,
+        data: dailyCount,
+        fillColor: color.Fill[index],
+        strokeColor: color.Stroke[index],
+        highlightFill: color.HighlightFill[index],
+        highlightStroke: color.HighlightStroke[index]
+      }
+      newDatasets.push(dataset)
+    }.bind(this));
+
+    var newSnapShot = {
+      labels: this.dates,
+      datasets: newDatasets
+    }
+    this._byChartID(chartID).snapShot = newSnapShot
+    this.emit("change");
+  },
+
+  updateSnapShot: function(chartID){
     var currentChart = this._byChartID(chartID)
 
     var dateMatch = function (row) {
@@ -94,30 +137,30 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.push(data)
-    this.update(chartID)
+    this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
-    this.update(chartID)
+    this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
     this._byChartID(payload.id).publishers.push(payload.data)
-    this.update(payload.id)
+    this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).publishers.splice(data, 1)
-    this.update(chartID)
+    this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).startDate = data[0]
     this._byChartID(chartID).endDate = data[1]
-    this.update(chartID)
+    this.handleUpdateChart(chartID)
   },
   getSnapShot: function(chartID){
     if (this._byChartID(chartID).snapShot) {
