@@ -58,11 +58,9 @@ export default Fluxxor.createStore({
 
     var filteredArr = this.datastore[id].filter(dateMatch);
     var newDatasets = []
-    console.log(this.datastore[id])
 
     this.publishers[id].forEach(function(publisher, index) {
       var wordcount = this.keywords[id].map(function(keyword) {
-        console.log(keyword)
         var sum = 0
         filteredArr.forEach(function(row) {
           if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
@@ -103,10 +101,8 @@ export default Fluxxor.createStore({
     this.update(id)
   },
   handleAddPublisher: function(payload, type) {
-    var id = payload.id
-    var data = payload.data
-    this.publishers[id].push(data)
-    this.update(id)
+    this.publishers[payload.chartID].push(payload.publisher)
+    this.update(payload.chartID)
   },
   handleRemovePublisher: function(payload, type) {
     var id = payload.id

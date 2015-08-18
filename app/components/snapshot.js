@@ -64,14 +64,14 @@ export default React.createClass({
     return {
       chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartID),
       keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartID),
-      publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartID),
+      publisherlist: this.getFlux().store("PublisherStore").getPublishers(),
+      activepublisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartID),
       startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartID),
       endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartID),
       allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartID)
     }
   },
   componentDidMount: function() {
-    console.log(this.props.params.publishers)
     this.getFlux().actions.loadChartData(this.props.chartID, this.props.params.keywords, this.props.params.publishers);
   },
   addKeyword: function(keyword){
@@ -90,11 +90,10 @@ export default React.createClass({
           <div className="chart-label-x">TESTING</div>
           <Slider chartID={this.props.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
         </div>
-
         <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
         <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
           <KeywordList chartID={this.props.chartID} className={'keyword-list'} list={this.state.keywordlist} />
-          <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} />
+          <PublisherList chartID={this.props.chartID} className={'publisher-list'} list={this.state.publisherlist} activelist={this.state.activepublisherlist} />
         </div>
       </div>
       </div>
