@@ -18,6 +18,10 @@ export default Fluxxor.createStore({
       "LOAD_CHARTS", this.handleLoadCharts
     );
   },
+  getCharts: function() {
+    return this.charts
+  },
+
   _byChartID: function(id) {
     var found = {}
     this.charts.forEach(function(chart) {
@@ -32,13 +36,7 @@ export default Fluxxor.createStore({
       chart.startDate = 0
       chart.endDate = (this.dates.length -1)
       chart.datastore = []
-      chart.snapShot = {
-        labels: [],
-        datasets: [{
-          label: "",
-          data: []
-        }]
-      }
+      chart.snapShot = false
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
@@ -93,7 +91,6 @@ export default Fluxxor.createStore({
 
   updateSnapShot: function(chartID){
     var currentChart = this._byChartID(chartID)
-
     var dateMatch = function (row) {
       var date = new Date(row.date);
       var startDate = new Date(this.dates[currentChart.startDate])
@@ -137,22 +134,26 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.push(data)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
     this._byChartID(payload.id).publishers.push(payload.data)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).publishers.splice(data, 1)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
@@ -160,20 +161,8 @@ export default Fluxxor.createStore({
     var data = payload.data
     this._byChartID(chartID).startDate = data[0]
     this._byChartID(chartID).endDate = data[1]
+    // this._byChartID(chartID).shouldRedraw = false
     this.handleUpdateChart(chartID)
-  },
-  getSnapShot: function(chartID){
-    if (this._byChartID(chartID).snapShot) {
-      return this._byChartID(chartID).snapShot
-    } else {
-      return {
-        labels: [],
-        datasets: [{
-          label: "",
-          data: []
-        }]
-      }
-    }
   },
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {

@@ -23,23 +23,10 @@ var options = {
 };
 
 export default React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
-
-  getStateFromFlux: function(){
-    return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
-      keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
-      publisherlist: this.getFlux().store("PublisherStore").getPublishers(),
-      activepublisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
-      startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartParams.chartID),
-      endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartParams.chartID),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartParams.chartID)
-    }
-  },
+  mixins: [FluxMixin],
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(this.props.chartParams.chartID, this.props.chartParams.keywords, this.props.chartParams.publishers);
+    this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
-
   addKeyword: function(keyword){
     this.getFlux().actions.addKeyword(this.props.chartParams.chartID, keyword);
   },
@@ -47,21 +34,36 @@ export default React.createClass({
     this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
   render: function() {
+    var chart;
+    if(this.props.chartParams.snapShot){
+      chart = (
+        <div className="chart-container">
+          <div className="chart-label-y">
+            Keyword Frequency
+          </div>
+          <div className="chart-main">
+            <BarChart className="chart" 
+                      data={this.props.chartParams.snapShot}
+                      redraw={true}
+                      options={options}/>
+            <Slider chartID={this.props.chartParams.chartID} dates={this.props.allDates} startDate={this.props.chartParams.startDate} endDate={this.props.chartParams.endDate}/>
+          </div>
+          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+            <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+          </div>
+        </div>
+      )
+    } else {
+      chart = (<h4>loading</h4>)
+    }
     return (
       <div>
-      <div className="chart-container">
-        <div className="chart-label-y">Keyword Frequency</div>
-        <div className="chart-main">
-          <BarChart className="chart" data={this.state.chartdata} options={options} redraw />
-          <Slider chartID={this.props.chartParams.chartID} dates={this.state.allDates} startDate={this.state.startDate} endDate={this.state.endDate}/>
-        </div>
-        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-        <div className={(this.state.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
-          <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.state.keywordlist} />
-          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.state.publisherlist} activelist={this.state.activepublisherlist}/>
-        </div>
-      </div>
+        {chart}
       </div>
     )
   }
 })
+
+// redraw={this.props.chartParams.shouldRedraw}
