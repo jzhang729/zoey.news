@@ -3,6 +3,7 @@ import Fluxxor from 'fluxxor'
 import KeywordList from './keywordlist'
 import PublisherList from './publisherlist'
 import Slider from './slider'
+import { Button } from 'react-bootstrap'
 
 var BarChart = require("react-chartjs").Bar;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -52,6 +53,7 @@ export default React.createClass({
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+            <Button className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )
