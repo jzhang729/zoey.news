@@ -20,6 +20,7 @@ export default Fluxxor.createStore({
     );
   },
   getCharts: function() {
+    console.log(this.charts)
     return this.charts
   },
 
@@ -41,11 +42,14 @@ export default Fluxxor.createStore({
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
+    console.log(this.charts)
+    this.emit("change")
   },
   loadChartData: function(payload, type) {
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
+    this.emit("change")
   },
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {
