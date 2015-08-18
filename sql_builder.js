@@ -47,6 +47,25 @@ var getCharts = function(user, callback) {
     .then(callback);
 }
 
+var getChart = function(chartID, callback) {
+  knex.select('chart_params')
+    .from('charts')
+    .where('charts.id', chartID)
+    .then(function(rows) {
+      callback(rows[0].chart_params)
+    });
+}
+
+var getChartData = function(chartParams, callback) {
+  var keywords = chartParams.keywords.toString()
+  var publishers = chartParams.publishers.toString()
+  queryDetail(keywords, publishers, function(resp) {
+    callback(resp.rows)
+  })
+}
+
 exports.queryDetail = queryDetail;
 exports.getPublisherList = getPublisherList;
 exports.getCharts = getCharts;
+exports.getChart = getChart;
+exports.getChartData = getChartData;
