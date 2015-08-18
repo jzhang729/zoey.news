@@ -48,12 +48,6 @@ export default React.createClass({
           <div className="chart-main">
             <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
-            <PublisherList chartID={this.props.chartParams.chartID} 
-                           className={'publisher-list'} 
-                           list={this.props.publisherList} 
-                           activelist={this.props.chartParams.publishers}
-                           legend={true}/>
-            <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <BarChart className="chart"
