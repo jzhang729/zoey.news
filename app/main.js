@@ -104,16 +104,24 @@ var actions = {
     this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
   },
 
-  addPublisher: function(chartID, publisher) {
+  addPublisher: function(chartID, publisherID) {
+    var publisherList = this.flux.store("PublisherStore").getPublishers()
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
+    var activePublisherIDs = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
+      return publisher.id
+    })
+    var addedPublisher = publisherList.filter(function(publisher) {
+      if (publisher.id == publisherID) {
+        return publisher
+      }
+    })[0]
 
-    if (publishersList.indexOf(publisher) < 0) {
-      var route = routeService.apiUrl(keywordsList, publishersList.concat(publisher))
+    if (activePublisherIDs.indexOf(addedPublisher.id) < 0) {
+      var route = routeService.apiUrl(keywordsList, activePublisherIDs.concat(addedPublisher.id))
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-        this.dispatch("ADD_PUBLISHER", {id: chartID, data: publisher})
+        this.dispatch("ADD_PUBLISHER", {id: chartID, data: addedPublisher})
       }.bind(this)
       requestManager.get(route, success)
     }
