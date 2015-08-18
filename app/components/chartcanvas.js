@@ -14,8 +14,8 @@ export default React.createClass({
   getStateFromFlux: function(){
     return {
       charts: this.getFlux().store("SnapShotStore").getCharts(),
-      publisherList: this.getFlux().store("PublisherStore").getPublishers(),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates()
+      // publisherList: this.getFlux().store("PublisherStore").getPublishers(),
+      // allDates: this.getFlux().store("SnapShotStore").getAllDates()
       // chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
       // keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
       // publisherlist: this.getFlux().store("PublisherStore").getPublishers(),
@@ -26,17 +26,20 @@ export default React.createClass({
     }
   },
   componentDidMount: function() {
+    console.log("canvas mounted")
   },
 
   render: function() {
-    var charts = this.state.charts.map(function(chart, index) {
+    console.log("canvas rendering")
+    var charts = this.props.charts.map(function(chart, index) {
       if (chart.chartType == "snapshot") {
+        console.log(this.props.charts)
         return (
-          <Snapshot chartParams={chart} publisherList={this.state.publisherList} allDates={this.state.allDates}/>
+          <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
       } else if (chart.chartType == "timelapse") {
         return (
-          <Timelapse chartParams={chart} publisherList={this.state.publisherList} allDates={this.state.allDates}/>
+          <Timelapse chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
       }
     }.bind(this));

@@ -12,6 +12,7 @@ export default Fluxxor.createStore({
 
   load: function(newCharts) {
     this.charts = this.charts.concat(newCharts)
+    console.log(this.charts)
     this.emit("change")
   },
 
