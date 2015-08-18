@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   render: function() {
-    
+
     return (
         <div>
           <div className="keyword-add">
@@ -54,5 +54,3 @@ export default React.createClass({
     )
   }
 })
-
-// {keywordList}
