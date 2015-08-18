@@ -37,19 +37,19 @@
 
 .chart-container {
   width: 500px;
+  min-height: 550px;
   flex: 1;    
   display: flex;
     display: -webkit-flex;
   flex-direction: row;
     -webkit-flex-direction: row;
-  margin: 10px 0px 10px 30px;
-  padding: 0px;
+  margin: 30px;
+
+/*  &:nth-child(odd) {
+    margin: 10px 0px 10px 0px;
+  }*/
 }
 
-.chart-container:nth-child(odd) {
-  margin: 10px 20px 10px 0px;
-  padding: 0px;
-}
 
 .chart-main {
   order: 1;
@@ -61,7 +61,7 @@
 
 .chart-options {
   display: block;
-  margin: 0px 10px;
+  margin: 0px 10px 0px 50px;
 
   &:hover{
     cursor: pointer;

@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import ActivePublisherListItem from './activepublisherlistitem'
+import { input } from 'react-bootstrap'
 var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({

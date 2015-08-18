@@ -49,7 +49,7 @@ export default React.createClass({
             <div className="add">
               <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
               <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
-              <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+              <i onClick={this.toggleHidden} className="fa fa-2x fa-caret-square-o-up chart-options"></i>
             </div>
             <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />

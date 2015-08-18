@@ -28,7 +28,7 @@ var actions = {
     [ {chartID: 0, 
       chartType: "snapshot", 
       title: "Leaders", 
-      keywords: ["Mulcair", "Trudeau", "Harper"],
+      keywords: ["Mulcair", "Trudeau", "Harper","economy","health","taxes","Duffy","French","Random","Donald","Trump","lucky","spaghetti"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       },
       {chartID: 12, 
