@@ -10,31 +10,13 @@ export default Fluxxor.createStore({
     )
   },
 
-  load: function(charts) {
-    this.charts = charts
+  load: function(newCharts) {
+    this.charts = this.charts.concat(newCharts)
+    this.emit("change")
   },
 
   getCharts: function() {
     return this.charts
-  },
-  getChartIDs: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.chartID
-    })
-  },
-  getKeywords: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.keywords
-    })
-  },
-  getTitles: function() {
-    return this.charts.map(function(chart) {
-      return chart.params.title
-    })
-  },
-  getChartTypes: function() {
-    return this.charts.map(function(chart) {
-      return chart.chartType
-    })
   }
+
 });

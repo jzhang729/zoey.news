@@ -24,33 +24,57 @@ var actions = {
   },
 
   loadCharts: function() {
-    var charts =
-    [ {chartID: 0,
-      chartType: "snapshot",
-      params: {title: "Leaders",
-              keywords: ["Mulcair", "Trudeau", "Harper"],
-              publishers: [{id: 3, domain: "theglobeandmail.com"}, {id: 4, domain: "nationalpost.com"}, {id: 5, domain: "cbc.ca"}]
-              }
+    var charts = 
+    [ {chartID: 0, 
+      chartType: "snapshot", 
+      title: "Leaders", 
+      keywords: ["Mulcair", "Trudeau", "Harper"],
+      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       },
-      {chartID: 1,
-      chartType: "snapshot",
-      params: {title: "Security",
-              keywords: ["ISIS", "Terrorism", "RCMP"],
-              publishers: [{id: 3, domain: "theglobeandmail.com"}, {id: 4, domain: "nationalpost.com"}, {id: 5, domain: "cbc.ca"}]
-              }
+      {chartID: 1, 
+      chartType: "snapshot", 
+      title: "Security", 
+      keywords: ["ISIS", "Terrorism", "RCMP"],
+      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       }
     ]
     this.dispatch("LOAD_CHARTS", charts)
   },
 
-  loadChartData: function(chartID, keywords, publishers) {
-    var publisherIds = publishers.map(function(publisher) {
+  addChart: function(type) {
+    var chart = {
+      chartID: 3,
+      chartType: type,
+      keywords: ["election"],
+      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+    }
+    this.dispatch("LOAD_CHARTS", [chart])
+
+    var chartID = chart.chartID
+    var keywordsList = chart.keywords
+    var publishersList = chart.publishers 
+    var publisherIds = publishersList.map(function(publisher) {
       return publisher.id
     })
-    var route = routeService.apiUrl(keywords, publisherIds)
+    var route = routeService.apiUrl(keywordsList, publisherIds)
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("UPDATE_CHART", chartID)
+    }.bind(this)
+    requestManager.get(route, success)
+  },
+
+  loadChartData: function(chartID) {
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID) 
+    var publisherIds = publishersList.map(function(publisher) {
+      return publisher.id
+    })
+    var route = routeService.apiUrl(keywordsList, publisherIds)
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
       this.dispatch("UPDATE_CHART", chartID)
     }.bind(this)
     requestManager.get(route, success)
@@ -69,7 +93,7 @@ var actions = {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
-        this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
+        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
       }.bind(this)
       requestManager.get(route, success)
@@ -92,13 +116,15 @@ var actions = {
       }
     })[0]
 
-    var route = routeService.apiUrl(keywordsList, activePublisherIDs.concat(publisherID))
-    var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_SNAPSHOT_DATA", {id: chartID, data: dataRows})
-      this.dispatch("ADD_PUBLISHER", {chartID: chartID, publisher: addedPublisher})
-    }.bind(this)
-    requestManager.get(route, success)
+    if (activePublisherIDs.indexOf(addedPublisher.id) < 0) {
+      var route = routeService.apiUrl(keywordsList, activePublisherIDs.concat(addedPublisher.id))
+      var success = function(err, resp) {
+        var dataRows = JSON.parse(resp.text);
+        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+        this.dispatch("ADD_PUBLISHER", {id: chartID, data: addedPublisher})
+      }.bind(this)
+      requestManager.get(route, success)
+    }
   },
 
   removePublisher: function(chartID, publisher) {

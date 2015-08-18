@@ -8,11 +8,11 @@ export default React.createClass({
     var charts = this.props.charts.map(function(chart, index) {
       if (chart.chartType == "snapshot") {
         return (
-          <Snapshot chartID={chart.chartID} params={chart.params} />
+          <Snapshot chartParams={chart} />
         )
       } else if (chart.chartType == "timelapse") {
         return (
-          <Timelapse chartID={chart.chartID} params={chart.params} />
+          <Timelapse chartParams={chart} />
         )
       }
     });

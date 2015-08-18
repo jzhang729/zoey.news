@@ -6,24 +6,8 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 export default React.createClass({
   mixins: [FluxMixin],
 
-  getInitialState: function(){
-    return {
-      value: ""
-    }
-  },
-
   handleChange: function(event) {
-    this.setState({value: event.target.value});
-  },
-
-  handleClick: function() {
-    var publisherList = this.props.list
-    var activePublisherListIDs = this.props.activelist.map(function(publisher) {
-      return publisher.id.toString()
-    })
-    if (activePublisherListIDs.indexOf(this.state.value) < 0) {
-      this.getFlux().actions.addPublisher(this.props.chartID, this.state.value)
-    }
+    this.getFlux().actions.addPublisher(this.props.chartID, event.target.value)
   },
 
   render: function() {
@@ -38,7 +22,11 @@ export default React.createClass({
       return publisher.id
     })
 
-    var publisherList = this.props.list.map(function(publisher){
+    var inactivePubs = this.props.list.filter(function(pub) {
+      return activePubIDs.indexOf(pub.id) < 0
+    });
+
+    var publisherList = inactivePubs.map(function(publisher){
       return (
         <option chartID={this.props.chartID} value={publisher.id}>{publisher.domain}</option>
       )
@@ -49,11 +37,10 @@ export default React.createClass({
         <h5>Publishers</h5>
         {activePublisherList}
         <div className="publisher-add">
-          <select onChange={this.handleChange} value={this.state.value}>
+          <select onChange={this.handleChange}>
             <option value="">Add media source</option>
             {publisherList}
           </select>
-          <button value="Submit" onClick={this.handleClick}>Submit</button>
         </div>
       </ul>
     )
