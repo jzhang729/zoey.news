@@ -40,8 +40,6 @@ export default React.createClass({
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <a href="#" onClick={this.handleAddChart.bind(this, "snapshot")}>Add Snapshot</a>
-        <a href="#" onClick={this.handleAddChart.bind(this, "timelapse")}>Add TimeLapse</a>
         <ChartCanvas charts={this.state.charts} />
         </div>
       <Footer />
