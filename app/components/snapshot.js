@@ -55,7 +55,6 @@ export default React.createClass({
                       options={options}/>
             <Slider chartID={this.props.chartParams.chartID} dates={this.props.allDates} startDate={this.props.chartParams.startDate} endDate={this.props.chartParams.endDate}/>
           </div>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
         </div>
       )
     } else {
@@ -68,6 +67,8 @@ export default React.createClass({
     )
   }
 })
+
+// <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
 
 // redraw={this.props.chartParams.shouldRedraw}
 

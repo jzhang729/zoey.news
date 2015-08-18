@@ -47,7 +47,6 @@ export default React.createClass({
                      redraw={true}
                      options={options}/>
         </div>
-        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
         </div>
       )
     } else {
@@ -60,6 +59,10 @@ export default React.createClass({
     )
   }
 })
+
+// <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
+
+
 // Experimenting with this code to control whether to redraw entire chart
 // redraw={this.props.chartParams.shouldRedraw}
 
