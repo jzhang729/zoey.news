@@ -1,6 +1,6 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import KeywordList from './keywordlist'
+import ActiveKeywordList from './activekeywordlist'
 import PublisherList from './publisherlist'
 
 var LineChart = require("react-chartjs").Line;
@@ -36,16 +36,16 @@ export default React.createClass({
       chart = (
         <div className="chart-container">
           <div className="chart-label-y">&nbsp;</div>
-          <LineChart className="chart" 
+          <LineChart className="chart"
                      data={this.props.chartParams.snapShot}
                      redraw={true}
                      options={options}/>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
+          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
-            <KeywordList chartID={this.props.chartParams.chartID} 
-                         className={'keyword-list'} 
-                         list={this.props.chartParams.keywords} 
-                         legend={true} />
+            <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                               className={'keyword-list'}
+                               list={this.props.chartParams.keywords}
+                               legend={true} />
             <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
           </div>
         </div>
@@ -60,7 +60,6 @@ export default React.createClass({
     )
   }
 })
+
 // Experimenting with this code to control whether to redraw entire chart
 // redraw={this.props.chartParams.shouldRedraw}
-
- 
