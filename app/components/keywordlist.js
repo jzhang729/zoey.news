@@ -77,14 +77,15 @@ export default React.createClass({
       }
     }.bind(this))
     return (
-      <ul className={this.props.className}>
-        <h5>Keywords</h5>
+      <div>
         <div className="keyword-add">
-          <input type="text" value={this.state.value} maxLength="16" chartID={this.props.chartID} onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
-          <i className="fa fa-2x fa-plus-square" value="Submit" onClick={this.handleClick}></i>
+            <input type="text" value={this.state.value} maxLength="16" chartID={this.props.chartID} onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
+            <i className="fa fa-2x fa-plus-square" value="Submit" onClick={this.handleClick}></i>
         </div>
-        {keywordList}
-      </ul>
+        <ul className="keyword-list">
+          {keywordList}
+        </ul>
+      </div>
     )
   }
 })

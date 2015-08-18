@@ -14,11 +14,17 @@
   text-align: center;
 }
 
+.chart-position {
+  display: inline-block;
+  float: left;
+}
+
 .chart-container {    
-  display: flex;
+/*  display: flex;
     display: -webkit-flex;
   flex-direction: row;
-    -webkit-flex-direction: row;
+    -webkit-flex-direction: row;*/
+  display: inline;
   margin: 20px;
 }
 
@@ -74,11 +80,13 @@
     -webkit-align-self: center;
 }
 
-
-
 .chart {
   padding: 10px;
   margin: 10px;
-  width: 700px;
-  height: 500px;
+  width: 500px;
+  height: 300px;
+}
+
+.slider {
+  width: 500px;
 }

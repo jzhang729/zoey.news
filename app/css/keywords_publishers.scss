@@ -1,15 +1,3 @@
-@mixin keyword-publisher-section {
-  list-style-type: none;
-  padding: 0px;
-  white-space: nowrap;
-  margin: 20px 0px;
-}
-
-@mixin keyword-publisher-list-item {
-  list-style-type: none;
-  font-size: 12pt;
-}
-
 @mixin keyword-publisher-hover {
   &:hover{
     cursor: pointer;
@@ -28,22 +16,39 @@ h5 {
 }
 
 .keyword-list {
-  @include keyword-publisher-section;
+  list-style-type: none;
+  white-space: nowrap;
+  padding: 10px;
+  margin: 0px;
+  display: flex;
+    display: -webkit-flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 .publisher-list {
-  @include keyword-publisher-section;
+  list-style-type: none;
+  white-space: nowrap;
+  padding: 10px;
+  margin: 0px;
+  display: flex;
+    display: -webkit-flex;
+  flex-direction: row;
+  justify-content: stretch;
 }
 
 .keyword-list-item {
-  @include keyword-publisher-list-item;
-  text-align: right;
-  margin-right: 20px;
+  list-style-type: none;
+  font-size: 12pt;
+  margin: 0px 10px;
+  flex: 0 1 auto;
 }
 
 .publisher-list-item {
-  @include keyword-publisher-list-item;
-  margin-bottom: 10px;
+  list-style-type: none;
+  font-size: 12pt;
+  margin: 0px 10px;
+  flex: 1 1 150px;
 }
 
 .keyword-list i {
@@ -54,13 +59,13 @@ h5 {
   @include keyword-publisher-hover; 
 }
 
-.keyword-add {
-  margin-left: 20px;
-  
-  input {
-    margin: 10px;
-  }
+.publisher-add {
+  margin-left: 25px;
+}
 
+.keyword-add {
+  margin-left: 25px;
+  
   i {
     color: rgba(44,149,36,1);
     background: none;
@@ -77,3 +82,4 @@ h5 {
 .delete {
   margin: 30px auto;
 }
+

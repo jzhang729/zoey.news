@@ -33,16 +33,17 @@ export default React.createClass({
     }.bind(this))
 
     return (
-      <ul className="publisher-list">
-        <h5>Publishers</h5>
-        {activePublisherList}
-        <div className="publisher-add">
+      <div>
+         <div className="publisher-add">
           <select onChange={this.handleChange}>
             <option value="">Add media source</option>
             {publisherList}
           </select>
         </div>
-      </ul>
+        <ul className="publisher-list">
+          {activePublisherList}
+        </ul>
+      </div>
     )
   }
 })

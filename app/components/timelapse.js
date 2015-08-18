@@ -35,19 +35,19 @@ export default React.createClass({
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
-          <div className="chart-label-y">&nbsp;</div>
+        <div className="chart-label-y">&nbsp;</div>
+        <div className="chart-main">
+          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+          <KeywordList chartID={this.props.chartParams.chartID} 
+                         className={'keyword-list'} 
+                         list={this.props.chartParams.keywords} 
+                         legend={true} />
           <LineChart className="chart" 
                      data={this.props.chartParams.snapShot}
                      redraw={true}
                      options={options}/>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
-          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
-            <KeywordList chartID={this.props.chartParams.chartID} 
-                         className={'keyword-list'} 
-                         list={this.props.chartParams.keywords} 
-                         legend={true} />
-            <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
-          </div>
+        </div>
+        <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
         </div>
       )
     } else {
