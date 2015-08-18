@@ -8,7 +8,6 @@ import App from './components/app.js'
 import Fluxxor from 'fluxxor'
 import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
-import ChartStore from './stores/chartstore'
 import routeService from './services/routeservice'
 import requestManager from './services/requestManager'
 
@@ -148,13 +147,11 @@ var actions = {
   changeDateRange: function(chartID, dates) {
     this.dispatch("CHANGE_DATE_RANGE", {id: chartID, data: dates})
   }
-
 }
 
 var stores = {
   SnapShotStore: new SnapShotStore(),
   PublisherStore: new PublisherStore(),
-  ChartStore: new ChartStore()
 }
 var flux = new Fluxxor.Flux(stores, actions);
 

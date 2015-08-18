@@ -21,7 +21,6 @@ export default React.createClass({
     return {
       publisherList: this.getFlux().store("PublisherStore").getPublishers(),
       charts: this.getFlux().store("SnapShotStore").getCharts(),
-      
       allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
