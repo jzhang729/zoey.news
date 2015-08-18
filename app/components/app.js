@@ -31,9 +31,8 @@ export default React.createClass({
   hideMenu: function() {
     this.refs.menu.hide();
   },
-  handleAddChart: function() {
-    this.getFlux().actions.addChart("snapshot")
-    console.log("app.js")
+  handleAddChart: function(chartType) {
+    this.getFlux().actions.addChart(chartType)
   },
   render: function() {
     return (
@@ -41,7 +40,8 @@ export default React.createClass({
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <a href="#" onClick={this.handleAddChart}>Add Snapshot</a>
+        <a href="#" onClick={this.handleAddChart.bind(this, "snapshot")}>Add Snapshot</a>
+        <a href="#" onClick={this.handleAddChart.bind(this, "timelapse")}>Add TimeLapse</a>
         <ChartCanvas charts={this.state.charts} />
         </div>
       <Footer />

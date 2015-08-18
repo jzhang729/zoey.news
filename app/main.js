@@ -31,10 +31,16 @@ var actions = {
       keywords: ["Mulcair", "Trudeau", "Harper"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       },
-      {chartID: 1, 
+      {chartID: 12, 
       chartType: "snapshot", 
       title: "Security", 
       keywords: ["ISIS", "Terrorism", "RCMP"],
+      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+      },
+      {chartID: 34, 
+      chartType: "timelapse", 
+      title: "Economy", 
+      keywords: ["Taxes", "economy"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       }
     ]
