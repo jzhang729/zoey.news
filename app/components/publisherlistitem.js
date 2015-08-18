@@ -25,10 +25,27 @@ export default React.createClass({
       borderBottomWidth: '8px',
       borderBottomStyle: 'solid'
     }];
+
+
+    var listItem;
+    if (this.props.legend == true) {
+      listItem = (
+        <div className="publisher-list-item" style={divStyle[this.props.publisherIndex]}>
+          {publisher} &nbsp;
+          <i className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
+        </div>
+      )
+    } else {
+      listItem = (
+        <div className="publisher-list-item">
+          {publisher} &nbsp;
+          <i className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
+        </div>
+      )
+    }
     return (
-      <li className="publisher-list-item" style={divStyle[this.props.publisherIndex]}>
-        {publisher} &nbsp;
-        <i className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
+      <li>
+        {listItem}
       </li>
     )
   }

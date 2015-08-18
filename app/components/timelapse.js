@@ -1,5 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
+import KeywordList from './keywordlist'
+import PublisherList from './publisherlist'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -37,6 +39,13 @@ export default React.createClass({
                      data={this.props.chartParams.snapShot}
                      redraw={true}
                      options={options}/>
+          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+            <KeywordList chartID={this.props.chartParams.chartID} 
+                         className={'keyword-list'} 
+                         list={this.props.chartParams.keywords} 
+                         legend={true} />
+            <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+          </div>
         </div>
       )
     } else {

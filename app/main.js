@@ -50,6 +50,7 @@ var actions = {
   addChart: function(type) {
     var chart = {
       chartID: 3,
+      title: "Election",
       chartType: type,
       keywords: ["election"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]

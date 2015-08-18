@@ -43,7 +43,7 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
-            <BarChart className="chart" 
+            <BarChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
                       options={options}/>
@@ -52,7 +52,11 @@ export default React.createClass({
           <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <KeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
-            <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+            <PublisherList chartID={this.props.chartParams.chartID} 
+                           className={'publisher-list'} 
+                           list={this.props.publisherList} 
+                           activelist={this.props.chartParams.publishers}
+                           legend={true}/>
             <Button className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
