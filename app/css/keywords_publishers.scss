@@ -2,6 +2,7 @@
   /*width: 250px;*/
   padding: 0px;
   white-space: nowrap;
+  margin: 20px 0px;
 }
 
 @mixin keyword-publisher-list-item {
@@ -21,7 +22,9 @@
 }
 
 h5 {
-  @include chart-menu-section-label;
+  font-size: 14pt;
+  font-family: $primary-font;
+  font-weight: bold;
 }
 
 .keyword-list {
@@ -69,4 +72,8 @@ h5 {
       color: rgba(47,255,38,0.5);
     }
   }
+}
+
+.delete {
+  margin: 30px auto;
 }
