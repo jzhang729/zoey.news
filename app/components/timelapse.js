@@ -1,7 +1,9 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import KeywordList from './keywordlist'
-import PublisherList from './publisherlist'
+import ActiveKeywordList from './activekeywordlist'
+import AddKeyword from './addkeyword'
+import ActivePublisherList from './activepublisherlist'
+import AddPublisher from './addpublisher'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -35,18 +37,20 @@ export default React.createClass({
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
-        <div className="chart-label-y">&nbsp;</div>
-        <div className="chart-main">
-          <PublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
-          <KeywordList chartID={this.props.chartParams.chartID} 
-                         className={'keyword-list'} 
-                         list={this.props.chartParams.keywords} 
-                         legend={true} />
-          <LineChart className="chart" 
-                     data={this.props.chartParams.snapShot}
-                     redraw={true}
-                     options={options}/>
-        </div>
+          <div className="chart-label-y">&nbsp;</div>
+          <div className="chart-main">
+            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                                 className={'keyword-list'}
+                                 list={this.props.chartParams.keywords}
+                                 legend={true} />
+            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+            <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />     
+            <LineChart className="chart"
+                       data={this.props.chartParams.snapShot}
+                       redraw={true}
+                       options={options} />
+          </div>    
         </div>
       )
     } else {
@@ -62,8 +66,5 @@ export default React.createClass({
 
 // <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
 
-
 // Experimenting with this code to control whether to redraw entire chart
 // redraw={this.props.chartParams.shouldRedraw}
-
- 
