@@ -35,10 +35,12 @@ export default React.createClass({
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
+          <div className="chart-label-y">&nbsp;</div>
           <LineChart className="chart" 
                      data={this.props.chartParams.snapShot}
                      redraw={true}
                      options={options}/>
+          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>        
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <KeywordList chartID={this.props.chartParams.chartID} 
                          className={'keyword-list'} 
