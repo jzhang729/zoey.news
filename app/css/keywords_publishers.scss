@@ -21,7 +21,9 @@
 }
 
 h5 {
-  @include chart-menu-section-label;
+  font-size: 14pt;
+  font-family: $primary-font;
+  font-weight: bold;
 }
 
 .keyword-list {

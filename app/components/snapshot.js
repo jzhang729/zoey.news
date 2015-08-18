@@ -11,7 +11,7 @@ var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 var options = {
   scaleBeginAtZero : true,
   scaleShowGridLines : true,
-  scaleGridLineColor : "rgba(0,0,0,0.3)",
+  scaleGridLineColor : "rgba(0,0,0,0.05)",
   scaleGridLineWidth : 1,
   scaleShowHorizontalLines: true,
   scaleShowVerticalLines: true,
