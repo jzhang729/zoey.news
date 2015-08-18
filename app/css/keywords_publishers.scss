@@ -20,8 +20,10 @@ h5 {
   white-space: nowrap;
   padding: 10px;
   margin: 0px;
+  width: 500px;
   display: flex;
     display: -webkit-flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
 }
@@ -31,46 +33,64 @@ h5 {
   white-space: nowrap;
   padding: 10px;
   margin: 0px;
+  width: 500px;
   display: flex;
     display: -webkit-flex;
+  flex-wrap: wrap;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: stretch;
 }
 
 .keyword-list-item {
   list-style-type: none;
-  font-size: 12pt;
+  font-size: 9pt;
   margin: 0px 10px;
   flex: 0 1 auto;
 }
 
 .publisher-list-item {
   list-style-type: none;
-  font-size: 12pt;
+  font-size: 9pt;
   margin: 0px 10px;
+  min-width: 150px;
   flex: 1 1 150px;
 }
 
-.keyword-list i {
+.keyword-list i, .publisher-list i {
   @include keyword-publisher-hover;
 }
 
-.publisher-list i {
-  @include keyword-publisher-hover; 
+.add {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
 }
 
 .publisher-add {
-  margin-left: 25px;
+  margin-left: 15px;
+
+  select {
+    line-height: 2em;
+    padding: 0px 10px;
+  }
 }
 
 .keyword-add {
-  margin-left: 25px;
+  margin-left: 15px;
+
+  input {
+    line-height: 1em;
+    padding: 0px 10px;
+  }
   
   i {
+    font-size: 16pt;
     color: rgba(44,149,36,1);
     background: none;
     border: 0px;
-    margin-top: 10px;
     padding: 5px;
 
     &:hover{

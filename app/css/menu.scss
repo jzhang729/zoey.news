@@ -1,12 +1,11 @@
 .menu {
-  width: 100px;
+  width: 80px;
   margin: 10px;
   float: left;
 
-/*  @media (max-width: 767px) {
-    width: 85%;
-    margin: auto;
-  }*/
+  @media (max-width: 767px) {
+    display: inline;
+  }
 }
 
 .menu > div {

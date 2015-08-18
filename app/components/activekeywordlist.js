@@ -37,14 +37,14 @@ export default React.createClass({
         return (
           <li className="keyword-list-item" style={divStyle[keywordIndex]}>
             {keyword} &nbsp;
-            <i className="fa fa-times-circle-o" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
+            <i className="fa fa-times" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
           </li>
         )
       } else {
         return (
           <li className="keyword-list-item">
             {keyword} &nbsp;
-            <i className="fa fa-times-circle-o" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
+            <i className="fa fa-times" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
           </li>
         )
       }

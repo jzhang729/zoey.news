@@ -37,19 +37,21 @@ export default React.createClass({
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
-          <div className="chart-label-y">&nbsp;</div>
+          <div className="chart-label-y">Keyword Frequency</div>
           <div className="chart-main">
-            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
-            <ActiveKeywordList chartID={this.props.chartParams.chartID}
-                                 className={'keyword-list'}
-                                 list={this.props.chartParams.keywords}
-                                 legend={true} />
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+          <div className="add">
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />     
-            <LineChart className="chart"
-                       data={this.props.chartParams.snapShot}
-                       redraw={true}
-                       options={options} />
+            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+          </div>
+          <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+          <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                               className={'keyword-list'}
+                               list={this.props.chartParams.keywords}
+                               legend={true} />
+          <LineChart className="chart"
+                     data={this.props.chartParams.snapShot}
+                     redraw={true}
+                     options={options} />
           </div>    
         </div>
       )

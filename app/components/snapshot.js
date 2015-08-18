@@ -46,10 +46,13 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
-            <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
-            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <div className="add">
+              <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+              <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+              <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+            </div>
             <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
             <BarChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
@@ -69,7 +72,7 @@ export default React.createClass({
   }
 })
 
-// <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+// 
 
 // redraw={this.props.chartParams.shouldRedraw}
 
