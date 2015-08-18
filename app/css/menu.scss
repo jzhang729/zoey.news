@@ -1,0 +1,23 @@
+.menu {
+  width: 100px;
+  margin: 10px;
+  float: left;
+
+/*  @media (max-width: 767px) {
+    width: 85%;
+    margin: auto;
+  }*/
+}
+
+.menu > div {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid $border-color;
+  text-align: center;
+  line-height: 3em;
+
+  &:hover {
+    background-color: $menu-hover-color;
+    cursor: pointer;
+  }
+}

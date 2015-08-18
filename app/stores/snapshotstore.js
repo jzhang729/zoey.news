@@ -5,53 +5,107 @@ import makeDates from '../services/makeDates'
 export default Fluxxor.createStore({
 
   initialize: function(options) {
-    this.snapShot =  [{
-      labels: [],
-      datasets: [
-        {
-            label: "",
-            data: []
-        }
-      ]
-    }]
-
+    this.charts = []
     this.dates = makeDates()
-    this.startDate = [0]
-    this.endDate = [(this.dates.length -1)]
-    this.keywords = [["harper", "mulcair", "trudeau"]]
-    this.publishers = [[{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]]
-    this.datastore = [[]]
-
     this.bindActions(
-      "LOAD_SNAPSHOT_DATA", this.load,
-      "UPDATE_CHART", this.update,
+      "LOAD_CHART_DATA", this.loadChartData,
+      "UPDATE_CHART", this.handleUpdateChart,
       "ADD_KEYWORD", this.handleAddKeyword,
       "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
-      "CHANGE_DATE_RANGE", this.handleChangeDateRange
-
+      "CHANGE_DATE_RANGE", this.handleChangeDateRange,
+      "LOAD_CHARTS", this.handleLoadCharts
     );
   },
-  load: function(payload, type){
+  _byChartID: function(id) {
+    var found = {}
+    this.charts.forEach(function(chart) {
+      if (chart.chartID == id) {
+        found = chart
+      }
+    })
+    return found
+  },
+  handleLoadCharts: function(newCharts) {
+    newCharts = newCharts.map(function(chart) {
+      chart.startDate = 0
+      chart.endDate = (this.dates.length -1)
+      chart.datastore = []
+      chart.snapShot = {
+        labels: [],
+        datasets: [{
+          label: "",
+          data: []
+        }]
+      }
+      return chart
+    }.bind(this))
+    this.charts = this.charts.concat(newCharts)
+  },
+  loadChartData: function(payload, type) {
     var id = payload.id
     var data = payload.data
-    this.datastore[id] = data
+    this._byChartID(id).datastore = data
+  },
+  handleUpdateChart: function(chartID) {
+    switch (this._byChartID(chartID).chartType) {
+      case "snapshot":
+        this.updateSnapShot(chartID)
+        break
+      case "timelapse":
+        this.updateTimeLapse(chartID)
+        break
+    }
+  },
+  updateTimeLapse: function(chartID) {
+    var currentChart = this._byChartID(chartID)
+    var newDatasets = []
+    
+    currentChart.keywords.forEach(function(keyword, index) {
+      var dailyCount = this.dates.map(function(date) {
+        var sum = 0
+        currentChart.datastore.forEach(function(row) {
+          if ( (date == row.date) && (keyword == row.word) ) {
+            sum += row.nentry
+          }
+        })
+        return sum
+      })
+      var dataset = {
+        label: keyword,
+        data: dailyCount,
+        fillColor: color.Fill[index],
+        strokeColor: color.Stroke[index],
+        highlightFill: color.HighlightFill[index],
+        highlightStroke: color.HighlightStroke[index]
+      }
+      newDatasets.push(dataset)
+    }.bind(this));
+
+    var newSnapShot = {
+      labels: this.dates,
+      datasets: newDatasets
+    }
+    this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
-  update: function(id){
+
+  updateSnapShot: function(chartID){
+    var currentChart = this._byChartID(chartID)
+
     var dateMatch = function (row) {
       var date = new Date(row.date);
-      var startDate = new Date(this.dates[this.startDate[id]])
-      var endDate = new Date(this.dates[this.endDate[id]])
+      var startDate = new Date(this.dates[currentChart.startDate])
+      var endDate = new Date(this.dates[currentChart.endDate])
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
 
-    var filteredArr = this.datastore[id].filter(dateMatch);
+    var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
 
-    this.publishers[id].forEach(function(publisher, index) {
-      var wordcount = this.keywords[id].map(function(keyword) {
+    currentChart.publishers.forEach(function(publisher, index) {
+      var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
         filteredArr.forEach(function(row) {
           if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
@@ -72,61 +126,77 @@ export default Fluxxor.createStore({
     }.bind(this));
 
     var newSnapShot = {
-      labels: this.keywords[id],
+      labels: currentChart.keywords,
       datasets: newDatasets
     }
-    this.snapShot[id] = newSnapShot
+    this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
 
   handleAddKeyword: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.keywords[id].push(data)
-    this.update(id)
+    this._byChartID(chartID).keywords.push(data)
+    this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.keywords[id].splice(data, 1)
-    this.update(id)
+    this._byChartID(chartID).keywords.splice(data, 1)
+    this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
-    var id = payload.id
-    var data = payload.data
-    this.publishers[id].push(data)
-    this.update(id)
+    this._byChartID(payload.id).publishers.push(payload.data)
+    this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.publishers[id].splice(data, 1)
-    this.update(id)
+    this._byChartID(chartID).publishers.splice(data, 1)
+    this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
-    var id = payload.id
+    var chartID = payload.id
     var data = payload.data
-    this.startDate[id] = data[0]
-    this.endDate[id] = data[1]
-    this.update(id)
+    this._byChartID(chartID).startDate = data[0]
+    this._byChartID(chartID).endDate = data[1]
+    this.handleUpdateChart(chartID)
   },
-  getSnapShot: function(id){
-    return this.snapShot[id]
+  getSnapShot: function(chartID){
+    if (this._byChartID(chartID).snapShot) {
+      return this._byChartID(chartID).snapShot
+    } else {
+      return {
+        labels: [],
+        datasets: [{
+          label: "",
+          data: []
+        }]
+      }
+    }
   },
-  getKeywords: function(id){
-    return this.keywords[id]
+  getKeywords: function(chartID){
+    if (this._byChartID(chartID).keywords) {
+      return this._byChartID(chartID).keywords
+    } else {
+      return []
+    }
   },
-  getPublishers: function(id){
-    return this.publishers[id]
+  getPublishers: function(chartID){
+    if (this._byChartID(chartID).publishers) {
+      return this._byChartID(chartID).publishers
+    } else {
+      return []
+    }
   },
-  getStartDate: function(id){
-    return this.startDate[id]
+  getStartDate: function(chartID){
+    return this._byChartID(chartID).startDate
   },
-  getEndDate: function(id){
-    return this.endDate[id]
+  getEndDate: function(chartID){
+    return this._byChartID(chartID).endDate
   },
-  getAllDates: function(id){
-    return this.dates[id]
-  },
+  getAllDates: function(){
+    return this.dates
+  }
 
 });

@@ -1,0 +1,84 @@
+@mixin chart-menu-section-label {
+  color: $chart-menu-section-color;
+  font-family: $primary-font;
+  font-size: 10pt;
+  text-align: left;
+}
+
+@mixin chart-axis-label {
+  font: {
+    family: $primary-font;
+    size: 10pt;
+    weight: bold;
+  }
+  text-align: center;
+}
+
+.chart-container {    
+  display: flex;
+    display: -webkit-flex;
+  flex-direction: row;
+    -webkit-flex-direction: row;
+  margin: 20px;
+}
+
+.chart-main {
+  order: 1;
+  display: flex;
+    display: -webkit-flex;
+  flex-direction: column;
+    -webkit-flex-direction: column;
+}
+
+.chart-options {
+  display: block;
+  margin: 0px 10px;
+  order: 2;
+    -webkit-order: 2;
+  align-self: flex-start;
+    -webkit-align-self: flex-start;
+
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.chart-menu {
+  background-color: $chart-menu-bg-color;
+  padding: 20px 10px;
+  border: 1px solid $border-color;
+/*  display: flex;
+    display: -webkit-flex;
+  align-items: flex-start;
+    -webkit-align-items: flex-start;
+  flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+  flex-direction: column;
+    -webkit-flex-direction: column;*/
+  order: 3;
+    -webkit-order: 3;
+}
+
+.chart-label-y {
+  @include chart-axis-label;
+  transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+  transform-origin: left top 0;
+    -webkit-transform-origin: left top 0;
+  white-space: nowrap;
+  flex: 0 0 30px;
+    -webkit-flex: 0 0 30px;
+  order: 0;
+    -webkit-order: 0;
+  align-self: center;
+    -webkit-align-self: center;
+}
+
+
+
+.chart {
+  padding: 10px;
+  margin: 10px;
+  width: 700px;
+  height: 500px;
+}

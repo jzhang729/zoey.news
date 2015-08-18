@@ -1,0 +1,49 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+/* COLORS */
+$menu-hover-color: rgba(12,213,248,0.2);
+$footer-color: rgba(0,0,0,0.1);
+$border-color: rgba(0,0,0,0.1);
+$chart-menu-bg-color: rgba(0,0,0,0.05);
+$chart-menu-section-color: rgba(0,0,0,0.7);
+
+/* FONTS & FONT STYLES */
+
+$primary-font: arial;
+
+@font-face{
+  font-family: 'Playfair';
+  src: url('../../public/playfair-display/PlayfairDisplay-Black.otf');
+}
+
+@mixin main-font-style{
+  font-family: arial;
+  font-size: 10pt;
+}
+
+/*
+@mixin tabstyle {
+  font-family: $primary-font;
+  font-weight: bold;
+  margin: 10px 5px;
+  color: #000;
+  padding: 10px;
+  border: 2px solid #000;
+  list-style-type: none;
+  -webkit-transform: skew(-20deg);
+     -moz-transform: skew(-20deg);
+       -o-transform: skew(-20deg);
+}*/
+
+/* MEDIA QUERIES */
+

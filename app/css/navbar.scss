@@ -1,0 +1,51 @@
+span.navbar-brand {
+  font-family: 'Playfair', $primary-font;
+  font-size: 30pt;
+}
+
+/*.flex-tabs {
+  display: flex;
+  flex: wrap;
+  flex-direction: row;
+  align-items: space-between;
+}
+
+.flex-tabs > li {
+  @include main-font-style;
+  list-style-type: none;
+  font-weight: bold;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  margin: 5px 5px;
+  color: #000;
+  background-color: #FFF;
+  padding: 10px;
+  transform: skew(-20deg);
+  flex: auto 25px;
+
+  &:hover {
+    background-color: #000;
+    color: #FFF;
+    cursor: pointer;
+    position: relative;
+    left: 2px;
+  }
+}
+
+h1.title {
+  margin: 0px 0px 20px 30px;
+  padding: 0px;
+  font-family: 'Playfair', serif;
+  font-size: 60pt;
+  text-align: left;
+  color: #FFF;
+   -webkit-text-stroke-width: 2px;
+   -webkit-text-stroke-color: black;
+}
+
+.tabs {  
+  margin: 20px 0px;
+  padding: 0px;
+  display: block;
+}*/

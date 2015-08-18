@@ -1,0 +1,72 @@
+@mixin keyword-publisher-section {
+  /*width: 250px;*/
+  padding: 0px;
+  white-space: nowrap;
+}
+
+@mixin keyword-publisher-list-item {
+  list-style-type: none;
+  font-size: 12pt;
+}
+
+@mixin keyword-publisher-hover {
+  &:hover{
+    cursor: pointer;
+    color: red;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+h5 {
+  @include chart-menu-section-label;
+}
+
+.keyword-list {
+  @include keyword-publisher-section;
+}
+
+.publisher-list {
+  @include keyword-publisher-section;
+}
+
+.keyword-list-item {
+  @include keyword-publisher-list-item;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.publisher-list-item {
+  @include keyword-publisher-list-item;
+  margin-bottom: 10px;
+}
+
+.keyword-list i {
+  @include keyword-publisher-hover;
+}
+
+.publisher-list i {
+  @include keyword-publisher-hover; 
+}
+
+.keyword-add {
+  margin-left: 20px;
+  
+  input {
+    margin: 10px;
+  }
+
+  i {
+    color: rgba(44,149,36,1);
+    background: none;
+    border: 0px;
+    margin-top: 10px;
+    padding: 5px;
+
+    &:hover{
+      color: rgba(47,255,38,0.5);
+    }
+  }
+}

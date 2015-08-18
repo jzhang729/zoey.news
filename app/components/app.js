@@ -8,36 +8,41 @@ import ChartCanvas from './chartcanvas'
 import Fluxxor from 'fluxxor'
 
 var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 export default React.createClass({
-  mixins: [FluxMixin],
+  mixins: [FluxMixin, StoreWatchMixin("PublisherStore", "ChartStore")],
 
   getInitialState: function(){
-    return {
-      keywordEntry: "",
-      charts: [
-              {chartID: 0, chartType: "snapshot", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}},
-              {chartID: 1, chartType: "timelapse", params: {title: "Homeland Security", keywords: ["ISIS", "Terrorism", "RCMP"], publishers: ["1", "2"]}}
-      ]
-    }
   },
   componentDidMount: function() {
     this.getFlux().actions.loadPublishers();
+    this.getFlux().actions.loadCharts();
   },  
+  getStateFromFlux: function(){
+    return {
+      charts: this.getFlux().store("ChartStore").getCharts(),
+      publishers: this.getFlux().store("PublisherStore").getPublishers()
+    }
+  },
   showMenu: function() {
     this.refs.menu.show();
   },
   hideMenu: function() {
     this.refs.menu.hide();
   },
+  handleAddChart: function(chartType) {
+    this.getFlux().actions.addChart(chartType)
+  },
   render: function() {
-    var charts = this.state.charts
     return (
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <ChartCanvas charts={charts} />
+        <a href="#" onClick={this.handleAddChart.bind(this, "snapshot")}>Add Snapshot</a>
+        <a href="#" onClick={this.handleAddChart.bind(this, "timelapse")}>Add TimeLapse</a>
+        <ChartCanvas charts={this.state.charts} />
         </div>
       <Footer />
       </section>

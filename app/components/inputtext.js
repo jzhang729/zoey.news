@@ -19,6 +19,7 @@ export default React.createClass({
   handleKeyDown: function(event) {
     if (event.which == 13) {
       this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+      this.setState({value: ""})
     }
   },
 
