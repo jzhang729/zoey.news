@@ -24,30 +24,32 @@ var options = {
 };
 
 export default React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
-
-  getStateFromFlux: function(){
-    return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
-      // keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
-      // publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
-      // startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartParams.chartID),
-      // endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartParams.chartID),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartParams.chartID)
-    }
-  },
+  mixins: [FluxMixin],
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(this.props.chartParams.chartID, this.props.chartParams.keywords, this.props.chartParams.publishers);
+    this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
-
   render: function() {
+    var chart;
+    if(this.props.chartParams.snapShot){
+      chart = (
+        <div className="chart-container">
+          <LineChart className="chart" 
+                     data={this.props.chartParams.snapShot}
+                     redraw={true}
+                     options={options}/>
+        </div>
+      )
+    } else {
+      chart = (<h4>loading</h4>)
+    }
     return (
-      <div className="chart-container">
-        <LineChart className="chart" data={this.state.chartdata} options={options} redraw />
-      </div>
+    <div>
+      {chart}
+    </div>
     )
   }
 })
-
+// Experimenting with this code to control whether to redraw entire chart
+// redraw={this.props.chartParams.shouldRedraw}
 
  
