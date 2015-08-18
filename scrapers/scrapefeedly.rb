@@ -26,7 +26,7 @@ require './scraper'
 # set query parameters to "&newerThan=1438488001&count=10000"
 
 
-query_parameters = "&count=200"
+query_parameters = "&newerThan=1438488001&count=100000"
 
 globeandmail = open("http://feedly.com/v3/streams/contents?streamId=feed/http://www.theglobeandmail.com/news/politics/?service=rss#{query_parameters}").read
 nationalpost = open("http://feedly.com/v3/streams/contents?streamId=feed/http://news.nationalpost.com/category/news/canada/canadian-politics/feed/#{query_parameters}").read

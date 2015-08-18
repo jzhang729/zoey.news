@@ -1,13 +1,17 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import KeywordListItem from './keywordlistitem'
-import KeywordAdd from './keywordadd'
+require("font-awesome-webpack");
 
+
+var FluxMixin = Fluxxor.FluxMixin(React);
 
 export default React.createClass({
+  mixins: [FluxMixin],
+
   getInitialState: function() {
     return {
-      hidden: false
+      hidden: false,
+      value: ""
     }
   },
 
@@ -21,16 +25,43 @@ export default React.createClass({
     this.setState({ visible: false });
   },
 
+  handleClick: function() {
+    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+  },
+
+  handleKeyDown: function(event) {
+    if (event.which == 13) {
+      this.getFlux().actions.addKeyword(this.props.chartID, event.target.value)
+      this.setState({value: ""})
+    }
+  },
+
+  handleChange: function(event) {
+    this.setState({value: event.target.value})
+  },
+
+  handleRemoveKeyword: function(keywordIndex) {
+    this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
+  },
+
   render: function() {
+
     var keywordList = this.props.list.map(function(keyword, keywordIndex){
       return (
-        <KeywordListItem chartID={this.props.chartID} keyword={keyword} id={keywordIndex} />
+        <li className="keyword-list-item">
+          {keyword} &nbsp;
+          <i className="fa fa-times-circle-o" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
+        </li>
+
       )
     }.bind(this))
     return (
       <ul className={this.props.className}>
         <h5>Keywords</h5>
-        <KeywordAdd chartID={this.props.chartID} />
+        <div className="keyword-add">
+          <input type="text" value={this.state.value} maxLength="16" chartID={this.props.chartID} onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
+          <i className="fa fa-2x fa-plus-square" value="Submit" onClick={this.handleClick}></i>
+        </div>
         {keywordList}
       </ul>
     )
