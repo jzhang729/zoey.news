@@ -39,10 +39,14 @@ var getPublisherList = function(callback) {
   knex.select().from("publishers").then(callback)
 }
 
-var getTopKeywords = function(d, p, callback) {
-  // TODO: return top ten(?) keywords for a given set of publishers and date range
+var getCharts = function(user, callback) {
+  knex.select('charts.id', 'charts.chart_list_order', 'charts.chart_params', 'charts.tab_id', 'tabs.tab_list_order', 'tabs.tab_name')
+    .from("charts")
+    .leftJoin('tabs', 'charts.tab_id', 'tabs.id')
+    .where('tabs.user_id', user)
+    .then(callback);
 }
-
 
 exports.queryDetail = queryDetail;
 exports.getPublisherList = getPublisherList;
+exports.getCharts = getCharts;
