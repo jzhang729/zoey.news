@@ -5,6 +5,7 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({
   mixins: [FluxMixin],
+
   handleRemovePublisher: function(publisherIndex) {
     this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
   },
@@ -26,7 +27,6 @@ export default React.createClass({
       borderBottomWidth: '8px',
       borderBottomStyle: 'solid'
     }];
-
 
     var listItem;
     if (this.props.legend == true) {
