@@ -30,8 +30,6 @@ export default React.createClass({
   mixins: [FluxMixin],
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
-    console.log("snapshot mounted")
-    console.log(this.props.chartParams.chartID)
   },
   addKeyword: function(keyword){
     this.getFlux().actions.addKeyword(this.props.chartParams.chartID, keyword);

@@ -34,8 +34,6 @@ export default React.createClass({
     this.getFlux().actions.addChart(chartType)
   },
   render: function() {
-    console.log("app state")
-    console.log(this.state.charts)
     return (
       <section className="content">
       <Navbar />

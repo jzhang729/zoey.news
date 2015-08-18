@@ -5,12 +5,7 @@ import Fluxxor from 'fluxxor'
 
 export default React.createClass({
 
-  componentDidMount: function() {
-    console.log("canvas mounted")
-  },
-
   render: function() {
-    console.log("canvas rendering")
     var charts = this.props.charts.map(function(chart, index) {
       if (chart.chartType == "snapshot") {
         console.log(this.props.charts)
