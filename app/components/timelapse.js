@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import ActiveKeywordList from './activekeywordlist'
+import AddKeyword from './addkeyword'
 import PublisherList from './publisherlist'
 
 var LineChart = require("react-chartjs").Line;
@@ -42,6 +43,8 @@ export default React.createClass({
                      options={options}/>
           <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+            <h5>Keywords</h5>
+            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID}
                                className={'keyword-list'}
                                list={this.props.chartParams.keywords}
