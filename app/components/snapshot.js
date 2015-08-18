@@ -71,14 +71,3 @@ export default React.createClass({
     )
   }
 })
-
-// 
-
-// redraw={this.props.chartParams.shouldRedraw}
-
-   // <PublisherList chartID={this.props.chartParams.chartID} 
-            //                className={'publisher-list'} 
-            //                list={this.props.publisherList} 
-            //                activelist={this.props.chartParams.publishers}
-            //                legend={true}/>
-// redraw={this.props.chartParams.shouldRedraw}
