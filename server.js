@@ -10,8 +10,12 @@ var app = express();
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
+
 var queryDetail = require('./sql_builder').queryDetail;
 var getPublisherList = require('./sql_builder').getPublisherList;
+var getCharts = require('./sql_builder').getCharts;
+var getChart = require('./sql_builder').getChart;
+var getChartData = require('./sql_builder').getChartData;
 
 app.use(express.static(publicPath));
 
@@ -30,11 +34,23 @@ app.get('/detail', function(req, res) {
 });
 
 app.get('/publishers', function(req, res) {
-
   getPublisherList(function(resp) {
     res.send(resp);
   });
+});
 
+app.get('/users/:user/charts', function(req, res) {
+  getCharts(req.params.user, function(resp) {
+    res.send(resp);
+  });
+});
+
+app.get('/charts/show/:chartID', function(req, res) {
+  getChart(req.params.chartID, function(chartParams) {
+    getChartData(chartParams, function(rows) {
+      res.send(rows)
+    })
+  })
 })
 
 if (!isProduction) {
