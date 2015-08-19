@@ -62,12 +62,15 @@ export default Fluxxor.createStore({
   updateTimeLapse: function(chartID) {
     var currentChart = this._byChartID(chartID)
     var newDatasets = []
-
+    var activePublisherIDs = currentChart.publishers.map(function(publisher) {
+      return publisher.id
+    })
     currentChart.keywords.forEach(function(keyword, index) {
       var dailyCount = this.dates.map(function(date) {
         var sum = 0
+
         currentChart.datastore.forEach(function(row) {
-          if ( (date == row.date) && (keyword == row.word) ) {
+          if ( (date == row.date) && (keyword == row.word) && (activePublisherIDs.indexOf(row.publisher_id) >= 0) ) {
             sum += row.nentry
           }
         })

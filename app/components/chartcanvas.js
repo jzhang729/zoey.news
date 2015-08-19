@@ -8,7 +8,6 @@ export default React.createClass({
   render: function() {
     var charts = this.props.charts.map(function(chart, index) {
       if (chart.chartType == "snapshot") {
-        console.log(this.props.charts)
         return (
           <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
