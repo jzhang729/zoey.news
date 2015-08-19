@@ -6,5 +6,19 @@ export default {
       .get(route)
       .set('Accept', 'application/json')
       .end(success)
+  },
+  put: function(route, params, success) {
+    request
+      .put(route)
+      .send(params)
+      .set('Accept', 'application/json')
+      .end(success)
+  }
+  post: function(route, params, success) {
+    request
+      .post(route)
+      .send(params)
+      .set('Accept', 'application/json')
+      .end(success)
   }
 }

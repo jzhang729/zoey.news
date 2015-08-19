@@ -86,19 +86,16 @@ var actions = {
     this.dispatch("UPDATE_CHART", chartID)
   },
 
-  addKeyword: function(chartID, keyword) {
+  addKeyword: function(chartID, newKeyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
-      return publisher.id
-    })
-    if (keywordsList.indexOf(keyword) < 0) {
-      var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
+    if (keywordsList.indexOf(newKeyword) < 0) {
+      var route = 'charts/id'
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-        this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
+        this.dispatch("ADD_KEYWORD", {id: chartID, data: newKeyword})
       }.bind(this)
-      requestManager.get(route, success)
+      requestManager.put(route, {keyword: newKeyword}, success)
     }
   },
 
