@@ -51,7 +51,10 @@ export default React.createClass({
                                list={this.props.chartParams.keywords}
                                legend={true} />
             <h5>Publishers</h5>
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+            <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                 className={'publisher-list'}
+                                 list={this.props.publisherList}
+                                 activelist={this.props.chartParams.publishers}/>
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
           </div>
         </div>

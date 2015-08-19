@@ -7,7 +7,7 @@
 
 @mixin keyword-publisher-list-item {
   input {
-    width: 100px;
+    width: inherit;
   }
 }
 
@@ -38,13 +38,10 @@ h5 {
 
 .keyword-list-item {
   @include keyword-publisher-list-item;
-  text-align: right;
-  margin-right: 20px;
 }
 
 .publisher-list-item {
   @include keyword-publisher-list-item;
-  margin-bottom: 10px;
 }
 
 .keyword-list i {

@@ -55,8 +55,12 @@ export default React.createClass({
           <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <h5>Keywords</h5>
-            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
-            <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <AddKeyword chartID={this.props.chartParams.chartID}
+                        className={'keyword-list'}
+                        list={this.props.chartParams.keywords} />
+            <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                               className={'keyword-list'}
+                               list={this.props.chartParams.keywords} />
             <h5>Publishers</h5>
             <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />

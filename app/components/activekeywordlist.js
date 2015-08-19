@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-require("font-awesome-webpack");
+require("font-awesome-webpack")
+import { Input, Button } from 'react-bootstrap'
 import Color from '../services/donutchartcolor.js'
 
 
@@ -14,7 +15,10 @@ export default React.createClass({
   },
 
   render: function() {
-    var divStyle = [{
+    var keyword = this.props.keyword
+    var keywordIndex = this.props.keywordIndex
+
+    var buttonStyle = [{
       borderBottomColor: Color.Fill[0],
       borderBottomWidth: '8px',
       borderBottomStyle: 'solid'
@@ -62,19 +66,23 @@ export default React.createClass({
       borderBottomStyle: 'solid'
     }];
 
+    var iStyle = {
+      color: 'rgba(255,255,255,1)'
+    }
+
+    var innerButton = <Button style={buttonStyle[this.props.keywordIndex]}><i style={iStyle} className="fa fa-times" onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i></Button>;
+
     var activeKeywordList = this.props.list.map(function(keyword, keywordIndex){
       if (this.props.legend == true) {
         return (
-          <li className="keyword-list-item" style={divStyle[keywordIndex]}>
-            {keyword} &nbsp;
-            <i className="fa fa-times-circle-o" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
+          <li className="keyword-list-item">
+            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButton} value={keyword} />
           </li>
         )
       } else {
         return (
           <li className="keyword-list-item">
-            {keyword} &nbsp;
-            <i className="fa fa-times-circle-o" chartID={this.props.chartID} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i>
+            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButton} value={keyword} />
           </li>
         )
       }
