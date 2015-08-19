@@ -96,7 +96,7 @@ var actions = {
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
       return publisher.id
     })
-    if (keywordsList.indexOf(keyword) < 0) {
+    if (keywordsList.indexOf(keyword) < 0 && keywordsList.length < 8) {
       var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
