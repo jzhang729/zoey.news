@@ -62,8 +62,14 @@ export default React.createClass({
                                className={'keyword-list'}
                                list={this.props.chartParams.keywords} />
             <h5>Publishers</h5>
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
-            <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+            <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                 className={'publisher-list'}
+                                 list={this.props.publisherList}
+                                 activelist={this.props.chartParams.publishers}
+                                 legend={true} />
+            <AddPublisher chartID={this.props.chartParams.chartID}
+                          list={this.props.publisherList}
+                          activelist={this.props.chartParams.publishers} />
             <Button className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>

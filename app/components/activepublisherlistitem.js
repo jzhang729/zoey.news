@@ -14,7 +14,7 @@ export default React.createClass({
   render: function() {
     var publisher = this.props.publisher
     var publisherIndex = this.props.publisherIndex
-    var buttonStyle = [{
+    var legendButtonStyle = [{
       backgroundColor: Color.Fill[0],
       borderBottomWidth: '0px'
     },{
@@ -40,23 +40,28 @@ export default React.createClass({
       borderBottomWidth: '0px'
     }];
 
+    var normalButtonStyle = {
+      backgroundColor: 'rgba(0,0,0,0.5)'
+    }
+
     var iStyle = {
       color: 'rgba(255,255,255,1)'
     }
 
-    var innerButton = <Button style={buttonStyle[this.props.publisherIndex]}><i style={iStyle} className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i></Button>;
+    var innerButtonLegend = <Button style={legendButtonStyle[this.props.publisherIndex]}><i style={iStyle} className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i></Button>;
+    var innerButtonNormal = <Button style={normalButtonStyle}><i style={iStyle} className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i></Button>;
 
     var listItem;
     if (this.props.legend == true) {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' buttonBefore={innerButton} value={publisher} />
+          <Input type='text' buttonBefore={innerButtonLegend} value={publisher} />
         </div>
       )
     } else {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' buttonBefore={innerButton} value={publisher} />
+          <Input type='text' buttonBefore={innerButtonNormal} value={publisher} />
         </div>
       )
     }

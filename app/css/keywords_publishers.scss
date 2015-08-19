@@ -37,11 +37,15 @@ h5 {
 }
 
 .keyword-list-item {
-  @include keyword-publisher-list-item;
+   input {
+    width: inherit;
+  }
 }
 
 .publisher-list-item {
-  @include keyword-publisher-list-item;
+   input {
+    width: inherit;
+  }
 }
 
 .keyword-list i {
