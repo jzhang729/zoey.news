@@ -16,7 +16,6 @@ export default Fluxxor.createStore({
   },
 
   getPublishers: function(){
-    console.log("getPublishers")
     return this.publishers
   }
 });
