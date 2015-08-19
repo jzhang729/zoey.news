@@ -25,23 +25,21 @@ var actions = {
   loadCharts: function() {
     var route = '/users/1/charts'
     var success = function(err, resp){
+      var allPubObjects = this.flux.store("PublisherStore").getPublishers()
       var charts = JSON.parse(resp.text).map(function(chart) {
-        var publishersWithNames = this.flux.store("PublisherStore").getPublishers().map(function(pub) {
-          var pub = pub;
-          var found;
-          chart.chart_params.publishers.forEach(function(pubID) {
-            if (pubID = pub.id) {
-              found = pub
-            }
-          })
-          return pub
+
+        var chartPubsWithNames = [];
+        allPubObjects.forEach(function(publisher) {
+          if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
+            chartPubsWithNames.push(publisher)
+          }
         })
         return {
-          chartID: chart.id, 
+          chartID: chart.id,
           chartType: chart.chart_params.chart_type,
-          title: chart.chart_params.title, 
-          keywords: chart.chart_params.keywords, 
-          publishers: publishersWithNames
+          title: chart.chart_params.title,
+          keywords: chart.chart_params.keywords,
+          publishers: chartPubsWithNames
         }
       }.bind(this))
       this.dispatch("LOAD_CHARTS", charts)
@@ -61,7 +59,7 @@ var actions = {
 
     var chartID = chart.chartID
     var keywordsList = chart.keywords
-    var publishersList = chart.publishers 
+    var publishersList = chart.publishers
     var publisherIds = publishersList.map(function(publisher) {
       return publisher.id
     })
