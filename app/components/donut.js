@@ -43,7 +43,6 @@ var options = {
 export default React.createClass({
   mixins: [FluxMixin],
   componentDidMount: function() {
-    console.log("mounted")
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
   addKeyword: function(keyword){

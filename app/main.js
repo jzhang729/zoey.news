@@ -74,7 +74,6 @@ var actions = {
   },
 
   loadChartData: function(chartID) {
-    console.log("loadchartdata")
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
     var publisherIds = publishersList.map(function(publisher) {
