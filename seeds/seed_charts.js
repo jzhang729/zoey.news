@@ -28,6 +28,10 @@ exports.seed = function(knex, Promise) {
     knex('charts').insert({tab_id: 2, chart_list_order: 3, 
       chart_params: { title: "Economy", chart_type: "timelapse", 
       keywords: ["Taxes", "Economy", "Jobs"], publishers: [1,2,3] }
+    }),
+    knex('charts').insert({tab_id: 2, chart_list_order: 3, 
+      chart_params: { title: "Economy", chart_type: "donut", 
+      keywords: ["Taxes", "Economy", "Jobs"], publishers: [1,2,3] }
     })
   );
 };

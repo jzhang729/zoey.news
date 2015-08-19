@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import ActivePublisherListItem from './activepublisherlistitem'
+import { DropDownButton, MenuItem } from 'react-bootstrap'
 var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({
@@ -29,9 +30,9 @@ export default React.createClass({
       return activePubIDs.indexOf(pub.id) < 0
     });
 
-    var inactivePublisherList = inactivePubs.map(function(publisher){
+    var inactivePublisherList = inactivePubs.map(function(publisher, index){
       return (
-        <option chartID={this.props.chartID} value={publisher.id}>{publisher.domain}</option>
+        <option eventKey={index} chartID={this.props.chartID} value={publisher.id}>{publisher.domain}</option>
       )
     }.bind(this));
 
@@ -39,7 +40,7 @@ export default React.createClass({
       return (  
         <div className="publisher-add">
           <select onChange={this.handleChange} value="0">
-          <option value="0">Add media source</option>
+            <option value="0">Add media source</option>
             {inactivePublisherList}
           </select>
         </div>

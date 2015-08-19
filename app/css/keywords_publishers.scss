@@ -6,8 +6,9 @@
 }
 
 @mixin keyword-publisher-list-item {
-  list-style-type: none;
-  font-size: 12pt;
+  input {
+    width: 100px;
+  }
 }
 
 @mixin keyword-publisher-hover {
