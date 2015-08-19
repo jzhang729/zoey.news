@@ -31,16 +31,16 @@ var actions = {
       keywords: ["Mulcair", "Trudeau", "Harper"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       },
-      {chartID: 12, 
-      chartType: "snapshot", 
-      title: "Security", 
-      keywords: ["ISIS", "Terrorism", "RCMP"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-      },
       {chartID: 34, 
       chartType: "timelapse", 
       title: "Economy", 
       keywords: ["Taxes", "economy"],
+      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
+      },
+      {chartID: 36,
+      chartType: "donut",
+      title: "Leaders",
+      keywords: ["Mulcair", "Trudeau", "Harper"],
       publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
       }
     ]
@@ -73,6 +73,7 @@ var actions = {
   },
 
   loadChartData: function(chartID) {
+    console.log("loadchartdata")
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID) 
     var publisherIds = publishersList.map(function(publisher) {
