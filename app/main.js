@@ -75,12 +75,7 @@ var actions = {
   },
 
   loadChartData: function(chartID) {
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID) 
-    var publisherIds = publishersList.map(function(publisher) {
-      return publisher.id
-    })
-    var route = routeService.apiUrl(keywordsList, publisherIds)
+    var route = '/charts/show/' + chartID
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
