@@ -88,8 +88,10 @@ var getChart = function(chartID, callback) {
 }
 
 var addChart = function(params, callback) {
-  knex('charts').insert(params)
-  callback()
+  knex('charts')
+  .returning('id')
+  .insert(params)
+  .then(callback)
 }
 
 exports.queryDetail = queryDetail;
@@ -97,3 +99,4 @@ exports.getPublisherList = getPublisherList;
 exports.getCharts = getCharts;
 exports.getChart = getChart;
 exports.getChartData = getChartData;
+exports.addChart = addChart;

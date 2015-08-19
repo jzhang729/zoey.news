@@ -7,7 +7,8 @@ var FluxMixin = Fluxxor.FluxMixin(React);
 export default React.createClass({
   mixins: [FluxMixin],
   handleAddChart: function(chartType) {
-    this.getFlux().actions.addChart(chartType)
+    console.log("handleaddchart");
+    this.getFlux().actions.addChart(chartType);
   },
   render: function() {
     return (

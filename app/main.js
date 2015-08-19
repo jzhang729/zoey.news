@@ -27,7 +27,6 @@ var actions = {
     var success = function(err, resp){
       var allPubObjects = this.flux.store("PublisherStore").getPublishers()
       var charts = JSON.parse(resp.text).map(function(chart) {
-
         var chartPubsWithNames = [];
         allPubObjects.forEach(function(publisher) {
           if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
@@ -48,29 +47,43 @@ var actions = {
   },
 
   addChart: function(type) {
-    
-
-    // this.dispatch("LOAD_CHARTS", [chart])
-
-    // var chartID = chart.chartID
-    // var keywordsList = chart.keywords
-    // var publishersList = chart.publishers
-    // var publisherIds = publishersList.map(function(publisher) {
-    //   return publisher.id
-    // })
-
+    var params = {chartType: type}
     var route = '/charts'
-    var success = function(err, resp) {
-      console.log(resp)
-      // var dataRows = JSON.parse(resp.text);
-      // this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      // this.dispatch("UPDATE_CHART", chartID)
-    }.bind(this)
-    requestManager.post(route, success)
+
+    var postSuccess = function(err, resp) {
+      // we have the ID of the chart we just added
+      var newChartID = resp.body[0]
+      // now get its metadata
+      var route = '/charts' + newChartID
+      var getSuccess = function(err, resp) {
+        var chart = JSON.parse(resp.text)
+        // flesh out the publishers list with publisher names
+        var allPublishers = this.flux.store("PublisherStore").getPublishers()
+        pubsWithNames = []
+        allPubObjects.forEach(function(publisher) {
+          if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
+            pubsWithNames.push(publisher)
+          }
+        })
+        // create chart literal so we can pass to the Flux store
+        completeChart = {
+          chartID: chart.id,
+          chartType: chart.chart_params.chart_type,
+          title: chart.chart_params.title,
+          keywords: chart.chart_params.keywords,
+          publishers: chartPubsWithNames
+        }
+      }.bind(this);
+      console.log(comleteChart)
+      this.dispatch("LOAD_CHARTS", [completeChart])
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("UPDATE_CHART", chartID)
+    }.bind(this);
+    requestManager.post(route, params, postSuccess)
   },
 
   loadChartData: function(chartID) {
-    var route = '/charts/show/' + chartID
+    var route = '/charts/data/' + chartID
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
