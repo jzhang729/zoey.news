@@ -29,17 +29,3 @@ export default React.createClass({
     )
   }
 })
-
-
-// switch(chart.chartType) {
-//       case "snapshot":
-//         console.log("snapshot")
-//         <Snapshot chartParams={chart} publisherList={this.state.publisherList} allDates={this.state.allDates}/>
-//       case "timelapse":
-//         console.log("timelapse")
-//         <Timelapse chartParams={chart} publisherList={this.state.publisherList} allDates={this.state.allDates}/>
-//       case "donut":
-//         console.log.("donut")
-//         <Donut chartParams={chart} publisherList={this.state.publisherList} allDates={this.state.allDates} />
-
-//     
