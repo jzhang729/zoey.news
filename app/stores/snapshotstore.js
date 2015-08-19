@@ -1,6 +1,7 @@
 import Fluxxor from 'fluxxor'
 import barchartcolor from '../services/barchartcolor'
 import linechartcolor from '../services/linechartcolor'
+import donutchartcolor from '../services/donutchartcolor'
 import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
@@ -56,6 +57,9 @@ export default Fluxxor.createStore({
         break
       case "timelapse":
         this.updateTimeLapse(chartID)
+        break
+      case "donut":
+        this.updateDonut(chartID)
         break
     }
   },
@@ -136,6 +140,36 @@ export default Fluxxor.createStore({
       datasets: newDatasets
     }
     this._byChartID(chartID).snapShot = newSnapShot
+
+    this.emit("change");
+  },
+
+  updateDonut: function(chartID){
+    var currentChart = this._byChartID(chartID)
+    var newDataset = []
+
+    var wordcount = currentChart.keywords.map(function(keyword, index) {
+      var sum = 0
+
+      currentChart.datastore.forEach(function(row) {
+        if (keyword == row.word){
+          sum += row.nentry
+        }
+      })
+
+      var dataset = {
+        value: sum,
+        label: keyword,
+        color: donutchartcolor.Fill[index],
+        highlight: donutchartcolor.Fill[index]
+      }
+
+      newDataset.push(dataset)
+
+    }.bind(this));
+
+    this._byChartID(chartID).snapShot = newDataset
+
     this.emit("change");
   },
 
