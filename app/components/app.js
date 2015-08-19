@@ -39,7 +39,7 @@ export default React.createClass({
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <ChartCanvas charts={this.state.charts} publisherList = {this.state.publisherList} allDates = {this.state.publisherList}/>
+        <ChartCanvas charts={this.state.charts} publisherList = {this.state.publisherList} allDates = {this.state.allDates}/>
         </div>
       <Footer />
       </section>
