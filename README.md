@@ -44,15 +44,13 @@ SCRAPER USAGE
 
       DATABASE = '<your_database_name'>
 
-3) Perform a knex migrate:rollback, and then a knex migrate:latest to empty your
-   current database. This step is not necessary before performing subsequent
-   scrapes. Note there is no longer any need to run knex seed.
+3) Perform a knex migrate:rollback as many times as necessary to reset the dataabse,
+   and then a knex migrate:latest. Then run 'knex seed:run' to populate the charts 
+   table. This step is not necessary before performing subsequent scrapes.
 
-4) In scrapefeedly.rb, change the query parameters as desired. For development
-   purposes, parameters have initially been set to scrape the most recent 200
-   articles for each source. It is also possible - and more practical when in
-   production - to scrape all articles after a certain date. See the comments in
-   scrapefeedly.rb for usage details.
+4) In scrapefeedly.rb, change the query parameters as desired. Parameters have now
+   been set to scrape the most recent 10,000 articles per feed, starting from 00:00:01
+   EDT on Sunday, August 15, 2015.
 
 5) Execute the following command:
 
