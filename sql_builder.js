@@ -37,9 +37,9 @@ var getPublisherList = function(callback) {
   knex.select().from("publishers").then(callback)
 }
 
-// This function doesn't work yet because 
+// This function doesn't work yet because
 // I can't figure out how to make async database
-// calls for all the chart data while mapping over 
+// calls for all the chart data while mapping over
 // the array of chart metadata... Knex only works
 // asynchronously
 
@@ -69,7 +69,6 @@ var getCharts = function(user, callback) {
 
 
 var getChartData = function(chartParams, callback) {
-  console.log("getChartData")
   var keywords = chartParams.keywords.toString()
   var publishers = chartParams.publishers.toString()
   queryDetail(keywords, publishers, function(resp) {
@@ -82,8 +81,15 @@ var getChart = function(chartID, callback) {
     .from('charts')
     .where('charts.id', chartID)
     .then(function(rows) {
+      console.log("here are the chart params")
+      console.log(rows[0].chart_params)
       callback(rows[0].chart_params)
     });
+}
+
+var addChart = function(params, callback) {
+  knex('charts').insert(params)
+  callback()
 }
 
 exports.queryDetail = queryDetail;

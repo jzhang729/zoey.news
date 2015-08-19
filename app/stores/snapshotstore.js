@@ -20,7 +20,6 @@ export default Fluxxor.createStore({
     );
   },
   getCharts: function() {
-    console.log(this.charts)
     return this.charts
   },
 
@@ -42,7 +41,6 @@ export default Fluxxor.createStore({
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
-    console.log(this.charts)
     this.emit("change")
   },
   loadChartData: function(payload, type) {
@@ -64,7 +62,7 @@ export default Fluxxor.createStore({
   updateTimeLapse: function(chartID) {
     var currentChart = this._byChartID(chartID)
     var newDatasets = []
-    
+
     currentChart.keywords.forEach(function(keyword, index) {
       var dailyCount = this.dates.map(function(date) {
         var sum = 0
