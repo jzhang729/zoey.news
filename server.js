@@ -10,8 +10,13 @@ var app = express();
 var isProduction = process.env.NODE_ENV === 'production';
 var port = isProduction ? process.env.PORT : 3000;
 var publicPath = path.resolve(__dirname, 'public');
+
 var queryDetail = require('./sql_builder').queryDetail;
 var getPublisherList = require('./sql_builder').getPublisherList;
+var getCharts = require('./sql_builder').getCharts;
+var getChart = require('./sql_builder').getChart;
+var getChartData = require('./sql_builder').getChartData;
+var addChart = require('./sql_builder').addChart;
 
 app.use(express.static(publicPath));
 
@@ -29,13 +34,49 @@ app.get('/detail', function(req, res) {
   });
 });
 
-app.get('/publishers', function(req, res) {
 
+/// active
+
+app.get('/publishers', function(req, res) {
   getPublisherList(function(resp) {
     res.send(resp);
   });
+});
 
-})
+/// active
+
+app.get('/users/:user/charts', function(req, res) {
+  getCharts(req.params.user, function(resp) {
+    res.send(resp);
+  });
+});
+
+/// active
+
+app.get('/charts/show/:chartID', function(req, res) {
+  getChart(req.params.chartID, function(chartParams) {
+    getChartData(chartParams, function(rows) {
+      res.send(rows)
+    });
+  });
+});
+
+/// in progress
+
+app.post('/charts', function(req, res) {
+  var fields = {
+    tab_id: 1,
+    chart_params: {
+      chart_type: req.params.chartType,
+      title: "Key Issues",
+      keywords: ["economy", "duffy", "environment"],
+      publishers: [1,2,3]
+    }
+  }
+  addChart(fields, function(chart) {
+    res.send(chart[0])
+  });
+});
 
 if (!isProduction) {
 

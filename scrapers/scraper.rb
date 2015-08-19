@@ -31,29 +31,33 @@ def parseArticles(feed)
   @conn.exec_params('SELECT id, domain FROM publishers').each do |hash|
     publishers[hash["domain"]] = hash["id"].to_i
   end
+  start_date = Time.at(1438488001).to_date.to_s   # sets start_date to 00:00:01 EDT, Aug. 2, 2015
   JSON.parse(feed)["items"].each do |item|
-    url = item["alternate"][0]["href"]
     date = Time.at(item["published"] / 1000).to_date.to_s
-    title = item["title"]
-    domain = item["alternate"][0]["href"].match(/\w*\.\w*\//)[0].chop
-    if publishers[domain]
-      publisher_id = publishers[domain]
-    else
-      publisher_id = @conn.exec_params("INSERT INTO publishers (domain) VALUES ($1) RETURNING id", [domain])[0]["id"].to_i
-      publishers[domain] = publisher_id
-    end
-    begin
-      full_text = "#{title}" + " "
-      html_page = open(url).read
-      full_text += Readability::Document.new(html_page, :tags => []).content
-      full_text.gsub!(/\n/, " ")
-      full_text.gsub!(".", ". ")
-      article = Article.new(url, date, title, publisher_id, full_text)
-      addToDatabase(article)
-    rescue PG::UniqueViolation
-      duplicates += 1
-    rescue Exception => error
-      errors << "Error adding item #{url}: #{error}"
+    if date >= start_date
+      url = item["alternate"][0]["href"]
+      date = Time.at(item["published"] / 1000).to_date.to_s
+      title = item["title"]
+      domain = item["alternate"][0]["href"].match(/\w*\.\w*\//)[0].chop
+      if publishers[domain]
+        publisher_id = publishers[domain]
+      else
+        publisher_id = @conn.exec_params("INSERT INTO publishers (domain) VALUES ($1) RETURNING id", [domain])[0]["id"].to_i
+        publishers[domain] = publisher_id
+      end
+      begin
+        full_text = "#{title}" + " "
+        html_page = open(url).read
+        full_text += Readability::Document.new(html_page, :tags => []).content
+        full_text.gsub!(/\n/, " ")
+        full_text.gsub!(".", ". ")
+        article = Article.new(url, date, title, publisher_id, full_text)
+        addToDatabase(article)
+      rescue PG::UniqueViolation
+        duplicates += 1
+      rescue Exception => error
+        errors << "Error adding item #{url}: #{error}"
+      end
     end
   end
   puts "\n#{@items_successfully_added} item#{"s" if @items_successfully_added != 1} successfully added."

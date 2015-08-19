@@ -14,7 +14,9 @@ export default React.createClass({
   },
 
   handleChange: function(event) {
-    this.getFlux().actions.addPublisher(this.props.chartID, event.target.value)
+    if (event.target.value > 0) {
+      this.getFlux().actions.addPublisher(this.props.chartID, event.target.value)
+    }
   },
 
   render: function() {
@@ -34,10 +36,10 @@ export default React.createClass({
     }.bind(this));
 
     if (!(this.props.publisherLimit)) {
-      return (  
+      return (
         <div className="publisher-add">
-          <select onChange={this.handleChange}>
-          <option value="">Add media source</option>
+          <select onChange={this.handleChange} value="0">
+          <option value="0">Add media source</option>
             {inactivePublisherList}
           </select>
         </div>
@@ -45,13 +47,12 @@ export default React.createClass({
     } else {
       return (
         <div className="publisher-add">
-          <select onChange={this.handleChange}>
-          <option value="">Pick 1 media source</option>
+          <select onChange={this.handleChange} value="0">
+          <option value="0">Select media source</option>
             {inactivePublisherList}
           </select>
         </div>
-      )   
+      )
     }
-
   }
 })

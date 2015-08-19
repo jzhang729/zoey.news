@@ -7,7 +7,6 @@ var FluxMixin = Fluxxor.FluxMixin(React);
 export default React.createClass({
   mixins: [FluxMixin],
   handleAddChart: function(chartType) {
-    console.log(chartType)
     this.getFlux().actions.addChart(chartType)
   },
   render: function() {
@@ -21,6 +20,9 @@ export default React.createClass({
         </div>
         <div>
           <i className="fa fa-2x fa-line-chart" onClick={this.handleAddChart.bind(this, "timelapse")}></i>
+        </div>
+        <div>
+          <i className="fa fa-2x fa-line-chart" onClick={this.handleAddChart.bind(this, "donut")}></i>
         </div>
       </div>
     )
