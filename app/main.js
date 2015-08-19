@@ -48,28 +48,25 @@ var actions = {
   },
 
   addChart: function(type) {
-    var chart = {
-      chartID: 8,
-      title: "Election",
-      chartType: type,
-      keywords: ["election"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-    }
-    this.dispatch("LOAD_CHARTS", [chart])
+    
 
-    var chartID = chart.chartID
-    var keywordsList = chart.keywords
-    var publishersList = chart.publishers
-    var publisherIds = publishersList.map(function(publisher) {
-      return publisher.id
-    })
-    var route = routeService.apiUrl(keywordsList, publisherIds)
+    // this.dispatch("LOAD_CHARTS", [chart])
+
+    // var chartID = chart.chartID
+    // var keywordsList = chart.keywords
+    // var publishersList = chart.publishers
+    // var publisherIds = publishersList.map(function(publisher) {
+    //   return publisher.id
+    // })
+
+    var route = '/charts'
     var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("UPDATE_CHART", chartID)
+      console.log(resp)
+      // var dataRows = JSON.parse(resp.text);
+      // this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      // this.dispatch("UPDATE_CHART", chartID)
     }.bind(this)
-    requestManager.get(route, success)
+    requestManager.post(route, success)
   },
 
   loadChartData: function(chartID) {
@@ -95,12 +92,17 @@ var actions = {
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: newKeyword})
       }.bind(this)
-      requestManager.put(route, {keyword: newKeyword}, success)
+      requestManager.put(route, {keywords: keywordList.concat(newKeyword)}, success)
     }
   },
 
   removeKeyword: function(chartID, keywordIndex) {
-    this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
+    var route = 'charts/id'
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
+    }.bind(this)
+      requestManager.put(route, {keywords: keywordList.splice(keywordIndex, 1)}, success)
   },
 
   addPublisher: function(chartID, publisherID) {

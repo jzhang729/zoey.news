@@ -13,7 +13,7 @@ export default {
       .send(params)
       .set('Accept', 'application/json')
       .end(success)
-  }
+  },
   post: function(route, params, success) {
     request
       .post(route)
