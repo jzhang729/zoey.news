@@ -81,8 +81,15 @@ var getChart = function(chartID, callback) {
     .from('charts')
     .where('charts.id', chartID)
     .then(function(rows) {
+      console.log("here are the chart params")
+      console.log(rows[0].chart_params)
       callback(rows[0].chart_params)
     });
+}
+
+var addChart = function(params, callback) {
+  knex('charts').insert(params)
+  callback()
 }
 
 exports.queryDetail = queryDetail;
