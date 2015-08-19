@@ -10,6 +10,8 @@ import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
 import routeService from './services/routeservice'
 import requestManager from './services/requestManager'
+import buildPublishersForChart from './services/buildPublishersForChart'
+
 
 var actions = {
 
@@ -25,19 +27,14 @@ var actions = {
   loadCharts: function() {
     var route = '/users/1/charts'
     var success = function(err, resp){
-      var allPubObjects = this.flux.store("PublisherStore").getPublishers()
+      var allPublishers = flux.store("PublisherStore").getPublishers()
       var charts = JSON.parse(resp.text).map(function(chart) {
-        var chartPubsWithNames = [];
-        allPubObjects.forEach(function(publisher) {
-          if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
-            chartPubsWithNames.push(publisher)
-          }
-        })
+        var chartPubsWithNames = buildPublishersForChart(chart, allPublishers)
         return {
           chartID: chart.id,
-          chartType: chart.chart_params.chart_type,
-          title: chart.chart_params.title,
-          keywords: chart.chart_params.keywords,
+          chartType: chart.chart_type,
+          title: chart.title,
+          keywords: chart.keywords.split(','),
           publishers: chartPubsWithNames
         }
       }.bind(this))
@@ -49,7 +46,6 @@ var actions = {
   addChart: function(type) {
     var params = {chartType: type}
     var route = '/charts'
-
     var postSuccess = function(err, resp) {
       // we have the ID of the chart we just added
       var newChartID = resp.body[0]
@@ -59,25 +55,19 @@ var actions = {
         var chart = JSON.parse(resp.text)
         // flesh out the publishers list with publisher names
         var allPublishers = this.flux.store("PublisherStore").getPublishers()
-        pubsWithNames = []
-        allPubObjects.forEach(function(publisher) {
-          if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
-            pubsWithNames.push(publisher)
-          }
-        })
+        var chartPubsWithNames = buildPublishersForChart(chart, allPublishers)
         // create chart literal so we can pass to the Flux store
-        completeChart = {
+        var completeChart = {
           chartID: chart.id,
-          chartType: chart.chart_params.chart_type,
-          title: chart.chart_params.title,
-          keywords: chart.chart_params.keywords,
+          chartType: chart.chart_type,
+          title: chart.title,
+          keywords: chart.keywords.split(','),
           publishers: chartPubsWithNames
         }
+        this.dispatch("LOAD_CHARTS", [completeChart])
+        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+        this.dispatch("UPDATE_CHART", chartID)
       }.bind(this);
-      console.log(comleteChart)
-      this.dispatch("LOAD_CHARTS", [completeChart])
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("UPDATE_CHART", chartID)
     }.bind(this);
     requestManager.post(route, params, postSuccess)
   },
@@ -99,23 +89,24 @@ var actions = {
   addKeyword: function(chartID, newKeyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     if (keywordsList.indexOf(newKeyword) < 0) {
-      var route = 'charts/id'
+      var route = 'charts/' + chartID
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: newKeyword})
       }.bind(this)
-      requestManager.put(route, {keywords: keywordList.concat(newKeyword)}, success)
+      requestManager.put(route, {keywords: keywordList.concat(newKeyword).toString}, success)
     }
   },
 
   removeKeyword: function(chartID, keywordIndex) {
-    var route = 'charts/id'
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    var route = 'charts/' + chartID
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
     }.bind(this)
-      requestManager.put(route, {keywords: keywordList.splice(keywordIndex, 1)}, success)
+      requestManager.put(route, {keywords: keywordsList.splice(keywordIndex, 1)}, success)
   },
 
   addPublisher: function(chartID, publisherID) {

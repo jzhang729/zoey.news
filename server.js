@@ -70,12 +70,10 @@ app.get('/charts/data/:chartID', function(req, res) {
 app.post('/charts', function(req, res) {
   var fields = {
     tab_id: 1,
-    chart_params: {
-      chart_type: req.body.chartType,
-      title: "Key Issues",
-      keywords: ["economy", "duffy", "environment"],
-      publishers: [1,2,3]
-    }
+    chart_type: req.body.chartType,
+    chart_title: "Key Issues",
+    keywords: "economy, duffy, environment",
+    publishers: "1, 2, 3"
   }
   addChart(fields, function(chart) {
     console.log(chart)

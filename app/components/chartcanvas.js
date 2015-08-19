@@ -9,6 +9,7 @@ export default React.createClass({
     console.log("canvas render")
     var charts = this.props.charts.map(function(chart, index) {
       if (chart.chartType == "snapshot") {
+        console.log(chart.publishers)
         return (
           <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )

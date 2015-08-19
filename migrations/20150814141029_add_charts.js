@@ -26,7 +26,11 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.integer('tab_id').notNullable() // .references('id').inTable('tabs');
       table.integer('chart_list_order') //.notNullable(); 
-      table.json('chart_params');
+      table.string('chart_type');
+      table.string('chart_title');
+      table.string('keywords');
+      table.string('publishers');
+
       table.timestamps();
     });
 };

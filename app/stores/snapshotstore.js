@@ -106,7 +106,7 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-
+    console.log(currentChart.publishers)
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
