@@ -17,8 +17,8 @@ export default React.createClass({
   },
 
   handleClick: function() {
-    if (this.state.value.length > 0) {
-      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+    if (this.state.value.trim().length > 0) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
       this.setState({value: ""})
     }
   },
@@ -27,8 +27,8 @@ export default React.createClass({
     if (event.which != 13) {
       this.setState({value: event.target.value})
     } else {
-      if (this.state.value.length > 0) {
-        this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+      if (this.state.value.trim().length > 0) {
+        this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
       }
     this.setState({value: ""})
     }
@@ -45,7 +45,7 @@ export default React.createClass({
       fontSize: '12pt',
       fontWeight: 'bold'
     }
-    
+
     var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}>+</Button>;
 
     return (
