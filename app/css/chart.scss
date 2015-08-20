@@ -19,6 +19,7 @@
     display: -webkit-flex;
   flex-direction: row;
     -webkit-flex-direction: row;
+  min-height: 520px;
   margin: 20px 20px 20px 125px;
 }
 
@@ -84,4 +85,11 @@
   margin: 10px;
   width: 700px;
   height: 500px;
+}
+
+.chart-title {
+  font-family: $primary-font;
+  font-size: 16pt;
+  font-weight: bold;
+  text-align: center;
 }
