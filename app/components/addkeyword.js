@@ -42,12 +42,17 @@ export default React.createClass({
       fontWeight: 'bold'
     }
 
+    var addKeywordDisabled = false;
+    if (this.props.list.length > 7) {
+      addKeywordDisabled = true;
+    }
+
     var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}>+</Button>;
 
     return (
         <div>
           <div className="keyword-add">
-            <Input type='text' value={value} maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
+            <Input type='text' value={value} disabled={addKeywordDisabled} maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
           </div>
         </div>
     )
