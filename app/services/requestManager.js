@@ -21,5 +21,11 @@ export default {
       .send(params)
       .set('Accept', 'application/json')
       .end(success)
+  },
+
+  del: function(route, success) {
+    request
+      .del(route)
+      .end(success)
   }
 }

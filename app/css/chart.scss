@@ -19,7 +19,9 @@
     display: -webkit-flex;
   flex-direction: row;
     -webkit-flex-direction: row;
-  margin: 20px 20px 20px 125px;
+  min-height: 520px;
+  padding: 0px;
+  margin: 20px 20px 40px 125px;
 }
 
 .chart-main {
@@ -37,6 +39,7 @@
     -webkit-order: 2;
   align-self: flex-start;
     -webkit-align-self: flex-start;
+  color: $chart-menu-section-color;
 
   &:hover{
     cursor: pointer;
@@ -45,19 +48,13 @@
 
 .chart-menu {
   background-color: $chart-menu-bg-color;
-  padding: 20px 10px;
+  padding: 5px 10px;
   border: 1px solid $border-color;
-/*  display: flex;
-    display: -webkit-flex;
-  align-items: flex-start;
-    -webkit-align-items: flex-start;
-  flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-  flex-direction: column;
-    -webkit-flex-direction: column;*/
   order: 3;
     -webkit-order: 3;
   width: 300px;
+  position: relative;
+  left: 50px;
 }
 
 .chart-label-y {
@@ -73,6 +70,8 @@
     -webkit-order: 0;
   align-self: center;
     -webkit-align-self: center;
+  position: relative;
+  left: 20px;
 }
 
 .chart {
@@ -80,4 +79,18 @@
   margin: 10px;
   width: 700px;
   height: 500px;
+}
+
+.chart-title {
+  font-family: $primary-font;
+  font-size: 16pt;
+  font-weight: bold;
+  text-align: center;
+  border: 1px dashed #fff;
+
+  &:hover {
+    border: 1px dashed #000;
+
+  }
+  
 }

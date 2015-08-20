@@ -2,16 +2,7 @@
   list-style-type: none;
   padding: 0px;
   white-space: nowrap;
-  margin: 20px 0px;
-}
-
-@mixin keyword-publisher-list-item {
-  width: 100px;
-
-  i:hover{
-    cursor: pointer;
-    color: red;
-  }
+  margin: 0px 0px 30px 0px;
 }
 
 .hidden {
@@ -40,7 +31,13 @@ h5 {
 
 .publisher-list-item {
    input {
-    width: inherit;
+    width: 300px;
+  }
+}
+
+i.fa-times {
+  &:hover{
+    color: red;
   }
 }
 
@@ -48,20 +45,9 @@ select {
   font-size: 14pt;
 }
 
-.keyword-add {
-  input {
-    padding: 5px;
-  }
-
-  i {
-    color: rgba(44,149,36,1);
-    font-size: 20pt;
-    padding: 0px;
-    margin: 0px;
-
-    &:hover{
-      color: rgba(47,255,38,0.5);
-    }
+.keyword-add, .publisher-add {
+  select {
+    width: 100%;
   }
 }
 

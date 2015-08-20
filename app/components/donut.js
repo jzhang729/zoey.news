@@ -5,6 +5,7 @@ import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
 import Slider from './slider'
+import ChartTitle from './charttitle'
 import { Button } from 'react-bootstrap'
 
 var DonutChart = require("react-chartjs").Doughnut;
@@ -51,33 +52,49 @@ export default React.createClass({
   addPublisher: function(publisher){
     this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
+  handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
+  },
+
   render: function() {
     var chart;
+    var deleteChartButton = "";
+
+    if (this.props.chartListLength > 1) {
+      deleteChartButton = (
+        <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
+      )
+    }
+
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
           <div className="chart-label-y">
-            {this.props.chartParams.publishers[0].domain}
           </div>
           <div className="chart-main">
+          <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <DonutChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
                       options={options}/>
+            <Slider chartID={this.props.chartParams.chartID} dates={this.props.allDates} startDate={this.props.chartParams.startDate} endDate={this.props.chartParams.endDate}/>
           </div>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <div className="chart-menu">
             <h5>Keywords</h5>
             <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} legend={true} />
             <h5>Publishers</h5>
-            <AddPublisher publisherLimit={1} chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
-            <Button className="delete" bsStyle="danger">Delete Chart</Button>
+              <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                   className={'publisher-list'}
+                                   list={this.props.publisherList}
+                                   activelist={this.props.chartParams.publishers}/>
+              <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+              {deleteChartButton}
           </div>
         </div>
       )
     } else {
-      chart = (<p>&nbsp;</p>)
+      chart = (<div className="loading"><img src="/img/loading.gif" /></div>)
     }
     return (
       <div>

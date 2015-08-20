@@ -4,6 +4,8 @@ import ActiveKeywordList from './activekeywordlist'
 import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
+import ChartTitle from './charttitle'
+import { Button } from 'react-bootstrap'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -31,22 +33,34 @@ export default React.createClass({
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
+
+  handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
+  },
+
   render: function() {
     var chart;
+    var deleteChartButton = "";
+
+    if (this.props.chartListLength > 1) {
+      deleteChartButton = (
+        <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
+      )
+    }
+
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
           <div className="chart-label-y">
-            Keyword Frequency
           </div>
           <div className="chart-main">
+          <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <LineChart className="chart"
                        data={this.props.chartParams.snapShot}
                        redraw={true}
                        options={options}/>
           </div>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <div className="chart-menu">
             <h5>Keywords</h5>
             <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID}
@@ -59,11 +73,12 @@ export default React.createClass({
                                  list={this.props.publisherList}
                                  activelist={this.props.chartParams.publishers}/>
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+            {deleteChartButton}
           </div>
         </div>
       )
     } else {
-      chart = (<p>&nbsp;</p>)
+      chart = (<div className="loading"><img src="/img/loading.gif" /></div>)
     }
     return (
     <div>

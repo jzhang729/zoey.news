@@ -8,7 +8,9 @@ export default React.createClass({
   mixins: [FluxMixin],
 
   handleRemovePublisher: function(publisherIndex) {
-    this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
+    if (this.props.activePublishers.length > 1) {
+      this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
+    }
   },
 
   render: function() {
@@ -24,7 +26,7 @@ export default React.createClass({
       borderBottomWidth: '0px'
       })
     }
-    
+
     var normalButtonStyle = {
       backgroundColor: 'rgba(0,0,0,0.5)'
     }

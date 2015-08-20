@@ -6,6 +6,10 @@
 @import 'slider';
 @import 'footer';
 
+body {
+  overflow-x: hidden;
+}
+
 .main {
   background-color: #fff;
   display: flex;
@@ -24,4 +28,11 @@
   flex: 1 1 20px;
   font-size: 8pt;
   align-self: baseline;
+}
+
+.loading {
+  width: 720px;
+  height: 520px;
+  background-color: #fff;
+  position: relative;
 }

@@ -12,50 +12,47 @@ export default React.createClass({
 
   getInitialState: function() {
     return {
-      hidden: false,
       value: ""
     }
   },
 
-  show: function() {
-    this.setState({ visible: true });
-    document.addEventListener("hover", this.hide.bind(this));
-  },
-
-  hide: function() {
-    document.removeEventListener("hover", this.hide.bind(this));
-    this.setState({ visible: false });
-  },
-
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
-    this.setState({value: ""})
+    if (this.state.value.trim().length > 0) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
+      this.setState({value: ""})
+    }
   },
 
-  handleKeyDown: function(event) {
-    if (event.which == 13) {
-      this.getFlux().actions.addKeyword(this.props.chartID, event.target.value)
+  handleKeyUp: function(event) {
+    if (event.which == 13 && this.state.value.trim().length > 0) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
       this.setState({value: ""})
     }
   },
 
   handleChange: function(event) {
-    this.setState({value: event.target.value})
+    this.setState({value: event.target.value});
   },
 
   render: function() {
-
+    var value = this.state.value
     var ButtonStyle = {
       backgroundColor: '#e7e7e7',
-      border: '0px'
+      fontSize: '12pt',
+      fontWeight: 'bold'
     }
 
-    var innerButton = <Button style={ButtonStyle} onClick={this.handleChange}><i className="fa fa-plus-square"></i></Button>;
+    var addKeywordDisabled = false;
+    if (this.props.list.length > 7) {
+      addKeywordDisabled = true;
+    }
+
+    var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}>+</Button>;
 
     return (
         <div>
           <div className="keyword-add">
-            <Input type='text' maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onKeyDown={this.handleKeyDown} />
+            <Input type='text' value={value} disabled={addKeywordDisabled} maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
           </div>
         </div>
     )
