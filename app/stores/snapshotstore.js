@@ -49,6 +49,7 @@ export default Fluxxor.createStore({
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
+    this.handleUpdateChart(id)
   },
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {

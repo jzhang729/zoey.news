@@ -48,7 +48,6 @@ var actions = {
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("UPDATE_CHART", chartID)
     }.bind(this)
     requestManager.get(route, success)
   },
@@ -79,8 +78,6 @@ var actions = {
           publishers: chartPubsWithNames
         }
         this.dispatch("LOAD_CHARTS", [completeChart])
-        this.dispatch("LOAD_CHART_DATA", {id: newChartID, data: dataRows})
-        this.dispatch("UPDATE_CHART", chartID)
       }.bind(this);
       requestManager.get(route, getSuccess)
     }.bind(this);
