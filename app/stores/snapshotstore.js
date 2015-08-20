@@ -112,12 +112,12 @@ export default Fluxxor.createStore({
       return ((date >= startDate) && (date <= endDate))
     }.bind(this)
 
-    var filteredArr = currentChart.datastore.filter(dateMatch);
+    var filteredDatastore = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
-        filteredArr.forEach(function(row) {
+        filteredDatastore.forEach(function(row) {
           if ( (publisher.id == row.publisher_id) && (keyword == row.word) ) {
             sum += row.nentry
           }
@@ -145,10 +145,18 @@ export default Fluxxor.createStore({
 
   updateDonut: function(chartID){
     var currentChart = this._byChartID(chartID)
+    var dateMatch = function (row) {
+      var date = new Date(row.date);
+      var startDate = new Date(this.dates[currentChart.startDate])
+      var endDate = new Date(this.dates[currentChart.endDate])
+      return ((date >= startDate) && (date <= endDate))
+    }.bind(this)
+    var filteredDatastore = currentChart.datastore.filter(dateMatch);
+
     var newDataset = []
     var wordcount = currentChart.keywords.map(function(keyword, index) {
       var sum = 0
-      currentChart.datastore.forEach(function(row) {
+      filteredDatastore.forEach(function(row) {
         if (keyword == row.word){
           sum += row.nentry
         }
@@ -169,27 +177,22 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.push(data)
-    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
-    console.log(this._byChartID(chartID).keywords)
-    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
     this._byChartID(payload.id).publishers.push(payload.data)
-    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
     var publisherIndex = payload.publisherIndex
     this._byChartID(chartID).publishers.splice(publisherIndex, 1)
-    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
@@ -197,13 +200,12 @@ export default Fluxxor.createStore({
     var data = payload.data
     this._byChartID(chartID).startDate = data[0]
     this._byChartID(chartID).endDate = data[1]
-    // this._byChartID(chartID).shouldRedraw = false
     this.handleUpdateChart(chartID)
   },
-  handleDeleteChart: function(chartID) {
+  handleDeleteChart: function(deletedChartID) {
     var deleteIndex
     this.charts.forEach(function(chart, index) {
-      if (chart.chartID == chartID) {
+      if (chart.chartID == deletedChartID) {
         deleteIndex = index
       }
     })
