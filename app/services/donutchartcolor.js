@@ -13,5 +13,3 @@ export default {
   HighlightFill: [blue[2],green[2],red[2],purple[2],teal[2],olive[2],peach[2],orange[2]],
   HighlightStroke: [blue[3],green[3],red[3],purple[3],teal[3],olive[3],peach[3],orange[3]]
 }
-
-
