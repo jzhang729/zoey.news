@@ -49,20 +49,7 @@ select {
 }
 
 .keyword-add {
-  input {
-    padding: 5px;
-  }
 
-  i {
-    color: rgba(44,149,36,1);
-    font-size: 20pt;
-    padding: 0px;
-    margin: 0px;
-
-    &:hover{
-      color: rgba(47,255,38,0.5);
-    }
-  }
 }
 
 .delete {

@@ -15,7 +15,7 @@ export default React.createClass({
   render: function() {
     return (
       <div className="menu">
-        <div onClick={this.scrollToTop.bind(this)}>
+        <div onClick={this.scrollToTop}>
           <i className="fa fa-2x fa-long-arrow-up"></i>
         </div>
         <div onClick={this.handleAddChart.bind(this, "snapshot")}>
