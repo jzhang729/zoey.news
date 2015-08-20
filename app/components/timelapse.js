@@ -4,6 +4,7 @@ import ActiveKeywordList from './activekeywordlist'
 import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
+import ChartTitle from './charttitle'
 import { Button } from 'react-bootstrap'
 
 var LineChart = require("react-chartjs").Line;
@@ -54,6 +55,7 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
+          <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <LineChart className="chart"
                        data={this.props.chartParams.snapShot}
                        redraw={true}

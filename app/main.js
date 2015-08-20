@@ -33,7 +33,7 @@ var actions = {
         return {
           chartID: chart.id,
           chartType: chart.chart_type,
-          title: chart.title,
+          title: chart.chart_title,
           keywords: chart.keywords.split(','),
           publishers: chartPubsWithNames
         }
@@ -162,6 +162,16 @@ var actions = {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
       this.dispatch("REMOVE_PUBLISHER", {id: chartID, publisherIndex: removedPublisherIndex})
+    }.bind(this)
+    requestManager.put(route, params, success)
+  },
+
+  updateChartTitle: function(chartID, newTitle) {
+    console.log(newTitle)
+    var route = 'charts/' + chartID
+    var params = {chart_title: newTitle}
+    var success = function(err, resp) {
+      this.dispatch("UPDATE_CHART_TITLE", chartID, newTitle)
     }.bind(this)
     requestManager.put(route, params, success)
   },

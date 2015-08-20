@@ -18,7 +18,8 @@ export default Fluxxor.createStore({
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
       "LOAD_CHARTS", this.handleLoadCharts,
-      "DELETE_CHART", this.handleDeleteChart
+      "DELETE_CHART", this.handleDeleteChart,
+      "UPDATE_CHART_TITLE", this.handleUpdateChart
     );
   },
   getCharts: function() {
@@ -211,6 +212,9 @@ export default Fluxxor.createStore({
     })
     this.charts.splice(deleteIndex, 1)
     this.emit("change")
+  },
+  handleUpdateChartTitle: function(chartID, newTitle) {
+    this._byChartID(chartID).chart_title = newTitle
   },
 
   getKeywords: function(chartID){
