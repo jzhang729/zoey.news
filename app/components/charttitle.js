@@ -13,7 +13,11 @@ export default React.createClass({
     this.getFlux().actions.updateChartTitle(this.props.chartID, this.state.value)
   },
   handleKeyUp: function(event) {
-    this.setState({value: event.target.innerHTML})
+    if (event.which != 13) {
+      this.setState({value: event.target.innerText})
+    } else if (this.state.value.length > 0) {
+    this.getFlux().actions.updateChartTitle(this.props.chartID, this.state.value)
+    }
   },
   render: function() {
     return (

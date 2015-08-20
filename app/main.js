@@ -33,7 +33,7 @@ var actions = {
         return {
           chartID: chart.id,
           chartType: chart.chart_type,
-          title: chart.title,
+          title: chart.chart_title,
           keywords: chart.keywords.split(','),
           publishers: chartPubsWithNames
         }
@@ -167,14 +167,14 @@ var actions = {
   },
 
   updateChartTitle: function(chartID, newTitle) {
+    console.log(newTitle)
     var route = 'charts/' + chartID
     var params = {chart_title: newTitle}
     var success = function(err, resp) {
       this.dispatch("UPDATE_CHART_TITLE", chartID, newTitle)
     }.bind(this)
     requestManager.put(route, params, success)
-  }
-
+  },
 
   // this takes an array of index values
   // ie [0, 2] which corresponds to the first

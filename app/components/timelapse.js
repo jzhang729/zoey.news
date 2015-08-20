@@ -45,7 +45,7 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
-          <ChartTitle title={"test"} chartID={this.props.chartParams.chartID} />
+          <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <LineChart className="chart"
                        data={this.props.chartParams.snapShot}
                        redraw={true}

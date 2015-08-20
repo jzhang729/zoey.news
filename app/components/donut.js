@@ -64,7 +64,7 @@ export default React.createClass({
             {this.props.chartParams.publishers[0].domain}
           </div>
           <div className="chart-main">
-          <ChartTitle title={"test"} chartID={this.props.chartParams.chartID} />
+          <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <DonutChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
