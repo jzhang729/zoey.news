@@ -10,7 +10,7 @@ export default React.createClass({
 
     var activePublisherList = this.props.activelist.map(function(publisher, index){
       return (
-        <ActivePublisherListItem chartID={this.props.chartID} publisher={publisher.domain} publisherIndex={index} legend={this.props.legend}/>
+        <ActivePublisherListItem chartID={this.props.chartID} activePublishers={this.props.activelist} publisher={publisher.domain} publisherIndex={index} legend={this.props.legend}/>
       )
     }.bind(this))
 

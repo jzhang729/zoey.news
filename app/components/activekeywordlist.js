@@ -10,7 +10,9 @@ export default React.createClass({
   mixins: [FluxMixin],
 
   handleRemoveKeyword: function(keywordIndex) {
-    this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
+    if (this.props.list.length > 1) {
+      this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
+    }
   },
 
   render: function() {
@@ -33,7 +35,7 @@ export default React.createClass({
       color: 'rgba(255,255,255,1)'
     }
 
-    
+
     var activeKeywordList = this.props.list.map(function(keyword, keywordIndex){
       var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
       var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
@@ -52,7 +54,7 @@ export default React.createClass({
         )
       }
     }.bind(this))
-    
+
     return (
       <div>
         <ul className={'keyword-list'}>
