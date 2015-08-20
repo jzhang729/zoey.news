@@ -9,7 +9,6 @@ import { Button } from 'react-bootstrap'
 
 var BarChart = require("react-chartjs").Bar;
 var FluxMixin = Fluxxor.FluxMixin(React);
-var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var options = {
   scaleBeginAtZero : true,
@@ -30,12 +29,6 @@ export default React.createClass({
   mixins: [FluxMixin],
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
-  },
-  addKeyword: function(keyword){
-    this.getFlux().actions.addKeyword(this.props.chartParams.chartID, keyword);
-  },
-  addPublisher: function(publisher){
-    this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
   render: function() {
     var chart;

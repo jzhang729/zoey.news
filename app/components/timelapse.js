@@ -7,7 +7,6 @@ import AddPublisher from './addpublisher'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
-var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var options = {
     scaleShowGridLines : true,

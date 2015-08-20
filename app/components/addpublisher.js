@@ -37,7 +37,7 @@ export default React.createClass({
     }.bind(this));
 
     if (!(this.props.publisherLimit)) {
-      return (  
+      return (
         <div className="publisher-add">
           <select onChange={this.handleChange} value="0">
             <option value="0">Add media source</option>
@@ -49,11 +49,11 @@ export default React.createClass({
       return (
         <div className="publisher-add">
           <select onChange={this.handleChange} value="0">
-          <option value="0">Pick 1 media source</option>
+            <option value="0">Select media source</option>
             {inactivePublisherList}
           </select>
         </div>
-      )   
+      )
     }
   }
 })
