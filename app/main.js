@@ -87,7 +87,7 @@ var actions = {
   deleteChart: function(chartID) {
     var route = '/charts/' + chartID
     var success = function(err, resp) {
-      this.dispatch("DELETE_CHART"), chartID
+      this.dispatch("DELETE_CHART", chartID)
     }.bind(this);
     requestManager.del(route, success)
   },
