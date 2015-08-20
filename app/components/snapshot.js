@@ -42,6 +42,7 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
+          <span className="chart-title">Keyword by Publication Over Specified Date</span>
             <BarChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
