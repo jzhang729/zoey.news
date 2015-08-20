@@ -17,16 +17,6 @@ export default React.createClass({
     }
   },
 
-  show: function() {
-    this.setState({ visible: true });
-    document.addEventListener("hover", this.hide.bind(this));
-  },
-
-  hide: function() {
-    document.removeEventListener("hover", this.hide.bind(this));
-    this.setState({ visible: false });
-  },
-
   handleClick: function() {
     this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
     this.setState({value: ""})
@@ -47,10 +37,11 @@ export default React.createClass({
 
     var ButtonStyle = {
       backgroundColor: '#e7e7e7',
-      border: '0px'
+      fontSize: '12pt',
+      fontWeight: 'bold'
     }
 
-    var innerButton = <Button style={ButtonStyle} onClick={this.handleChange}><i className="fa fa-plus-square"></i></Button>;
+    var innerButton = <Button style={ButtonStyle} onClick={this.handleChange}>+</Button>;
 
     return (
         <div>
