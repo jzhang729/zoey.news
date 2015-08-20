@@ -157,8 +157,8 @@ export default Fluxxor.createStore({
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
-    var data = payload.data
-    this._byChartID(chartID).publishers.splice(data, 1)
+    var publisherIndex = payload.publisherIndex
+    this._byChartID(chartID).publishers.splice(publisherIndex, 1)
     // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
