@@ -70,7 +70,6 @@ export default React.createClass({
       chart = (
         <div className="chart-container">
           <div className="chart-label-y">
-            {this.props.chartParams.publishers[0].domain}
           </div>
           <div className="chart-main">
           <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />

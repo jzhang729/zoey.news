@@ -2,16 +2,7 @@
   list-style-type: none;
   padding: 0px;
   white-space: nowrap;
-  margin: 20px 0px;
-}
-
-@mixin keyword-publisher-list-item {
-  width: 100px;
-
-  i:hover{
-    cursor: pointer;
-    color: red;
-  }
+  margin: 0px 0px 30px 0px;
 }
 
 .hidden {
@@ -40,7 +31,13 @@ h5 {
 
 .publisher-list-item {
    input {
-    width: inherit;
+    width: 300px;
+  }
+}
+
+i.fa-times {
+  &:hover{
+    color: red;
   }
 }
 
@@ -48,8 +45,10 @@ select {
   font-size: 14pt;
 }
 
-.keyword-add {
-
+.keyword-add, .publisher-add {
+  select {
+    width: 100%;
+  }
 }
 
 .delete {
