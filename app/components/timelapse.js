@@ -62,7 +62,7 @@ export default React.createClass({
         </div>
       )
     } else {
-      chart = (<p>&nbsp;</p>)
+      chart = (<div className="loading"><img src="/img/loading.gif" /></div>)
     }
     return (
     <div>
