@@ -27,11 +27,12 @@ h5 {
   input {
     width: 100%;
     background-color: #FFF !important;
+    color: #000;
     font-size: 14px;
   }
 
-  input:hover{
-    cursor: auto;
+  input:hover {
+    cursor: default;
   }
 
 }
@@ -40,18 +41,14 @@ h5 {
    input {
     width: 100%;
     background-color: #FFF !important;
+    color: #000;
     font-size: 14px;
   }
 
   input:hover{
-    cursor: auto;
+    cursor: default;
   }
-}
 
-i.fa-times {
-  &:hover{
-    color: red;
-  }
 }
 
 select {
