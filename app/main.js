@@ -88,6 +88,8 @@ var actions = {
 
   addKeyword: function(chartID, newKeyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    var newKeywordsList = keywordsList.concat(newKeyword).toString()
+    var params = {keywords: newKeywordsList}
     if (keywordsList.indexOf(newKeyword) < 0) {
       var route = 'charts/' + chartID
       var success = function(err, resp) {
@@ -95,18 +97,21 @@ var actions = {
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
         this.dispatch("ADD_KEYWORD", {id: chartID, data: newKeyword})
       }.bind(this)
-      requestManager.put(route, {keywords: keywordList.concat(newKeyword).toString}, success)
+      requestManager.put(route, params, success)
     }
   },
 
   removeKeyword: function(chartID, keywordIndex) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
+    keywordsList.splice(keywordIndex, 1)
+    var params = {keywords: keywordsList.toString().trim()}
     var route = 'charts/' + chartID
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
       this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
     }.bind(this)
-      requestManager.put(route, {keywords: keywordsList.splice(keywordIndex, 1)}, success)
+    requestManager.put(route, params, success)
   },
 
   addPublisher: function(chartID, publisherID) {

@@ -106,7 +106,6 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-    console.log(currentChart.publishers)
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
@@ -147,6 +146,7 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
+    console.log(this._byChartID(chartID).keywords)
     // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },

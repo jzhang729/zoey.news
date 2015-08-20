@@ -92,9 +92,18 @@ var addChart = function(params, callback) {
   .then(callback)
 }
 
+var updateChart = function(chartID, params, callback) {
+  console.log(params)
+  knex('charts')
+  .where('charts.id', chartID)
+  .update(params)
+  .then(callback)
+}
+
 exports.queryDetail = queryDetail;
 exports.getPublisherList = getPublisherList;
 exports.getCharts = getCharts;
 exports.getChart = getChart;
 exports.getChartData = getChartData;
 exports.addChart = addChart;
+exports.updateChart = updateChart

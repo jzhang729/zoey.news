@@ -12,6 +12,7 @@ export default {
       .put(route)
       .send(params)
       .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
       .end(success)
   },
   post: function(route, params, success) {

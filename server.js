@@ -18,6 +18,7 @@ var getCharts = require('./sql_builder').getCharts;
 var getChart = require('./sql_builder').getChart;
 var getChartData = require('./sql_builder').getChartData;
 var addChart = require('./sql_builder').addChart;
+var updateChart = require('./sql_builder').updateChart;
 
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false })); 
@@ -49,8 +50,6 @@ app.get('/users/:user/charts', function(req, res) {
   });
 });
 
-/// active
-
 app.get('/charts/:chartID', function(req, res) {
   getChart(req.params.chartID, function(chartParams) {
     res.send(chartParams)
@@ -65,8 +64,6 @@ app.get('/charts/data/:chartID', function(req, res) {
   });
 });
 
-/// in progress
-
 app.post('/charts', function(req, res) {
   var fields = {
     tab_id: 1,
@@ -76,10 +73,24 @@ app.post('/charts', function(req, res) {
     publishers: "1, 2, 3"
   }
   addChart(fields, function(chart) {
-    console.log(chart)
     res.json(chart)
   });
 });
+
+app.put('/charts/:chartID', function(req, res) {
+  var params = req.body
+  var id = req.params.chartID
+  console.log(params)
+  console.log(id)
+  updateChart(id, params, function(chart) {
+    getChart(id, function(chartParams) {
+      getChartData(chartParams, function(rows) {
+      console.log(rows)
+      res.send(rows)
+      });
+    });
+  });
+})
 
 if (!isProduction) {
 
