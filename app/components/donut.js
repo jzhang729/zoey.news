@@ -51,7 +51,7 @@ export default React.createClass({
   addPublisher: function(publisher){
     this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
-    handleDeleteChart: function() {
+  handleDeleteChart: function() {
     this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
   },
   render: function() {
@@ -67,6 +67,7 @@ export default React.createClass({
                       data={this.props.chartParams.snapShot}
                       redraw={true}
                       options={options}/>
+            <Slider chartID={this.props.chartParams.chartID} dates={this.props.allDates} startDate={this.props.chartParams.startDate} endDate={this.props.chartParams.endDate}/>
           </div>
           <div className="chart-menu">
             <h5>Keywords</h5>
