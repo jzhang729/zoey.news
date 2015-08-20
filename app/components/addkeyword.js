@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 require("font-awesome-webpack");
+import { Input, Button } from 'react-bootstrap'
 import Color from '../services/linechartcolor.js'
 
 
@@ -44,11 +45,17 @@ export default React.createClass({
 
   render: function() {
 
+    var ButtonStyle = {
+      backgroundColor: '#e7e7e7',
+      border: '0px'
+    }
+
+    var innerButton = <Button style={ButtonStyle} onClick={this.handleChange}><i className="fa fa-plus-square"></i></Button>;
+
     return (
         <div>
           <div className="keyword-add">
-            <input type="text" value={this.state.value} maxLength="16" chartID={this.props.chartID} onChange={this.handleChange} onKeyDown={this.handleKeyDown}></input>
-            <i className="fa fa-2x fa-plus-square" value="Submit" onClick={this.handleClick}></i>
+            <Input type='text' maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onKeyDown={this.handleKeyDown} />
           </div>
         </div>
     )

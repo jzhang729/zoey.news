@@ -1,6 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 import Color from '../services/barchartcolor.js'
+import { Input, Button } from 'react-bootstrap'
 var FluxMixin = Fluxxor.FluxMixin(React)
 
 export default React.createClass({
@@ -13,34 +14,39 @@ export default React.createClass({
   render: function() {
     var publisher = this.props.publisher
     var publisherIndex = this.props.publisherIndex
-    var divStyle = [{
-      borderBottomColor: Color.Fill[0],
-      borderBottomWidth: '8px',
-      borderBottomStyle: 'solid',
-      listStyleType: 'none'
-    },{
-      borderBottomColor: Color.Fill[1],
-      borderBottomWidth: '8px',
-      borderBottomStyle: 'solid'
-    },{
-      borderBottomColor: Color.Fill[2],
-      borderBottomWidth: '8px',
-      borderBottomStyle: 'solid'
-    }];
+
+    var legendButtonStyle = []
+
+    for (var i = 0; i < 8; i++) {
+      legendButtonStyle.push(
+      {
+      backgroundColor: Color.Fill[i],
+      borderBottomWidth: '0px'
+      })
+    }
+    
+    var normalButtonStyle = {
+      backgroundColor: 'rgba(0,0,0,0.5)'
+    }
+
+    var iStyle = {
+      color: 'rgba(255,255,255,1)'
+    }
+
+    var innerButtonLegend = <Button style={legendButtonStyle[this.props.publisherIndex]} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
+    var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
 
     var listItem;
     if (this.props.legend == true) {
       listItem = (
-        <div className="publisher-list-item" style={divStyle[this.props.publisherIndex]}>
-          {publisher} &nbsp;
-          <i className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
+        <div className="publisher-list-item">
+          <Input type='text' buttonBefore={innerButtonLegend} value={publisher} />
         </div>
       )
     } else {
       listItem = (
         <div className="publisher-list-item">
-          {publisher} &nbsp;
-          <i className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i>
+          <Input type='text' buttonBefore={innerButtonNormal} value={publisher} />
         </div>
       )
     }

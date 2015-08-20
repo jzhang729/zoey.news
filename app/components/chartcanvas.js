@@ -8,18 +8,22 @@ export default React.createClass({
 
   render: function() {
     var charts = this.props.charts.map(function(chart, index) {
-      if (chart.chartType == "snapshot") {
+      switch(chart.chartType) {
+      case "snapshot":
         return (
           <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
-      } else if (chart.chartType == "timelapse") {
+        break;
+      case "timelapse":
         return (
           <Timelapse chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
-      } else if (chart.chartType == "donut") {
+        break;
+      case "donut":
         return (
           <Donut chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates} />
         )
+        break;
       }
     }.bind(this));
     return (

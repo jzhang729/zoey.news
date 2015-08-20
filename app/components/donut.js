@@ -57,7 +57,7 @@ export default React.createClass({
       chart = (
         <div className="chart-container">
           <div className="chart-label-y">
-            Keyword Frequency
+            {this.props.chartParams.publishers[0].domain}
           </div>
           <div className="chart-main">
             <DonutChart className="chart"
@@ -77,7 +77,7 @@ export default React.createClass({
         </div>
       )
     } else {
-      chart = (<h4>loading</h4>)
+      chart = (<p>&nbsp;</p>)
     }
     return (
       <div>

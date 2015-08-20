@@ -10,6 +10,8 @@ import SnapShotStore from './stores/snapshotstore'
 import PublisherStore from './stores/publisherstore'
 import routeService from './services/routeservice'
 import requestManager from './services/requestManager'
+import buildPublishersForChart from './services/buildPublishersForChart'
+
 
 var actions = {
 
@@ -25,20 +27,14 @@ var actions = {
   loadCharts: function() {
     var route = '/users/1/charts'
     var success = function(err, resp){
-      var allPubObjects = this.flux.store("PublisherStore").getPublishers()
+      var allPublishers = flux.store("PublisherStore").getPublishers()
       var charts = JSON.parse(resp.text).map(function(chart) {
-
-        var chartPubsWithNames = [];
-        allPubObjects.forEach(function(publisher) {
-          if (chart.chart_params.publishers.indexOf(publisher.id) >= 0) {
-            chartPubsWithNames.push(publisher)
-          }
-        })
+        var chartPubsWithNames = buildPublishersForChart(chart, allPublishers)
         return {
           chartID: chart.id,
-          chartType: chart.chart_params.chart_type,
-          title: chart.chart_params.title,
-          keywords: chart.chart_params.keywords,
+          chartType: chart.chart_type,
+          title: chart.title,
+          keywords: chart.keywords.split(','),
           publishers: chartPubsWithNames
         }
       }.bind(this))
@@ -48,37 +44,36 @@ var actions = {
   },
 
   addChart: function(type) {
-    var chart = {
-      chartID: 8,
-      title: "Election",
-      chartType: type,
-      keywords: ["election"],
-      publishers: [{id: 1, domain: "theglobeandmail.com"}, {id: 2, domain: "nationalpost.com"}, {id: 3, domain: "cbc.ca"}]
-    }
-    this.dispatch("LOAD_CHARTS", [chart])
-
-    var chartID = chart.chartID
-    var keywordsList = chart.keywords
-    var publishersList = chart.publishers
-    var publisherIds = publishersList.map(function(publisher) {
-      return publisher.id
-    })
-    var route = routeService.apiUrl(keywordsList, publisherIds)
-    var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("UPDATE_CHART", chartID)
-    }.bind(this)
-    requestManager.get(route, success)
+    var params = {chartType: type}
+    var route = '/charts'
+    var postSuccess = function(err, resp) {
+      // we have the ID of the chart we just added
+      var newChartID = resp.body[0]
+      // now get its metadata
+      var route = '/charts' + newChartID
+      var getSuccess = function(err, resp) {
+        var chart = JSON.parse(resp.text)
+        // flesh out the publishers list with publisher names
+        var allPublishers = this.flux.store("PublisherStore").getPublishers()
+        var chartPubsWithNames = buildPublishersForChart(chart, allPublishers)
+        // create chart literal so we can pass to the Flux store
+        var completeChart = {
+          chartID: chart.id,
+          chartType: chart.chart_type,
+          title: chart.title,
+          keywords: chart.keywords.split(','),
+          publishers: chartPubsWithNames
+        }
+        this.dispatch("LOAD_CHARTS", [completeChart])
+        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+        this.dispatch("UPDATE_CHART", chartID)
+      }.bind(this);
+    }.bind(this);
+    requestManager.post(route, params, postSuccess)
   },
 
   loadChartData: function(chartID) {
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
-    var publisherIds = publishersList.map(function(publisher) {
-      return publisher.id
-    })
-    var route = routeService.apiUrl(keywordsList, publisherIds)
+    var route = '/charts/data/' + chartID
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
@@ -91,51 +86,78 @@ var actions = {
     this.dispatch("UPDATE_CHART", chartID)
   },
 
-  addKeyword: function(chartID, keyword) {
+  addKeyword: function(chartID, newKeyword) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
-      return publisher.id
-    })
-    if (keywordsList.indexOf(keyword) < 0 && keywordsList.length < 8) {
-      var route = routeService.apiUrl(keywordsList.concat(keyword), publishersList)
+    var newKeywordsList = keywordsList.concat(newKeyword).toString()
+    var params = {keywords: newKeywordsList}
+    if (keywordsList.indexOf(newKeyword) < 0) {
+      var route = 'charts/' + chartID
       var success = function(err, resp) {
         var dataRows = JSON.parse(resp.text);
         this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-        this.dispatch("ADD_KEYWORD", {id: chartID, data: keyword})
+        this.dispatch("ADD_KEYWORD", {id: chartID, data: newKeyword})
       }.bind(this)
-      requestManager.get(route, success)
+      requestManager.put(route, params, success)
     }
   },
 
   removeKeyword: function(chartID, keywordIndex) {
-    this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
+    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID).map(function(keyword) {
+      return keyword
+    });
+    keywordsList.splice(keywordIndex, 1)
+    var params = {keywords: keywordsList.toString().trim()}
+    var route = 'charts/' + chartID
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("REMOVE_KEYWORD", {id: chartID, data: keywordIndex})
+    }.bind(this)
+    requestManager.put(route, params, success)
   },
 
-  addPublisher: function(chartID, publisherID) {
-    var publisherList = this.flux.store("PublisherStore").getPublishers()
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var activePublisherIDs = this.flux.store("SnapShotStore").getPublishers(chartID).map(function(publisher) {
-      return publisher.id
+  addPublisher: function(chartID, newPublisherID) { 
+    // create new string of publisher id's so we can send to DB
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
+    var publishersIDList = publishersList.map(function(publisher) {
+      return publisher.id;
     })
-    var addedPublisher = publisherList.filter(function(publisher) {
-      if (publisher.id == publisherID) {
+    publishersIDList = publishersIDList.concat(newPublisherID).toString()
+    var params = {publishers: publishersIDList}
+    
+    // Get the publishers details from publisher store
+    // so we can pass to the chart's entry in chart store
+    var allPublishers = this.flux.store("PublisherStore").getPublishers()
+    var addedPublisher = allPublishers.filter(function(publisher) {
+      if (publisher.id == newPublisherID) {
         return publisher
       }
     })[0]
 
-    if (activePublisherIDs.indexOf(addedPublisher.id) < 0) {
-      var route = routeService.apiUrl(keywordsList, activePublisherIDs.concat(addedPublisher.id))
-      var success = function(err, resp) {
-        var dataRows = JSON.parse(resp.text);
-        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-        this.dispatch("ADD_PUBLISHER", {id: chartID, data: addedPublisher})
-      }.bind(this)
-      requestManager.get(route, success)
-    }
+    var route = 'charts/' + chartID
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("ADD_PUBLISHER", {id: chartID, data: addedPublisher})
+    }.bind(this)
+    requestManager.put(route, params, success)
   },
 
-  removePublisher: function(chartID, publisher) {
-    this.dispatch("REMOVE_PUBLISHER", {id: chartID, data: publisher})
+  removePublisher: function(chartID, removedPublisherIndex) {
+    // create new string of publisher id's so we can send to DB
+    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
+    var publishersIDList = publishersList.map(function(publisher) {
+      return publisher.id;
+    })
+    publishersIDList.splice(removedPublisherIndex, 1)
+    var params = {publishers: publishersIDList.toString().trim()}
+    var route = 'charts/' + chartID
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+      this.dispatch("REMOVE_PUBLISHER", {id: chartID, publisherIndex: removedPublisherIndex})
+    }.bind(this)
+    requestManager.put(route, params, success)
   },
 
   // this takes an array of index values
