@@ -212,6 +212,9 @@ export default Fluxxor.createStore({
     this.charts.splice(deleteIndex, 1)
     this.emit("change")
   },
+  handleUpdateChartTitle: function(chartID, newTitle) {
+    this._byChartID(chartID).title = newTitle
+  },
 
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {
