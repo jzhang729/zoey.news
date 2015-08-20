@@ -24,13 +24,9 @@ export default React.createClass({
   },
 
   handleKeyUp: function(event) {
-    if (event.which != 13) {
-      this.setState({value: event.target.value})
-    } else {
-      if (this.state.value.trim().length > 0) {
-        this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
-      }
-    this.setState({value: ""})
+    if (event.which == 13 && this.state.value.trim().length > 0) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
+      this.setState({value: ""})
     }
   },
 
