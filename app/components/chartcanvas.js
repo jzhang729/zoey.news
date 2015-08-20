@@ -11,17 +11,17 @@ export default React.createClass({
       switch(chart.chartType) {
       case "snapshot":
         return (
-          <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
+          <Snapshot chartParams={chart} chartListLength={this.props.charts.length} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
         break;
       case "timelapse":
         return (
-          <Timelapse chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
+          <Timelapse chartParams={chart} chartListLength={this.props.charts.length} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
         break;
       case "donut":
         return (
-          <Donut chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates} />
+          <Donut chartParams={chart} chartListLength={this.props.charts.length} publisherList={this.props.publisherList} allDates={this.props.allDates} />
         )
         break;
       }
