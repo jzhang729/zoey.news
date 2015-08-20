@@ -36,11 +36,15 @@ export default React.createClass({
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
-          <div className="chart-label-y">&nbsp;</div>
-          <LineChart className="chart"
-                     data={this.props.chartParams.snapShot}
-                     redraw={true}
-                     options={options}/>
+          <div className="chart-label-y">
+            Keyword Frequency
+          </div>
+          <div className="chart-main">
+            <LineChart className="chart"
+                       data={this.props.chartParams.snapShot}
+                       redraw={true}
+                       options={options}/>
+          </div>
           <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <h5>Keywords</h5>
@@ -50,13 +54,16 @@ export default React.createClass({
                                list={this.props.chartParams.keywords}
                                legend={true} />
             <h5>Publishers</h5>
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers}/>
+            <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                 className={'publisher-list'}
+                                 list={this.props.publisherList}
+                                 activelist={this.props.chartParams.publishers}/>
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
           </div>
         </div>
       )
     } else {
-      chart = (<h4>loading</h4>)
+      chart = (<p>&nbsp;</p>)
     }
     return (
     <div>

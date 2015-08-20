@@ -8,8 +8,8 @@ var teal = ["rgba( 34,102,102,1)","rgba(102,153,153,1)","rgba( 64,127,127,1)","r
 var olive = ["rgba(170,157, 57,1)","rgba(255,245,170,1)","rgba(212,201,106,1)","rgba(128,116, 21,1)","rgba( 85, 75,  0,1)"];
 
 export default {
-  Fill:  [blue[0],green[0],red[0],peach[0],lightgreen[0],purple[0],teal[0],olive[0]],
-  Stroke:  [blue[1],green[1],red[1]],
-  HighlightFill:  [blue[2],green[2],red[2]],
-  HighlightStroke:  [blue[3],green[3],red[3]]
+  Fill: [blue[0],green[0],red[0],peach[0],lightgreen[0],purple[0],teal[0],olive[0]],
+  Stroke: [blue[1],green[1],red[1],peach[1],lightgreen[1],purple[1],teal[1],olive[1]],
+  HighlightFill: [blue[2],green[2],red[2],peach[2],lightgreen[2],purple[2],teal[2],olive[2]],
+  HighlightStroke: [blue[3],green[3],red[3],peach[3],lightgreen[3],purple[3],teal[3],olive[3]]
 }

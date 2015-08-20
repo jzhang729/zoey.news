@@ -18,7 +18,7 @@ exports.seed = function(knex, Promise) {
       keywords: "Mulcair, Trudeau, Harper", publishers: "1,2,3"
     }),
     knex('charts').insert({tab_id: 1, chart_list_order: 2, 
-      chart_title: "Security", chart_type: "snapshot", 
+      chart_title: "Security", chart_type: "donut", 
       keywords: "ISIS, Terrorism, RCMP", publishers: "1,2,3"
     }),
     knex('charts').insert({tab_id: 1, chart_list_order: 3, 

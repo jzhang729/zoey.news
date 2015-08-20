@@ -23,7 +23,7 @@ export default React.createClass({
           <i className="fa fa-2x fa-line-chart" onClick={this.handleAddChart.bind(this, "timelapse")}></i>
         </div>
         <div>
-          <i className="fa fa-2x fa-line-chart" onClick={this.handleAddChart.bind(this, "donut")}></i>
+          <i className="fa fa-2x fa-pie-chart" onClick={this.handleAddChart.bind(this, "donut")}></i>
         </div>
       </div>
     )

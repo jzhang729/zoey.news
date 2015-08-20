@@ -19,7 +19,7 @@ var options = {
   scaleShowVerticalLines: true,
   barShowStroke : true,
   barStrokeWidth : 2,
-  barValueSpacing : 5,
+  barValueSpacing : 2,
   barDatasetSpacing : 1,
   // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
   // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
@@ -48,17 +48,27 @@ export default React.createClass({
           <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
           <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
             <h5>Keywords</h5>
-            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
-            <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <AddKeyword chartID={this.props.chartParams.chartID}
+                        className={'keyword-list'}
+                        list={this.props.chartParams.keywords} />
+            <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                               className={'keyword-list'}
+                               list={this.props.chartParams.keywords} />
             <h5>Publishers</h5>
-            <ActivePublisherList chartID={this.props.chartParams.chartID} className={'publisher-list'} list={this.props.publisherList} activelist={this.props.chartParams.publishers} legend={true} />
-            <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+            <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                 className={'publisher-list'}
+                                 list={this.props.publisherList}
+                                 activelist={this.props.chartParams.publishers}
+                                 legend={true} />
+            <AddPublisher chartID={this.props.chartParams.chartID}
+                          list={this.props.publisherList}
+                          activelist={this.props.chartParams.publishers} />
             <Button className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )
     } else {
-      chart = (<h4>loading</h4>)
+      chart = (<p>&nbsp;</p>)
     }
     return (
       <div>
