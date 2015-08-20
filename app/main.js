@@ -43,6 +43,19 @@ var actions = {
     requestManager.get(route, success)
   },
 
+  loadChartData: function(chartID) {
+    var route = '/charts/data/' + chartID
+    var success = function(err, resp) {
+      var dataRows = JSON.parse(resp.text);
+      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
+    }.bind(this)
+    requestManager.get(route, success)
+  },
+
+  updateChart: function(chartID) {
+    this.dispatch("UPDATE_CHART", chartID)
+  },
+
   addChart: function(type) {
     var params = {chartType: type}
     var route = '/charts'
@@ -50,7 +63,7 @@ var actions = {
       // we have the ID of the chart we just added
       var newChartID = resp.body[0]
       // now get its metadata
-      var route = '/charts' + newChartID
+      var route = '/charts/' + newChartID
       var getSuccess = function(err, resp) {
         var chart = JSON.parse(resp.text)
         // flesh out the publishers list with publisher names
@@ -65,25 +78,18 @@ var actions = {
           publishers: chartPubsWithNames
         }
         this.dispatch("LOAD_CHARTS", [completeChart])
-        this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-        this.dispatch("UPDATE_CHART", chartID)
       }.bind(this);
+      requestManager.get(route, getSuccess)
     }.bind(this);
     requestManager.post(route, params, postSuccess)
   },
 
-  loadChartData: function(chartID) {
-    var route = '/charts/data/' + chartID
+  deleteChart: function(chartID) {
+    var route = '/charts/' + chartID
     var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("UPDATE_CHART", chartID)
-    }.bind(this)
-    requestManager.get(route, success)
-  },
-
-  updateChart: function(chartID) {
-    this.dispatch("UPDATE_CHART", chartID)
+      this.dispatch("DELETE_CHART"), chartID
+    }.bind(this);
+    requestManager.del(route, success)
   },
 
   addKeyword: function(chartID, newKeyword) {
