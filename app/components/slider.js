@@ -27,7 +27,7 @@ export default React.createClass({
     return (
       <div>
         <SliderLegend dates={this.props.dates} />
-        <ReactSlider pearling={true} className='horizontal-slider' min={this.state.min} max={this.state.max} value={this.state.value} withBars onAfterChange={this.handleDateChange} />
+        <ReactSlider className='horizontal-slider' min={this.state.min} max={this.state.max} value={this.state.value} withBars onAfterChange={this.handleDateChange} />
       </div>
     )
   }

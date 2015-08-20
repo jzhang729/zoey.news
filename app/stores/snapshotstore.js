@@ -113,7 +113,6 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
@@ -184,6 +183,7 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
+    console.log(this._byChartID(chartID).keywords)
     // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
@@ -194,8 +194,8 @@ export default Fluxxor.createStore({
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
-    var data = payload.data
-    this._byChartID(chartID).publishers.splice(data, 1)
+    var publisherIndex = payload.publisherIndex
+    this._byChartID(chartID).publishers.splice(publisherIndex, 1)
     // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },

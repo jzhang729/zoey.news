@@ -60,7 +60,7 @@ var getPublisherList = function(callback) {
 // }
 
 var getCharts = function(user, callback) {
-  knex.select('charts.id', 'charts.chart_list_order', 'charts.chart_params', 'charts.tab_id', 'tabs.tab_list_order', 'tabs.tab_name')
+  knex.select('charts.*', 'tabs.tab_list_order', 'tabs.tab_name')
     .from("charts")
     .leftJoin('tabs', 'charts.tab_id', 'tabs.id')
     .where('tabs.user_id', user)
@@ -69,27 +69,35 @@ var getCharts = function(user, callback) {
 
 
 var getChartData = function(chartParams, callback) {
-  var keywords = chartParams.keywords.toString()
-  var publishers = chartParams.publishers.toString()
+  var keywords = chartParams.keywords
+  var publishers = chartParams.publishers
   queryDetail(keywords, publishers, function(resp) {
     callback(resp.rows);
   })
 }
 
 var getChart = function(chartID, callback) {
-  knex.select('chart_params')
+  knex.select()
     .from('charts')
     .where('charts.id', chartID)
     .then(function(rows) {
-      console.log("here are the chart params")
-      console.log(rows[0].chart_params)
-      callback(rows[0].chart_params)
+      callback(rows[0])
     });
 }
 
 var addChart = function(params, callback) {
-  knex('charts').insert(params)
-  callback()
+  knex('charts')
+  .returning('id')
+  .insert(params)
+  .then(callback)
+}
+
+var updateChart = function(chartID, params, callback) {
+  console.log(params)
+  knex('charts')
+  .where('charts.id', chartID)
+  .update(params)
+  .then(callback)
 }
 
 exports.queryDetail = queryDetail;
@@ -97,3 +105,5 @@ exports.getPublisherList = getPublisherList;
 exports.getCharts = getCharts;
 exports.getChart = getChart;
 exports.getChartData = getChartData;
+exports.addChart = addChart;
+exports.updateChart = updateChart
