@@ -5,6 +5,7 @@ import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
 import Slider from './slider'
+import ChartTitle from './charttitle'
 import { Button } from 'react-bootstrap'
 
 var DonutChart = require("react-chartjs").Doughnut;
@@ -63,6 +64,7 @@ export default React.createClass({
             {this.props.chartParams.publishers[0].domain}
           </div>
           <div className="chart-main">
+          <ChartTitle title={"test"} chartID={this.props.chartParams.chartID} />
             <DonutChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}

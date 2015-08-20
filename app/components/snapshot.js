@@ -5,6 +5,7 @@ import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
 import Slider from './slider'
+import ChartTitle from './charttitle'
 import { Button } from 'react-bootstrap'
 
 var BarChart = require("react-chartjs").Bar;
@@ -42,7 +43,7 @@ export default React.createClass({
             Keyword Frequency
           </div>
           <div className="chart-main">
-          <span className="chart-title">Keyword by Publication Over Specified Date</span>
+            <ChartTitle title={"test"} chartID={this.props.chartParams.chartID} />
             <BarChart className="chart"
                       data={this.props.chartParams.snapShot}
                       redraw={true}
