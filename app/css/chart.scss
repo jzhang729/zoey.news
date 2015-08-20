@@ -54,10 +54,12 @@
   flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
   flex-direction: column;
-    -webkit-flex-direction: column;*/
+    -webkit-flex-direction: column; */
   order: 3;
     -webkit-order: 3;
   width: 300px;
+  position: relative;
+  left: 50px;
 }
 
 .chart-label-y {
@@ -73,6 +75,8 @@
     -webkit-order: 0;
   align-self: center;
     -webkit-align-self: center;
+  position: relative;
+  left: 20px;
 }
 
 .chart {

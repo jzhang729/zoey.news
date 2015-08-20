@@ -42,10 +42,11 @@ export default React.createClass({
     var value = this.state.value
     var ButtonStyle = {
       backgroundColor: '#e7e7e7',
-      border: '0px'
+      fontSize: '12pt',
+      fontWeight: 'bold'
     }
-
-    var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}><i className="fa fa-plus-square"></i></Button>;
+    
+    var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}>+</Button>;
 
     return (
         <div>

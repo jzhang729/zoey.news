@@ -87,17 +87,24 @@ var getChart = function(chartID, callback) {
 
 var addChart = function(params, callback) {
   knex('charts')
-  .returning('id')
-  .insert(params)
-  .then(callback)
+    .returning('id')
+    .insert(params)
+    .then(callback)
 }
 
 var updateChart = function(chartID, params, callback) {
   console.log(params)
   knex('charts')
-  .where('charts.id', chartID)
-  .update(params)
-  .then(callback)
+    .where('charts.id', chartID)
+    .update(params)
+    .then(callback)
+}
+
+var deleteChart = function(chartID, callback) {
+  knex('charts')
+    .where('charts.id', chartID)
+    .del()
+    .then(callback)
 }
 
 exports.queryDetail = queryDetail;
@@ -107,3 +114,4 @@ exports.getChart = getChart;
 exports.getChartData = getChartData;
 exports.addChart = addChart;
 exports.updateChart = updateChart
+exports.deleteChart = deleteChart

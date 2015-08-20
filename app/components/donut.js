@@ -51,6 +51,9 @@ export default React.createClass({
   addPublisher: function(publisher){
     this.getFlux().actions.addPublisher(this.props.chartParams.chartID, publisher);
   },
+    handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
+  },
   render: function() {
     var chart;
     if(this.props.chartParams.snapShot){
@@ -65,14 +68,13 @@ export default React.createClass({
                       redraw={true}
                       options={options}/>
           </div>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <div className="chart-menu">
             <h5>Keywords</h5>
             <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} legend={true} />
             <h5>Publishers</h5>
             <AddPublisher publisherLimit={1} chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
-            <Button className="delete" bsStyle="danger">Delete Chart</Button>
+            <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )

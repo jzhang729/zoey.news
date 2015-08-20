@@ -4,6 +4,7 @@ import ActiveKeywordList from './activekeywordlist'
 import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
+import { Button } from 'react-bootstrap'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -31,6 +32,9 @@ export default React.createClass({
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
+    handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
+  },
   render: function() {
     var chart;
     if(this.props.chartParams.snapShot){
@@ -45,8 +49,7 @@ export default React.createClass({
                        redraw={true}
                        options={options}/>
           </div>
-          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
-          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+          <div className="chart-menu">
             <h5>Keywords</h5>
             <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
             <ActiveKeywordList chartID={this.props.chartParams.chartID}
@@ -59,6 +62,7 @@ export default React.createClass({
                                  list={this.props.publisherList}
                                  activelist={this.props.chartParams.publishers}/>
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+            <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )
