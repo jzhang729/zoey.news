@@ -24,14 +24,27 @@ h5 {
 }
 
 .keyword-list-item {
-   input {
+  input {
     width: 100%;
+    background-color: #FFF !important;
+    font-size: 14px;
   }
+
+  input:hover{
+    cursor: auto;
+  }
+
 }
 
 .publisher-list-item {
    input {
     width: 100%;
+    background-color: #FFF !important;
+    font-size: 14px;
+  }
+
+  input:hover{
+    cursor: auto;
   }
 }
 

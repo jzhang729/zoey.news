@@ -43,13 +43,13 @@ export default React.createClass({
       if (this.props.legend == true) {
         return (
           <li className="keyword-list-item">
-            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonLegend} value={keyword.trim()} />
+            <Input type='text' disabled chartID={this.props.chartID} buttonBefore={innerButtonLegend} value={keyword.trim()} />
           </li>
         )
       } else {
         return (
           <li className="keyword-list-item">
-            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonNormal} value={keyword.trim()} />
+            <Input type='text' disabled chartID={this.props.chartID} buttonBefore={innerButtonNormal} value={keyword.trim()} />
           </li>
         )
       }

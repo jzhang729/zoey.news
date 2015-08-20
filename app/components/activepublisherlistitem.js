@@ -42,13 +42,13 @@ export default React.createClass({
     if (this.props.legend == true) {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' buttonBefore={innerButtonLegend} value={publisher} />
+          <Input type='text' disabled buttonBefore={innerButtonLegend} value={publisher} />
         </div>
       )
     } else {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' buttonBefore={innerButtonNormal} value={publisher} />
+          <Input type='text' disabled buttonBefore={innerButtonNormal} value={publisher} />
         </div>
       )
     }
