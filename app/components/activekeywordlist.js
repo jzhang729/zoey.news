@@ -33,7 +33,7 @@ export default React.createClass({
       color: 'rgba(255,255,255,1)'
     }
 
-    
+
     var activeKeywordList = this.props.list.map(function(keyword, keywordIndex){
       var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
       var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
@@ -41,18 +41,18 @@ export default React.createClass({
       if (this.props.legend == true) {
         return (
           <li className="keyword-list-item">
-            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonLegend} value={keyword} />
+            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonLegend} value={keyword.trim()} />
           </li>
         )
       } else {
         return (
           <li className="keyword-list-item">
-            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonNormal} value={keyword} />
+            <Input type='text' chartID={this.props.chartID} buttonBefore={innerButtonNormal} value={keyword.trim()} />
           </li>
         )
       }
     }.bind(this))
-    
+
     return (
       <div>
         <ul className={'keyword-list'}>
