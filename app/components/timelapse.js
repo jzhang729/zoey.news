@@ -57,7 +57,6 @@ export default React.createClass({
           <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <LineChart className="chart"
                        data={this.props.chartParams.snapShot}
-                       redraw={true}
                        options={options}/>
           </div>
           <div className="chart-menu">

@@ -75,7 +75,6 @@ export default React.createClass({
           <ChartTitle title={this.props.chartParams.title} chartID={this.props.chartParams.chartID} />
             <DonutChart className="chart"
                       data={this.props.chartParams.snapShot}
-                      redraw={true}
                       options={options}/>
             <Slider chartID={this.props.chartParams.chartID} dates={this.props.allDates} startDate={this.props.chartParams.startDate} endDate={this.props.chartParams.endDate}/>
           </div>
