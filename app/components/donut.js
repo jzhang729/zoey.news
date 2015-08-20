@@ -54,8 +54,17 @@ export default React.createClass({
   handleDeleteChart: function() {
     this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
   },
+
   render: function() {
     var chart;
+    var deleteChartButton = "";
+
+    if (this.props.chartListLength > 1) {
+      deleteChartButton = (
+        <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
+      )
+    }
+
     if(this.props.chartParams.snapShot){
       chart = (
         <div className="chart-container">
@@ -79,7 +88,7 @@ export default React.createClass({
                                    list={this.props.publisherList}
                                    activelist={this.props.chartParams.publishers}/>
               <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
-            <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
+              {deleteChartButton}
           </div>
         </div>
       )
