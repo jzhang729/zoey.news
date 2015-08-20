@@ -1,20 +1,23 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
+import ActiveKeywordList from './activekeywordlist'
+import AddKeyword from './addkeyword'
+import ActivePublisherList from './activepublisherlist'
+import AddPublisher from './addpublisher'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
-var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var options = {
     scaleShowGridLines : true,
-    scaleGridLineColor : "rgba(0,0,0,0.3)",
+    scaleGridLineColor : "rgba(0,0,0,0.05)",
     scaleGridLineWidth : 1,
     scaleShowHorizontalLines: true,
     scaleShowVerticalLines: true,
     bezierCurve : true,
     bezierCurveTension : 0.4,
     pointDot : true,
-    pointDotRadius : 4,
+    pointDotRadius : 2,
     pointDotStrokeWidth : 1,
     pointHitDetectionRadius : 20,
     datasetStroke : true,
@@ -24,30 +27,51 @@ var options = {
 };
 
 export default React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("SnapShotStore")],
-
-  getStateFromFlux: function(){
-    return {
-      chartdata: this.getFlux().store("SnapShotStore").getSnapShot(this.props.chartParams.chartID),
-      // keywordlist: this.getFlux().store("SnapShotStore").getKeywords(this.props.chartParams.chartID),
-      // publisherlist: this.getFlux().store("SnapShotStore").getPublishers(this.props.chartParams.chartID),
-      // startDate: this.getFlux().store("SnapShotStore").getStartDate(this.props.chartParams.chartID),
-      // endDate: this.getFlux().store("SnapShotStore").getEndDate(this.props.chartParams.chartID),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates(this.props.chartParams.chartID)
-    }
-  },
+  mixins: [FluxMixin],
   componentDidMount: function() {
-    this.getFlux().actions.loadChartData(this.props.chartParams.chartID, this.props.chartParams.keywords, this.props.chartParams.publishers);
+    this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
-
   render: function() {
+    var chart;
+    if(this.props.chartParams.snapShot){
+      chart = (
+        <div className="chart-container">
+          <div className="chart-label-y">
+            Keyword Frequency
+          </div>
+          <div className="chart-main">
+            <LineChart className="chart"
+                       data={this.props.chartParams.snapShot}
+                       redraw={true}
+                       options={options}/>
+          </div>
+          <i onClick={this.toggleHidden} className="fa fa-2x fa-cog chart-options"></i>
+          <div className={(this.props.chartParams.hiddenSettings ? 'hidden ' : '') + "chart-menu"}>
+            <h5>Keywords</h5>
+            <AddKeyword chartID={this.props.chartParams.chartID} className={'keyword-list'} list={this.props.chartParams.keywords} />
+            <ActiveKeywordList chartID={this.props.chartParams.chartID}
+                               className={'keyword-list'}
+                               list={this.props.chartParams.keywords}
+                               legend={true} />
+            <h5>Publishers</h5>
+            <ActivePublisherList chartID={this.props.chartParams.chartID}
+                                 className={'publisher-list'}
+                                 list={this.props.publisherList}
+                                 activelist={this.props.chartParams.publishers}/>
+            <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+          </div>
+        </div>
+      )
+    } else {
+      chart = (<p>&nbsp;</p>)
+    }
     return (
-      <div className="chart-container">
-        <LineChart className="chart" data={this.state.chartdata} options={options} redraw />
-      </div>
+    <div>
+      {chart}
+    </div>
     )
   }
 })
 
-
- 
+// Experimenting with this code to control whether to redraw entire chart
+// redraw={this.props.chartParams.shouldRedraw}

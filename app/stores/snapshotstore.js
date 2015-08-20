@@ -1,5 +1,7 @@
 import Fluxxor from 'fluxxor'
-import color from '../services/color'
+import barchartcolor from '../services/barchartcolor'
+import linechartcolor from '../services/linechartcolor'
+import donutchartcolor from '../services/donutchartcolor'
 import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
@@ -18,6 +20,10 @@ export default Fluxxor.createStore({
       "LOAD_CHARTS", this.handleLoadCharts
     );
   },
+  getCharts: function() {
+    return this.charts
+  },
+
   _byChartID: function(id) {
     var found = {}
     this.charts.forEach(function(chart) {
@@ -32,21 +38,17 @@ export default Fluxxor.createStore({
       chart.startDate = 0
       chart.endDate = (this.dates.length -1)
       chart.datastore = []
-      chart.snapShot = {
-        labels: [],
-        datasets: [{
-          label: "",
-          data: []
-        }]
-      }
+      chart.snapShot = false
       return chart
     }.bind(this))
     this.charts = this.charts.concat(newCharts)
+    this.emit("change")
   },
   loadChartData: function(payload, type) {
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
+    this.emit("change")
   },
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {
@@ -56,17 +58,23 @@ export default Fluxxor.createStore({
       case "timelapse":
         this.updateTimeLapse(chartID)
         break
+      case "donut":
+        this.updateDonut(chartID)
+        break
     }
   },
   updateTimeLapse: function(chartID) {
     var currentChart = this._byChartID(chartID)
     var newDatasets = []
-    
+    var activePublisherIDs = currentChart.publishers.map(function(publisher) {
+      return publisher.id
+    })
     currentChart.keywords.forEach(function(keyword, index) {
       var dailyCount = this.dates.map(function(date) {
         var sum = 0
+
         currentChart.datastore.forEach(function(row) {
-          if ( (date == row.date) && (keyword == row.word) ) {
+          if ( (date == row.date) && (keyword == row.word) && (activePublisherIDs.indexOf(row.publisher_id) >= 0) ) {
             sum += row.nentry
           }
         })
@@ -75,10 +83,13 @@ export default Fluxxor.createStore({
       var dataset = {
         label: keyword,
         data: dailyCount,
-        fillColor: color.Fill[index],
-        strokeColor: color.Stroke[index],
-        highlightFill: color.HighlightFill[index],
-        highlightStroke: color.HighlightStroke[index]
+        fillColor: linechartcolor.Fill[index],
+        strokeColor: linechartcolor.Stroke[index],
+        pointColor: linechartcolor.Point[index],
+        pointStrokeColor: linechartcolor.PointStroke[index],
+        pointHighlightFill: linechartcolor.PointHighlightFill[index],
+        pointHighlightStroke: linechartcolor.PointHighlightStroke[index]
+
       }
       newDatasets.push(dataset)
     }.bind(this));
@@ -93,7 +104,6 @@ export default Fluxxor.createStore({
 
   updateSnapShot: function(chartID){
     var currentChart = this._byChartID(chartID)
-
     var dateMatch = function (row) {
       var date = new Date(row.date);
       var startDate = new Date(this.dates[currentChart.startDate])
@@ -103,7 +113,6 @@ export default Fluxxor.createStore({
 
     var filteredArr = currentChart.datastore.filter(dateMatch);
     var newDatasets = []
-
     currentChart.publishers.forEach(function(publisher, index) {
       var wordcount = currentChart.keywords.map(function(keyword) {
         var sum = 0
@@ -117,10 +126,10 @@ export default Fluxxor.createStore({
       var dataset = {
         label: publisher.domain,
         data: wordcount,
-        fillColor: color.Fill[index],
-        strokeColor: color.Stroke[index],
-        highlightFill: color.HighlightFill[index],
-        highlightStroke: color.HighlightStroke[index]
+        fillColor: barchartcolor.Fill[index],
+        strokeColor: barchartcolor.Stroke[index],
+        highlightFill: barchartcolor.HighlightFill[index],
+        highlightStroke: barchartcolor.HighlightStroke[index]
       }
       newDatasets.push(dataset)
     }.bind(this));
@@ -130,6 +139,36 @@ export default Fluxxor.createStore({
       datasets: newDatasets
     }
     this._byChartID(chartID).snapShot = newSnapShot
+
+    this.emit("change");
+  },
+
+  updateDonut: function(chartID){
+    var currentChart = this._byChartID(chartID)
+    var newDataset = []
+
+    var wordcount = currentChart.keywords.map(function(keyword, index) {
+      var sum = 0
+
+      currentChart.datastore.forEach(function(row) {
+        if (keyword == row.word){
+          sum += row.nentry
+        }
+      })
+
+      var dataset = {
+        value: sum,
+        label: keyword,
+        color: donutchartcolor.Fill[index],
+        highlight: donutchartcolor.Fill[index]
+      }
+
+      newDataset.push(dataset)
+
+    }.bind(this));
+
+    this._byChartID(chartID).snapShot = newDataset
+
     this.emit("change");
   },
 
@@ -137,22 +176,27 @@ export default Fluxxor.createStore({
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.push(data)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
     this._byChartID(chartID).keywords.splice(data, 1)
+    console.log(this._byChartID(chartID).keywords)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
     this._byChartID(payload.id).publishers.push(payload.data)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(payload.id)
   },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
-    var data = payload.data
-    this._byChartID(chartID).publishers.splice(data, 1)
+    var publisherIndex = payload.publisherIndex
+    this._byChartID(chartID).publishers.splice(publisherIndex, 1)
+    // this._byChartID(chartID).shouldRedraw = true
     this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
@@ -160,20 +204,8 @@ export default Fluxxor.createStore({
     var data = payload.data
     this._byChartID(chartID).startDate = data[0]
     this._byChartID(chartID).endDate = data[1]
+    // this._byChartID(chartID).shouldRedraw = false
     this.handleUpdateChart(chartID)
-  },
-  getSnapShot: function(chartID){
-    if (this._byChartID(chartID).snapShot) {
-      return this._byChartID(chartID).snapShot
-    } else {
-      return {
-        labels: [],
-        datasets: [{
-          label: "",
-          data: []
-        }]
-      }
-    }
   },
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {

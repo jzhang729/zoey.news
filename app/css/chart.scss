@@ -19,7 +19,7 @@
     display: -webkit-flex;
   flex-direction: row;
     -webkit-flex-direction: row;
-  margin: 20px;
+  margin: 20px 20px 20px 125px;
 }
 
 .chart-main {
@@ -57,6 +57,7 @@
     -webkit-flex-direction: column;*/
   order: 3;
     -webkit-order: 3;
+  width: 300px;
 }
 
 .chart-label-y {
@@ -73,8 +74,6 @@
   align-self: center;
     -webkit-align-self: center;
 }
-
-
 
 .chart {
   padding: 10px;

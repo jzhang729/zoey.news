@@ -1,21 +1,31 @@
 import React from 'react'
 import Timelapse from './timelapse'
+import Donut from './donut'
 import Snapshot from './snapshot'
+import Fluxxor from 'fluxxor'
 
 export default React.createClass({
 
   render: function() {
     var charts = this.props.charts.map(function(chart, index) {
-      if (chart.chartType == "snapshot") {
+      switch(chart.chartType) {
+      case "snapshot":
         return (
-          <Snapshot chartParams={chart} />
+          <Snapshot chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
-      } else if (chart.chartType == "timelapse") {
+        break;
+      case "timelapse":
         return (
-          <Timelapse chartParams={chart} />
+          <Timelapse chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates}/>
         )
+        break;
+      case "donut":
+        return (
+          <Donut chartParams={chart} publisherList={this.props.publisherList} allDates={this.props.allDates} />
+        )
+        break;
       }
-    });
+    }.bind(this));
     return (
       <div>
         {charts}

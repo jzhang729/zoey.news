@@ -11,18 +11,17 @@ var FluxMixin = Fluxxor.FluxMixin(React);
 var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 export default React.createClass({
-  mixins: [FluxMixin, StoreWatchMixin("PublisherStore", "ChartStore")],
+  mixins: [FluxMixin, StoreWatchMixin("PublisherStore", "SnapShotStore")],
 
-  getInitialState: function(){
-  },
   componentDidMount: function() {
     this.getFlux().actions.loadPublishers();
     this.getFlux().actions.loadCharts();
   },  
   getStateFromFlux: function(){
     return {
-      charts: this.getFlux().store("ChartStore").getCharts(),
-      publishers: this.getFlux().store("PublisherStore").getPublishers()
+      publisherList: this.getFlux().store("PublisherStore").getPublishers(),
+      charts: this.getFlux().store("SnapShotStore").getCharts(),
+      allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   showMenu: function() {
@@ -40,9 +39,7 @@ export default React.createClass({
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <a href="#" onClick={this.handleAddChart.bind(this, "snapshot")}>Add Snapshot</a>
-        <a href="#" onClick={this.handleAddChart.bind(this, "timelapse")}>Add TimeLapse</a>
-        <ChartCanvas charts={this.state.charts} />
+        <ChartCanvas charts={this.state.charts} publisherList = {this.state.publisherList} allDates = {this.state.allDates}/>
         </div>
       <Footer />
       </section>
