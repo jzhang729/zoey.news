@@ -12,41 +12,46 @@ export default React.createClass({
 
   getInitialState: function() {
     return {
-      hidden: false,
       value: ""
     }
   },
 
   handleClick: function() {
-    this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
-    this.setState({value: ""})
-  },
-
-  handleKeyDown: function(event) {
-    if (event.which == 13) {
-      this.getFlux().actions.addKeyword(this.props.chartID, event.target.value)
+    if (this.state.value.length > 0) {
+      this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
       this.setState({value: ""})
     }
   },
 
+  handleKeyUp: function(event) {
+    if (event.which != 13) {
+      this.setState({value: event.target.value})
+    } else {
+      if (this.state.value.length > 0) {
+        this.getFlux().actions.addKeyword(this.props.chartID, this.state.value)
+      }
+    this.setState({value: ""})
+    }
+  },
+
   handleChange: function(event) {
-    this.setState({value: event.target.value})
+    this.setState({value: event.target.value});
   },
 
   render: function() {
-
+    var value = this.state.value
     var ButtonStyle = {
       backgroundColor: '#e7e7e7',
       fontSize: '12pt',
       fontWeight: 'bold'
     }
-
-    var innerButton = <Button style={ButtonStyle} onClick={this.handleChange}>+</Button>;
+    
+    var innerButton = <Button style={ButtonStyle} onClick={this.handleClick}>+</Button>;
 
     return (
         <div>
           <div className="keyword-add">
-            <Input type='text' maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onKeyDown={this.handleKeyDown} />
+            <Input type='text' value={value} maxLength="16" chartID={this.props.chartID} buttonBefore={innerButton} onChange={this.handleChange} onKeyUp={this.handleKeyUp} />
           </div>
         </div>
     )
