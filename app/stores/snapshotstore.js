@@ -177,7 +177,7 @@ export default Fluxxor.createStore({
   handleAddKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
-    this._byChartID(chartID).keywords.push(data)
+    this._byChartID(chartID).keywords.unshift(data)
     this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {
