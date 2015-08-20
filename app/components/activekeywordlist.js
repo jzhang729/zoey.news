@@ -1,7 +1,7 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
 require("font-awesome-webpack");
-import Color from '../services/linechartcolor.js'
+import Color from '../services/donutchartcolor.js'
 
 
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -28,6 +28,36 @@ export default React.createClass({
 
     {
       borderBottomColor: Color.Fill[2],
+      borderBottomWidth: '8px',
+      borderBottomStyle: 'solid'
+    },
+
+    {
+      borderBottomColor: Color.Fill[3],
+      borderBottomWidth: '8px',
+      borderBottomStyle: 'solid'
+    },
+
+    {
+      borderBottomColor: Color.Fill[4],
+      borderBottomWidth: '8px',
+      borderBottomStyle: 'solid'
+    },
+
+    {
+      borderBottomColor: Color.Fill[5],
+      borderBottomWidth: '8px',
+      borderBottomStyle: 'solid'
+    },
+
+    {
+      borderBottomColor: Color.Fill[6],
+      borderBottomWidth: '8px',
+      borderBottomStyle: 'solid'
+    },
+
+    {
+      borderBottomColor: Color.Fill[7],
       borderBottomWidth: '8px',
       borderBottomStyle: 'solid'
     }];

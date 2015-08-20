@@ -25,6 +25,7 @@ var actions = {
   },
 
   loadCharts: function() {
+
     var route = '/users/1/charts'
     var success = function(err, resp){
       var allPublishers = flux.store("PublisherStore").getPublishers()

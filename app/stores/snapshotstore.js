@@ -1,6 +1,7 @@
 import Fluxxor from 'fluxxor'
 import barchartcolor from '../services/barchartcolor'
 import linechartcolor from '../services/linechartcolor'
+import donutchartcolor from '../services/donutchartcolor'
 import makeDates from '../services/makeDates'
 
 export default Fluxxor.createStore({
@@ -57,17 +58,23 @@ export default Fluxxor.createStore({
       case "timelapse":
         this.updateTimeLapse(chartID)
         break
+      case "donut":
+        this.updateDonut(chartID)
+        break
     }
   },
   updateTimeLapse: function(chartID) {
     var currentChart = this._byChartID(chartID)
     var newDatasets = []
-
+    var activePublisherIDs = currentChart.publishers.map(function(publisher) {
+      return publisher.id
+    })
     currentChart.keywords.forEach(function(keyword, index) {
       var dailyCount = this.dates.map(function(date) {
         var sum = 0
+
         currentChart.datastore.forEach(function(row) {
-          if ( (date == row.date) && (keyword == row.word) ) {
+          if ( (date == row.date) && (keyword == row.word) && (activePublisherIDs.indexOf(row.publisher_id) >= 0) ) {
             sum += row.nentry
           }
         })
@@ -132,6 +139,36 @@ export default Fluxxor.createStore({
       datasets: newDatasets
     }
     this._byChartID(chartID).snapShot = newSnapShot
+
+    this.emit("change");
+  },
+
+  updateDonut: function(chartID){
+    var currentChart = this._byChartID(chartID)
+    var newDataset = []
+
+    var wordcount = currentChart.keywords.map(function(keyword, index) {
+      var sum = 0
+
+      currentChart.datastore.forEach(function(row) {
+        if (keyword == row.word){
+          sum += row.nentry
+        }
+      })
+
+      var dataset = {
+        value: sum,
+        label: keyword,
+        color: donutchartcolor.Fill[index],
+        highlight: donutchartcolor.Fill[index]
+      }
+
+      newDataset.push(dataset)
+
+    }.bind(this));
+
+    this._byChartID(chartID).snapShot = newDataset
+
     this.emit("change");
   },
 

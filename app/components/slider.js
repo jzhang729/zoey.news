@@ -12,7 +12,6 @@ export default React.createClass({
       value: [this.props.startDate, this.props.endDate],
       min: 0,
       max: (this.props.dates.length - 1),
-      dates: this.props.dates
     }
   },
 
