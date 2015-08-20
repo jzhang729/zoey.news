@@ -30,6 +30,9 @@ export default React.createClass({
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
   },
+  handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
+  },
   render: function() {
     var chart;
     if(this.props.chartParams.snapShot){
@@ -63,7 +66,7 @@ export default React.createClass({
             <AddPublisher chartID={this.props.chartParams.chartID}
                           list={this.props.publisherList}
                           activelist={this.props.chartParams.publishers} />
-            <Button className="delete" bsStyle="danger">Delete Chart</Button>
+            <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )

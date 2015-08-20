@@ -4,6 +4,7 @@ import ActiveKeywordList from './activekeywordlist'
 import AddKeyword from './addkeyword'
 import ActivePublisherList from './activepublisherlist'
 import AddPublisher from './addpublisher'
+import { Button } from 'react-bootstrap'
 
 var LineChart = require("react-chartjs").Line;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -30,6 +31,9 @@ export default React.createClass({
   mixins: [FluxMixin],
   componentDidMount: function() {
     this.getFlux().actions.loadChartData(this.props.chartParams.chartID);
+  },
+    handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartParams.chartID);
   },
   render: function() {
     var chart;
@@ -59,6 +63,7 @@ export default React.createClass({
                                  list={this.props.publisherList}
                                  activelist={this.props.chartParams.publishers}/>
             <AddPublisher chartID={this.props.chartParams.chartID} list={this.props.publisherList} activelist={this.props.chartParams.publishers} />
+            <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
           </div>
         </div>
       )

@@ -19,6 +19,7 @@ var getChart = require('./sql_builder').getChart;
 var getChartData = require('./sql_builder').getChartData;
 var addChart = require('./sql_builder').addChart;
 var updateChart = require('./sql_builder').updateChart;
+var deleteChart = require('./sql_builder').deleteChart;
 
 app.use(express.static(publicPath));
 app.use(bodyParser.urlencoded({ extended: false })); 
@@ -80,8 +81,6 @@ app.post('/charts', function(req, res) {
 app.put('/charts/:chartID', function(req, res) {
   var params = req.body
   var id = req.params.chartID
-  console.log(params)
-  console.log(id)
   updateChart(id, params, function(chart) {
     getChart(id, function(chartParams) {
       getChartData(chartParams, function(rows) {
@@ -90,6 +89,13 @@ app.put('/charts/:chartID', function(req, res) {
       });
     });
   });
+})
+
+app.delete('/charts/:chartID', function(req, res){
+  var id = req.params.chartID
+  deleteChart(id, function(chart) {
+    res.send(chart)
+  })
 })
 
 if (!isProduction) {

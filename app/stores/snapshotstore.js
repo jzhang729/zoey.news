@@ -17,7 +17,8 @@ export default Fluxxor.createStore({
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
-      "LOAD_CHARTS", this.handleLoadCharts
+      "LOAD_CHARTS", this.handleLoadCharts,
+      "DELETE_CHART", this.handleDeleteChart
     );
   },
   getCharts: function() {
@@ -48,7 +49,6 @@ export default Fluxxor.createStore({
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
-    this.emit("change")
   },
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {
@@ -139,36 +139,28 @@ export default Fluxxor.createStore({
       datasets: newDatasets
     }
     this._byChartID(chartID).snapShot = newSnapShot
-
     this.emit("change");
   },
 
   updateDonut: function(chartID){
     var currentChart = this._byChartID(chartID)
     var newDataset = []
-
     var wordcount = currentChart.keywords.map(function(keyword, index) {
       var sum = 0
-
       currentChart.datastore.forEach(function(row) {
         if (keyword == row.word){
           sum += row.nentry
         }
       })
-
       var dataset = {
         value: sum,
         label: keyword,
         color: donutchartcolor.Fill[index],
         highlight: donutchartcolor.Fill[index]
       }
-
       newDataset.push(dataset)
-
     }.bind(this));
-
     this._byChartID(chartID).snapShot = newDataset
-
     this.emit("change");
   },
 
@@ -207,6 +199,17 @@ export default Fluxxor.createStore({
     // this._byChartID(chartID).shouldRedraw = false
     this.handleUpdateChart(chartID)
   },
+  handleDeleteChart: function(chartID) {
+    var deleteIndex
+    this.charts.forEach(function(chart, index) {
+      if (chart.chartID == chartID) {
+        deleteIndex = index
+      }
+    })
+    this.charts.splice(deleteIndex, 1)
+    this.emit("change")
+  },
+
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {
       return this._byChartID(chartID).keywords
