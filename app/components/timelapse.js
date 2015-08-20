@@ -64,7 +64,7 @@ export default React.createClass({
         </div>
       )
     } else {
-      chart = (<h4>loading</h4>)
+      chart = (<p>&nbsp;</p>)
     }
     return (
     <div>

@@ -7,7 +7,7 @@ export default React.createClass({
   render: function() {
     return (
       <div className="header">
-        <Navbar brand='Zoey' toggleNavKey={0}>
+        <Navbar fluid="true" brand='Zoey' toggleNavKey={0}>
             <Nav right eventKey={0}> {/* This is the eventKey referenced */}
               <NavItem eventKey={1} href='#'>Sign Up</NavItem>
               <NavItem eventKey={2} href='#'>Log In</NavItem>

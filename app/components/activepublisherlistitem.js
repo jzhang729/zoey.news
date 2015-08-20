@@ -14,32 +14,17 @@ export default React.createClass({
   render: function() {
     var publisher = this.props.publisher
     var publisherIndex = this.props.publisherIndex
-    var legendButtonStyle = [{
-      backgroundColor: Color.Fill[0],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[1],
-      borderBottomWidth: '0px'  
-    },{
-      backgroundColor: Color.Fill[2],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[3],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[4],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[5],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[6],
-      borderBottomWidth: '0px'
-    },{
-      backgroundColor: Color.Fill[7],
-      borderBottomWidth: '0px'
-    }];
 
+    var legendButtonStyle = []
+
+    for (var i = 0; i < 8; i++) {
+      legendButtonStyle.push(
+      {
+      backgroundColor: Color.Fill[i],
+      borderBottomWidth: '0px'
+      })
+    }
+    
     var normalButtonStyle = {
       backgroundColor: 'rgba(0,0,0,0.5)'
     }
@@ -48,8 +33,8 @@ export default React.createClass({
       color: 'rgba(255,255,255,1)'
     }
 
-    var innerButtonLegend = <Button style={legendButtonStyle[this.props.publisherIndex]}><i style={iStyle} className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i></Button>;
-    var innerButtonNormal = <Button style={normalButtonStyle}><i style={iStyle} className="fa fa-times" onClick={this.handleRemovePublisher.bind(this, publisherIndex)}></i></Button>;
+    var innerButtonLegend = <Button style={legendButtonStyle[this.props.publisherIndex]} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
+    var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
 
     var listItem;
     if (this.props.legend == true) {

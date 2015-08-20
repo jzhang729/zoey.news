@@ -35,9 +35,8 @@ export default React.createClass({
 
     
     var activeKeywordList = this.props.list.map(function(keyword, keywordIndex){
-      console.log(keywordIndex)
-      var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]}><i style={iStyle} className="fa fa-times" onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i></Button>;
-      var innerButtonNormal = <Button style={normalButtonStyle}><i style={iStyle} className="fa fa-times" onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}></i></Button>;
+      var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
+      var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
 
       if (this.props.legend == true) {
         return (

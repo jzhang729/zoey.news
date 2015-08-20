@@ -20,7 +20,7 @@ var options = {
   scaleShowVerticalLines: true,
   barShowStroke : true,
   barStrokeWidth : 2,
-  barValueSpacing : 5,
+  barValueSpacing : 2,
   barDatasetSpacing : 1,
   // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
   // legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
@@ -75,7 +75,7 @@ export default React.createClass({
         </div>
       )
     } else {
-      chart = (<h4>loading</h4>)
+      chart = (<p>&nbsp;</p>)
     }
     return (
       <div>

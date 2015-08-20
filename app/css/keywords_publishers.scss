@@ -6,13 +6,9 @@
 }
 
 @mixin keyword-publisher-list-item {
-  input {
-    width: inherit;
-  }
-}
+  width: 100px;
 
-@mixin keyword-publisher-hover {
-  &:hover{
+  i:hover{
     cursor: pointer;
     color: red;
   }
@@ -48,27 +44,20 @@ h5 {
   }
 }
 
-.keyword-list i {
-  @include keyword-publisher-hover;
-}
-
-.publisher-list i {
-  @include keyword-publisher-hover; 
+select {
+  font-size: 14pt;
 }
 
 .keyword-add {
-  margin-left: 20px;
-  
   input {
-    margin: 10px;
+    padding: 5px;
   }
 
   i {
     color: rgba(44,149,36,1);
-    background: none;
-    border: 0px;
-    margin-top: 10px;
-    padding: 5px;
+    font-size: 20pt;
+    padding: 0px;
+    margin: 0px;
 
     &:hover{
       color: rgba(47,255,38,0.5);
