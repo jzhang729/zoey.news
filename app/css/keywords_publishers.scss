@@ -24,21 +24,31 @@ h5 {
 }
 
 .keyword-list-item {
-   input {
+  input {
     width: 100%;
+    background-color: #FFF !important;
+    color: #000;
+    font-size: 14px;
   }
+
+  input:hover {
+    cursor: default;
+  }
+
 }
 
 .publisher-list-item {
    input {
     width: 100%;
+    background-color: #FFF !important;
+    color: #000;
+    font-size: 14px;
   }
-}
 
-i.fa-times {
-  &:hover{
-    color: red;
+  input:hover{
+    cursor: default;
   }
+
 }
 
 select {
