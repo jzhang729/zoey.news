@@ -23,7 +23,16 @@ export default Fluxxor.createStore({
     );
   },
   getCharts: function() {
-    return this.charts
+    return this.charts.map(function(chart) {
+      return {chartID: chart.chartID,
+              chartType: chart.chartType,
+              title: chart.title,
+              data: chart.snapShot,
+              startDate: chart.startDate,
+              endDate: chart.endDate,
+              keywords: chart.keywords
+      }
+    })
   },
 
   _byChartID: function(id) {
@@ -54,8 +63,8 @@ export default Fluxxor.createStore({
   },
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {
-      case "snapshot":
-        this.updateSnapShot(chartID)
+      case "barchart":
+        this.updateBarChart(chartID)
         break
       case "timelapse":
         this.updateTimeLapse(chartID)
@@ -104,7 +113,7 @@ export default Fluxxor.createStore({
     this.emit("change");
   },
 
-  updateSnapShot: function(chartID){
+  updateBarChart: function(chartID){
     var currentChart = this._byChartID(chartID)
     var dateMatch = function (row) {
       var date = new Date(row.date);
@@ -177,7 +186,7 @@ export default Fluxxor.createStore({
   handleAddKeyword: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
-    this._byChartID(chartID).keywords.unshift(data)
+    // this._byChartID(chartID).keywords.unshift(data)
     this.handleUpdateChart(chartID)
   },
   handleRemoveKeyword: function(payload, type) {

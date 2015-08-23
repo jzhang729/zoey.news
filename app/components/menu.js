@@ -39,7 +39,7 @@ export default React.createClass({
           </div>
         </OverlayTrigger>
         <OverlayTrigger placement='right' overlay={tooltipBarChart}>
-        <div onClick={this.handleAddChart.bind(this, "snapshot")}>
+        <div onClick={this.handleAddChart.bind(this, "barchart")}>
           <i className="fa fa-2x fa-bar-chart"></i>
         </div>
         </OverlayTrigger>

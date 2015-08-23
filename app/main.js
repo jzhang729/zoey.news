@@ -122,7 +122,7 @@ var actions = {
     requestManager.put(route, params, success)
   },
 
-  addPublisher: function(chartID, newPublisherID) { 
+  addPublisher: function(chartID, newPublisherID) {
     // create new string of publisher id's so we can send to DB
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
     var publishersIDList = publishersList.map(function(publisher) {
@@ -130,7 +130,7 @@ var actions = {
     })
     publishersIDList = publishersIDList.concat(newPublisherID).toString()
     var params = {publishers: publishersIDList}
-    
+
     // Get the publishers details from publisher store
     // so we can pass to the chart's entry in chart store
     var allPublishers = this.flux.store("PublisherStore").getPublishers()

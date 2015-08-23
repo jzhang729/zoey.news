@@ -2,11 +2,11 @@ import React from 'react'
 
 export default React.createClass({
   render: function() {
-    
-    var increment = Math.floor((this.props.dates.length)/5)
-    var dateLabels = this.props.dates.map(function(date, index) {
+
+    var increment = Math.floor((this.props.allDates.length)/5)
+    var dateLabels = this.props.allDates.map(function(date, index) {
       var dateString = ""
-      if (((index+1) % increment == 0) || (index == 0) || ((index+1) == this.props.dates.length)) {
+      if (((index+1) % increment == 0) || (index == 0) || ((index+1) == this.props.allDates.length)) {
       var formatDate = new Date(date);
       var day = formatDate.getDate();
       var month = formatDate.getMonth() + 1

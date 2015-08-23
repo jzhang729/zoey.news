@@ -1,6 +1,6 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import Color from '../services/barchartcolor.js'
+import Color from '../../../services/barchartcolor.js'
 import { Input, Button } from 'react-bootstrap'
 var FluxMixin = Fluxxor.FluxMixin(React)
 

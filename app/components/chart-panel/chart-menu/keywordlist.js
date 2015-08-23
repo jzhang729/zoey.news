@@ -2,15 +2,16 @@ import React from 'react'
 import Fluxxor from 'fluxxor'
 require("font-awesome-webpack")
 import { Input, Button } from 'react-bootstrap'
-import Color from '../services/barchartcolor.js'
+import Color from '../../../services/barchartcolor.js'
 
 var FluxMixin = Fluxxor.FluxMixin(React);
 
 export default React.createClass({
+  
   mixins: [FluxMixin],
 
   handleRemoveKeyword: function(keywordIndex) {
-    if (this.props.list.length > 1) {
+    if (this.props.keywords.length > 1) {
       this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
     }
   },
@@ -35,8 +36,7 @@ export default React.createClass({
       color: 'rgba(255,255,255,1)'
     }
 
-
-    var activeKeywordList = this.props.list.map(function(keyword, keywordIndex){
+    var keywordList = this.props.keywords.map(function(keyword, keywordIndex){
       var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
       var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
 
@@ -58,7 +58,7 @@ export default React.createClass({
     return (
       <div>
         <ul className={'keyword-list'}>
-          {activeKeywordList}
+          {keywordList}
         </ul>
       </div>
     )

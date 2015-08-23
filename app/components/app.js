@@ -1,6 +1,4 @@
 import React from 'react'
-import Timelapse from './timelapse'
-import Snapshot from './snapshot'
 import Menu from './menu'
 import Navbar from './navbar'
 import Footer from './footer'
@@ -16,12 +14,11 @@ export default React.createClass({
   componentDidMount: function() {
     this.getFlux().actions.loadPublishers();
     this.getFlux().actions.loadCharts();
-  },  
+  },
   getStateFromFlux: function(){
     return {
       publisherList: this.getFlux().store("PublisherStore").getPublishers(),
       charts: this.getFlux().store("SnapShotStore").getCharts(),
-      allDates: this.getFlux().store("SnapShotStore").getAllDates()
     }
   },
   showMenu: function() {
@@ -34,12 +31,17 @@ export default React.createClass({
     this.getFlux().actions.addChart(chartType)
   },
   render: function() {
+    var allDates = this.getFlux().store("SnapShotStore").getAllDates()
+
     return (
       <section className="content">
       <Navbar />
       <Menu ref="menu" />
         <div className="main">
-        <ChartCanvas charts={this.state.charts} publisherList = {this.state.publisherList} allDates = {this.state.allDates}/>
+        <ChartCanvas charts={this.state.charts}
+                     publisherList = {this.state.publisherList}
+                     allDates = {allDates}
+        />
         </div>
       <Footer />
       </section>

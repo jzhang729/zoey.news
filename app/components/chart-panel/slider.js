@@ -10,8 +10,6 @@ export default React.createClass({
   getInitialState: function() {
     return {
       value: [this.props.startDate, this.props.endDate],
-      min: 0,
-      max: (this.props.dates.length - 1),
     }
   },
 
@@ -23,11 +21,17 @@ export default React.createClass({
   },
 
   render: function() {
-    var slider 
+    var slider
     return (
       <div>
-        <SliderLegend dates={this.props.dates} />
-        <ReactSlider className='horizontal-slider' min={this.state.min} max={this.state.max} value={this.state.value} withBars onAfterChange={this.handleDateChange} />
+        <SliderLegend allDates={this.props.allDates} />
+        <ReactSlider className='horizontal-slider'
+                     min={0}
+                     max={this.props.allDates.length - 1}
+                     value={this.state.value}
+                     withBars
+                     onAfterChange={this.handleDateChange}
+        />
       </div>
     )
   }
