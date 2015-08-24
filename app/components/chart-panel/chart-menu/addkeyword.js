@@ -16,11 +16,13 @@ export default React.createClass({
   },
 
   handleClick: function() {
-    this.props.onClick()
+    this.props.addKeyword()
   },
 
   handleKeyUp: function(event) {
-    this.props.onKeyUp(event)
+    if (event.which == 13) {
+      this.props.addKeyword()
+    }
   },
 
   render: function() {

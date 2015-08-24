@@ -8,14 +8,12 @@ export default React.createClass({
   mixins: [FluxMixin],
 
   handleRemovePublisher: function(publisherIndex) {
-    if (this.props.activePublishers.length > 1) {
+    if (this.props.publishers.length > 1) {
       this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
     }
   },
 
   render: function() {
-    var publisher = this.props.publisher
-    var publisherIndex = this.props.publisherIndex
 
     var legendButtonStyle = []
 
@@ -35,20 +33,25 @@ export default React.createClass({
       color: 'rgba(255,255,255,1)'
     }
 
-    var innerButtonLegend = <Button style={legendButtonStyle[this.props.publisherIndex]} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
-    var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemovePublisher.bind(this, publisherIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
+    var innerButtonLegend = <Button style={legendButtonStyle[this.props.index]}
+                                    onClick={this.handleRemovePublisher.bind(this, this.props.index)}>
+                                    <i style={iStyle} className="fa fa-times"></i></Button>;
+    var innerButtonNormal = <Button style={normalButtonStyle}
+                                    onClick={this.handleRemovePublisher.bind(this, this.props.index)}>
+                                    <i style={iStyle} className="fa fa-times"></i></Button>;
 
     var listItem;
+
     if (this.props.legend == true) {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' disabled buttonBefore={innerButtonLegend} value={publisher} />
+          <Input type='text' disabled buttonBefore={innerButtonLegend} value={this.props.domain} />
         </div>
       )
     } else {
       listItem = (
         <div className="publisher-list-item">
-          <Input type='text' disabled buttonBefore={innerButtonNormal} value={publisher} />
+          <Input type='text' disabled buttonBefore={innerButtonNormal} value={this.props.domain} />
         </div>
       )
     }

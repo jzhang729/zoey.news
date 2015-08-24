@@ -13,6 +13,8 @@ export default React.createClass({
                     title={chart.title}
                     data={chart.data}
                     keywords={chart.keywords}
+                    publishers={chart.publishers}
+                    publisherList={this.props.publisherList}
                     allDates={this.props.allDates}
                     startDate={chart.startDate}
                     endDate={chart.endDate}

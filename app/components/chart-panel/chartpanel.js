@@ -37,7 +37,10 @@ export default React.createClass({
           />
         </div>
         <ChartMenu chartID={this.props.chartID}
-                   keywords={this.props.keywords}/>
+                   keywords={this.props.keywords}
+                   publishers={this.props.publishers}
+                   publisherList={this.props.publisherList}
+        />
       </div>
     )
   }

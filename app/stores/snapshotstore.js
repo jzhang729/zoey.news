@@ -12,7 +12,7 @@ export default Fluxxor.createStore({
     this.bindActions(
       "LOAD_CHART_DATA", this.loadChartData,
       "UPDATE_CHART", this.handleUpdateChart,
-      "ADD_PUBLISHER", this.handleAddPublisher,
+      // "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
       "LOAD_CHARTS", this.handleLoadCharts,
@@ -28,7 +28,8 @@ export default Fluxxor.createStore({
               data: chart.snapShot,
               startDate: chart.startDate,
               endDate: chart.endDate,
-              keywords: chart.keywords
+              keywords: chart.keywords,
+              publishers: chart.publishers
       }
     })
   },
@@ -177,10 +178,10 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newDataset
     this.emit("change");
   },
-  handleAddPublisher: function(payload, type) {
-    this._byChartID(payload.id).publishers.push(payload.data)
-    this.handleUpdateChart(payload.id)
-  },
+  // handleAddPublisher: function(payload, type) {
+  //   this._byChartID(payload.id).publishers.push(payload.data)
+  //   this.handleUpdateChart(payload.id)
+  // },
   handleRemovePublisher: function(payload, type) {
     var chartID = payload.id
     var publisherIndex = payload.publisherIndex

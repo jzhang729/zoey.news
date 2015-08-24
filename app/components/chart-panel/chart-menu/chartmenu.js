@@ -3,6 +3,8 @@ import Fluxxor from 'fluxxor'
 
 import AddKeyword from './addkeyword'
 import KeywordList from './keywordlist'
+import PublisherList from './publisherlist'
+import AddPublisher from './addpublisher'
 
 var FluxMixin = Fluxxor.FluxMixin(React);
 
@@ -13,7 +15,8 @@ export default React.createClass({
   getInitialState: function() {
     return {
       newKeyword: "",
-      keywords: this.props.keywords
+      keywords: this.props.keywords,
+      publishers: this.props.publishers
     }
   },
 
@@ -21,24 +24,8 @@ export default React.createClass({
     this.setState({newKeyword: newKeyword})
   },
 
-  handleClick: function() {
+  addKeyword: function() {
     if (this.state.newKeyword.trim().length > 0) {
-      if (this.props.keywords.indexOf(this.state.newKeyword.trim()) < 0) {
-        this.getFlux().actions.addKeyword(this.props.chartID, this.state.newKeyword.trim())
-        this.setState(function(previousState, currentProps) {
-          return {
-            keywords: previousState.keywords.concat(previousState.newKeyword.trim()),
-            newKeyword: ""
-          }
-        })
-      } else {
-        this.setState({newKeyword: ""})
-      }
-    }
-  },
-
-  handleKeyUp: function(event) {
-    if (event.which == 13 && this.state.newKeyword.trim().length > 0) {
       if (this.props.keywords.indexOf(this.state.newKeyword.trim()) < 0) {
         var newKeywords = this.props.keywords
         newKeywords.push(this.state.newKeyword.trim())
@@ -50,6 +37,18 @@ export default React.createClass({
       } else {
         this.setState({newKeyword: ""})
       }
+    }
+  },
+
+  addPublisher: function(event) {
+    if (event.target.value > 0) {
+      var addedPublisher = this.props.publisherList.filter(function(publisher) {
+        return (publisher.id == event.target.value)
+      })[0]
+      var newActivePublishers = this.props.publishers
+      newActivePublishers.push(addedPublisher)
+      this.setState({publishers: newActivePublishers})
+      this.getFlux().actions.addPublisher(this.props.chartID, addedPublisher)
     }
   },
 
@@ -67,21 +66,29 @@ export default React.createClass({
     return (
       <div className="chart-menu">
         <h5>Keywords</h5>
-          <AddKeyword className={'keyword-list'}
-                      chartID={this.props.chartID}
-                      keywords={this.props.keywords}
-                      newKeyword={this.state.newKeyword}
-                      onChange={this.handleChange}
-                      onClick={this.handleClick}
-                      onKeyUp={this.handleKeyUp}
-          />
-          <KeywordList className={'keyword-list'}
-                       chartID={this.props.chartID}
-                       keywords={this.state.keywords}
-                       removeKeyword={this.removeKeyword}
-          />
+        <AddKeyword className={'keyword-list'}
+                    chartID={this.props.chartID}
+                    keywords={this.props.keywords}
+                    newKeyword={this.state.newKeyword}
+                    onChange={this.handleChange}
+                    addKeyword={this.addKeyword}
+        />
+        <KeywordList className={'keyword-list'}
+                     chartID={this.props.chartID}
+                     keywords={this.state.keywords}
+                     removeKeyword={this.removeKeyword}
+        />
         <h5>Publishers</h5>
-
+        <PublisherList className={'publisher-list'}
+                       chartID={this.props.chartID}
+                       publisherList={this.props.publisherList}
+                       publishers={this.state.publishers}
+                       legend={true}
+        />
+        <AddPublisher chartID={this.props.chartID}
+                      publisherList={this.props.publisherList}
+                      publishers={this.state.publishers}
+                      addPublisher={this.addPublisher} />
       </div>
     )
 
@@ -97,13 +104,6 @@ export default React.createClass({
 // }
 
 //
-// <ActivePublisherList chartID={this.props.chartParams.chartID}
-//                 className={'publisher-list'}
-//                 list={this.props.publisherList}
-//                 activelist={this.props.chartParams.publishers}
-//                 legend={true} />
-// <AddPublisher chartID={this.props.chartParams.chartID}
-//          list={this.props.publisherList}
-//          activelist={this.props.chartParams.publishers} />
+
 //
 //          {deleteChartButton}
