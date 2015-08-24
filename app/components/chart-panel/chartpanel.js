@@ -26,17 +26,19 @@ export default React.createClass({
                            data={this.props.data}
         />)
         break;
-      // case "donut":
-      //   chart = (<Donut className="chart"
-      //                   chartID={this.props.chartID}
-      //                   data={this.props.data}
-      //   />)
+      case "donut":
+        chart = (<Donut className="chart"
+                        chartID={this.props.chartID}
+                        data={this.props.data}
+        />)
+        break;
       case "timelapse":
         chart = (<TimeLapse className="chart"
                         chartID={this.props.chartID}
                         data={this.props.data}
         />)
         slider = ""
+        break;
     }
 
     return (
@@ -50,6 +52,7 @@ export default React.createClass({
           {slider}
         </div>
         <ChartMenu chartID={this.props.chartID}
+                   chartType={this.props.chartType}
                    keywords={this.props.keywords}
                    publishers={this.props.publishers}
                    publisherList={this.props.publisherList}

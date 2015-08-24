@@ -90,6 +90,7 @@ export default React.createClass({
         <h5>Keywords</h5>
         <KeywordList className={'keyword-list'}
                      chartID={this.props.chartID}
+                     chartType={this.props.chartType}
                      keywords={this.state.keywords}
                      removeKeyword={this.removeKeyword}
         />
@@ -104,10 +105,10 @@ export default React.createClass({
         <h5>Publishers</h5>
         <PublisherList className={'publisher-list'}
                        chartID={this.props.chartID}
+                       chartType={this.props.chartType}
                        publisherList={this.props.publisherList}
                        publishers={this.state.publishers}
                        removePublisher={this.removePublisher}
-                       legend={true}
         />
         <AddPublisher chartID={this.props.chartID}
                       publisherList={this.props.publisherList}

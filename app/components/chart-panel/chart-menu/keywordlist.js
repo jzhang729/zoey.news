@@ -38,7 +38,7 @@ export default React.createClass({
       var innerButtonLegend = <Button style={legendButtonStyle[keywordIndex]} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
       var innerButtonNormal = <Button style={normalButtonStyle} onClick={this.handleRemoveKeyword.bind(this, keywordIndex)}><i style={iStyle} className="fa fa-times"></i></Button>;
 
-      if (this.props.legend == true) {
+      if (this.props.chartType == "donut" || this.props.chartType == "timelapse") {
         return (
           <li className="keyword-list-item">
             <Input type='text' disabled chartID={this.props.chartID} buttonBefore={innerButtonLegend} value={keyword.trim()} />

@@ -15,10 +15,10 @@ export default React.createClass({
     var ActivePublisherList = this.props.publishers.map(function(publisher, index){
       return (
         <PublisherListItem chartID={this.props.chartID}
+                           chartType={this.props.chartType}
                            publishers={this.props.publishers}
                            domain={publisher.domain}
                            index={index}
-                           legend={this.props.legend}
                            removePublisher={this.handleRemovePublisher}
         />
       )

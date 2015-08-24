@@ -40,7 +40,7 @@ export default React.createClass({
 
     var listItem;
 
-    if (this.props.legend == true) {
+    if (this.props.chartType == "barchart") {
       listItem = (
         <div className="publisher-list-item">
           <Input type='text' disabled buttonBefore={innerButtonLegend} value={this.props.domain} />
