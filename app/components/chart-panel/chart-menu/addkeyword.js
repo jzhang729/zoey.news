@@ -19,6 +19,10 @@ export default React.createClass({
     this.props.onClick()
   },
 
+  handleKeyUp: function(event) {
+    this.props.onKeyUp(event)
+  },
+
   render: function() {
     var ButtonStyle = {
       backgroundColor: '#e7e7e7',
@@ -48,18 +52,3 @@ export default React.createClass({
     )
   }
 })
-
-
-// handleClick: function() {
-//   if (this.state.value.trim().length > 0) {
-//     this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
-//     this.setState({value: ""})
-//   }
-// },
-//
-// handleKeyUp: function(event) {
-//   if (event.which == 13 && this.state.value.trim().length > 0) {
-//     this.getFlux().actions.addKeyword(this.props.chartID, this.state.value.trim())
-//     this.setState({value: ""})
-//   }
-// },

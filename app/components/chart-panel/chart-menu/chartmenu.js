@@ -23,9 +23,42 @@ export default React.createClass({
 
   handleClick: function() {
     if (this.state.newKeyword.trim().length > 0) {
-      this.getFlux().actions.addKeyword(this.props.chartID, this.state.newKeyword.trim())
-      this.setState({keywords: this.state.keywords.push(this.state.newKeyword.trim()),
-                     newKeyword: ""})
+      if (this.props.keywords.indexOf(this.state.newKeyword.trim()) < 0) {
+        this.getFlux().actions.addKeyword(this.props.chartID, this.state.newKeyword.trim())
+        this.setState(function(previousState, currentProps) {
+          return {
+            keywords: previousState.keywords.concat(previousState.newKeyword.trim()),
+            newKeyword: ""
+          }
+        })
+      } else {
+        this.setState({newKeyword: ""})
+      }
+    }
+  },
+
+  handleKeyUp: function(event) {
+    if (event.which == 13 && this.state.newKeyword.trim().length > 0) {
+      if (this.props.keywords.indexOf(this.state.newKeyword.trim()) < 0) {
+        var newKeywords = this.props.keywords
+        newKeywords.push(this.state.newKeyword.trim())
+        this.setState({
+          keywords: newKeywords,
+          newKeyword: ""
+        })
+        this.getFlux().actions.addKeyword(this.props.chartID, this.state.newKeyword.trim())
+      } else {
+        this.setState({newKeyword: ""})
+      }
+    }
+  },
+
+  removeKeyword: function(keywordIndex) {
+    if (this.props.keywords.length > 1) {
+      var remainingKeywords = this.props.keywords
+      remainingKeywords.splice(keywordIndex, 1)
+      this.setState({keywords: remainingKeywords})
+      this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
     }
   },
 
@@ -39,10 +72,14 @@ export default React.createClass({
                       keywords={this.props.keywords}
                       newKeyword={this.state.newKeyword}
                       onChange={this.handleChange}
-                      onClick={this.handleClick}/>
+                      onClick={this.handleClick}
+                      onKeyUp={this.handleKeyUp}
+          />
           <KeywordList className={'keyword-list'}
-                             chartID={this.props.chartID}
-                             keywords={this.props.keywords} />
+                       chartID={this.props.chartID}
+                       keywords={this.state.keywords}
+                       removeKeyword={this.removeKeyword}
+          />
         <h5>Publishers</h5>
 
       </div>

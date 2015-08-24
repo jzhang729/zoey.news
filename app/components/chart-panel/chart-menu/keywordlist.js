@@ -7,13 +7,11 @@ import Color from '../../../services/barchartcolor.js'
 var FluxMixin = Fluxxor.FluxMixin(React);
 
 export default React.createClass({
-  
+
   mixins: [FluxMixin],
 
   handleRemoveKeyword: function(keywordIndex) {
-    if (this.props.keywords.length > 1) {
-      this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
-    }
+    this.props.removeKeyword(keywordIndex)
   },
 
   render: function() {

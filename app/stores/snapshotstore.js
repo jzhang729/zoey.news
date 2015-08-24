@@ -12,8 +12,6 @@ export default Fluxxor.createStore({
     this.bindActions(
       "LOAD_CHART_DATA", this.loadChartData,
       "UPDATE_CHART", this.handleUpdateChart,
-      "ADD_KEYWORD", this.handleAddKeyword,
-      "REMOVE_KEYWORD", this.handleRemoveKeyword,
       "ADD_PUBLISHER", this.handleAddPublisher,
       "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
@@ -34,7 +32,6 @@ export default Fluxxor.createStore({
       }
     })
   },
-
   _byChartID: function(id) {
     var found = {}
     this.charts.forEach(function(chart) {
@@ -112,7 +109,6 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
-
   updateBarChart: function(chartID){
     var currentChart = this._byChartID(chartID)
     var dateMatch = function (row) {
@@ -152,7 +148,6 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
-
   updateDonut: function(chartID){
     var currentChart = this._byChartID(chartID)
     var dateMatch = function (row) {
@@ -181,19 +176,6 @@ export default Fluxxor.createStore({
     }.bind(this));
     this._byChartID(chartID).snapShot = newDataset
     this.emit("change");
-  },
-
-  handleAddKeyword: function(payload, type) {
-    var chartID = payload.id
-    var data = payload.data
-    // this._byChartID(chartID).keywords.unshift(data)
-    this.handleUpdateChart(chartID)
-  },
-  handleRemoveKeyword: function(payload, type) {
-    var chartID = payload.id
-    var data = payload.data
-    this._byChartID(chartID).keywords.splice(data, 1)
-    this.handleUpdateChart(chartID)
   },
   handleAddPublisher: function(payload, type) {
     this._byChartID(payload.id).publishers.push(payload.data)
@@ -225,7 +207,6 @@ export default Fluxxor.createStore({
   handleUpdateChartTitle: function(chartID, newTitle) {
     this._byChartID(chartID).chart_title = newTitle
   },
-
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {
       return this._byChartID(chartID).keywords
