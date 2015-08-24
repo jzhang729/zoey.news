@@ -15,9 +15,10 @@ export default Fluxxor.createStore({
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
       "LOAD_CHARTS", this.handleLoadCharts,
       "DELETE_CHART", this.handleDeleteChart,
-      "UPDATE_CHART_TITLE", this.handleUpdateChart
+      "UPDATE_CHART_TITLE", this.handleUpdateChartTitle
     );
   },
+
   getCharts: function() {
     return this.charts.map(function(chart) {
       return {chartID: chart.chartID,
@@ -31,6 +32,7 @@ export default Fluxxor.createStore({
       }
     })
   },
+
   _byChartID: function(id) {
     var found = {}
     this.charts.forEach(function(chart) {
@@ -40,6 +42,7 @@ export default Fluxxor.createStore({
     })
     return found
   },
+
   handleLoadCharts: function(newCharts) {
     console.log("handleloadcharts")
     newCharts = newCharts.map(function(chart) {
@@ -52,6 +55,7 @@ export default Fluxxor.createStore({
     this.charts = this.charts.concat(newCharts)
     this.emit("change")
   },
+
   loadChartData: function(payload, type) {
     console.log("load chart data")
     var id = payload.id
@@ -59,6 +63,7 @@ export default Fluxxor.createStore({
     this._byChartID(id).datastore = data
     this.handleUpdateChart(id)
   },
+
   handleUpdateChart: function(chartID) {
     switch (this._byChartID(chartID).chartType) {
       case "barchart":
@@ -72,6 +77,7 @@ export default Fluxxor.createStore({
         break
     }
   },
+
   updateTimeLapse: function(chartID) {
     var currentChart = this._byChartID(chartID)
     var newDatasets = []
@@ -110,6 +116,7 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
+
   updateBarChart: function(chartID){
     var currentChart = this._byChartID(chartID)
     var dateMatch = function (row) {
@@ -149,6 +156,7 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newSnapShot
     this.emit("change");
   },
+
   updateDonut: function(chartID){
     var currentChart = this._byChartID(chartID)
     var dateMatch = function (row) {
@@ -178,6 +186,7 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).snapShot = newDataset
     this.emit("change");
   },
+
   handleChangeDateRange: function(payload, type) {
     var chartID = payload.id
     var data = payload.data
@@ -185,19 +194,22 @@ export default Fluxxor.createStore({
     this._byChartID(chartID).endDate = data[1]
     this.handleUpdateChart(chartID)
   },
+
   handleDeleteChart: function(deletedChartID) {
-    var deleteIndex
-    this.charts.forEach(function(chart, index) {
-      if (chart.chartID == deletedChartID) {
-        deleteIndex = index
-      }
+    console.log("handledeletechart triggered")
+    console.log(this.charts)
+    console.log("deletedChartID: " + deletedChartID)
+    var remainingCharts = this.charts.filter(function(chart) {
+      return (chart.chartID != deletedChartID)
     })
-    this.charts.splice(deleteIndex, 1)
+    this.charts = remainingCharts
     this.emit("change")
   },
+
   handleUpdateChartTitle: function(chartID, newTitle) {
     this._byChartID(chartID).chart_title = newTitle
   },
+
   getKeywords: function(chartID){
     if (this._byChartID(chartID).keywords) {
       return this._byChartID(chartID).keywords
@@ -205,6 +217,7 @@ export default Fluxxor.createStore({
       return []
     }
   },
+
   getPublishers: function(chartID){
     if (this._byChartID(chartID).publishers) {
       return this._byChartID(chartID).publishers
@@ -212,12 +225,15 @@ export default Fluxxor.createStore({
       return []
     }
   },
+
   getStartDate: function(chartID){
     return this._byChartID(chartID).startDate
   },
+
   getEndDate: function(chartID){
     return this._byChartID(chartID).endDate
   },
+
   getAllDates: function(){
     return this.dates
   }

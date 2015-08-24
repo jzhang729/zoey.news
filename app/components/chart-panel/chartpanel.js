@@ -13,6 +13,12 @@ export default React.createClass({
 
   render: function() {
     var chart;
+    var slider = (<Slider chartID={this.props.chartID}
+                          allDates={this.props.allDates}
+                          startDate={this.props.startDate}
+                          endDate={this.props.endDate}
+                          />
+    );
     switch(this.props.chartType) {
       case "barchart":
         chart = (<BarChart className="chart"
@@ -20,6 +26,17 @@ export default React.createClass({
                            data={this.props.data}
         />)
         break;
+      // case "donut":
+      //   chart = (<Donut className="chart"
+      //                   chartID={this.props.chartID}
+      //                   data={this.props.data}
+      //   />)
+      case "timelapse":
+        chart = (<TimeLapse className="chart"
+                        chartID={this.props.chartID}
+                        data={this.props.data}
+        />)
+        slider = ""
     }
 
     return (
@@ -30,16 +47,13 @@ export default React.createClass({
           <ChartTitle title={this.props.title}
                       chartID={this.props.chartID} />
           {chart}
-          <Slider chartID={this.props.chartID}
-                  allDates={this.props.allDates}
-                  startDate={this.props.startDate}
-                  endDate={this.props.endDate}
-          />
+          {slider}
         </div>
         <ChartMenu chartID={this.props.chartID}
                    keywords={this.props.keywords}
                    publishers={this.props.publishers}
                    publisherList={this.props.publisherList}
+                   chartListLength={this.props.chartListLength}
         />
       </div>
     )

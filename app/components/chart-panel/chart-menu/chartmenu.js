@@ -1,5 +1,6 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
+import { Button } from 'react-bootstrap'
 
 import AddKeyword from './addkeyword'
 import KeywordList from './keywordlist'
@@ -40,6 +41,15 @@ export default React.createClass({
     }
   },
 
+  removeKeyword: function(keywordIndex) {
+    if (this.props.keywords.length > 1) {
+      var remainingKeywords = this.props.keywords
+      remainingKeywords.splice(keywordIndex, 1)
+      this.setState({keywords: remainingKeywords})
+      this.getFlux().actions.updateKeywords(this.props.chartID);
+    }
+  },
+
   addPublisher: function(event) {
     if (event.target.value > 0) {
       var addedPublisher = this.props.publisherList.filter(function(publisher) {
@@ -52,15 +62,6 @@ export default React.createClass({
     }
   },
 
-  removeKeyword: function(keywordIndex) {
-    if (this.props.keywords.length > 1) {
-      var remainingKeywords = this.props.keywords
-      remainingKeywords.splice(keywordIndex, 1)
-      this.setState({keywords: remainingKeywords})
-      this.getFlux().actions.updateKeywords(this.props.chartID);
-    }
-  },
-
   removePublisher: function(publisherIndex) {
     if (this.props.publishers.length > 1) {
       var remainingPublishers = this.props.publishers
@@ -70,11 +71,28 @@ export default React.createClass({
     }
   },
 
+  handleDeleteChart: function() {
+    this.getFlux().actions.deleteChart(this.props.chartID);
+  },
+
   render: function() {
+
+    var deleteChartButton = "";
+
+    if (this.props.chartListLength > 1) {
+      deleteChartButton = (
+        <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
+      )
+    }
 
     return (
       <div className="chart-menu">
         <h5>Keywords</h5>
+        <KeywordList className={'keyword-list'}
+                     chartID={this.props.chartID}
+                     keywords={this.state.keywords}
+                     removeKeyword={this.removeKeyword}
+        />
         <AddKeyword className={'keyword-list'}
                     chartID={this.props.chartID}
                     keywords={this.props.keywords}
@@ -82,11 +100,7 @@ export default React.createClass({
                     onChange={this.handleChange}
                     addKeyword={this.addKeyword}
         />
-        <KeywordList className={'keyword-list'}
-                     chartID={this.props.chartID}
-                     keywords={this.state.keywords}
-                     removeKeyword={this.removeKeyword}
-        />
+
         <h5>Publishers</h5>
         <PublisherList className={'publisher-list'}
                        chartID={this.props.chartID}
@@ -98,22 +112,11 @@ export default React.createClass({
         <AddPublisher chartID={this.props.chartID}
                       publisherList={this.props.publisherList}
                       publishers={this.state.publishers}
-                      addPublisher={this.addPublisher} />
+                      addPublisher={this.addPublisher}
+        />
+        {deleteChartButton}
       </div>
     )
 
   }
 })
-
-// var deleteChartButton = "";
-//
-// if (this.props.chartListLength > 1) {
-//   deleteChartButton = (
-//     <Button onClick={this.handleDeleteChart} className="delete" bsStyle="danger">Delete Chart</Button>
-//   )
-// }
-
-//
-
-//
-//          {deleteChartButton}

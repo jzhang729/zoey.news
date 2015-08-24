@@ -18,6 +18,7 @@ export default React.createClass({
                     allDates={this.props.allDates}
                     startDate={chart.startDate}
                     endDate={chart.endDate}
+                    chartListLength={this.props.charts.length}
         />
       )
     }.bind(this))

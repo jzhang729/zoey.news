@@ -6,13 +6,17 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 var FluxMixin = Fluxxor.FluxMixin(React);
 
 export default React.createClass({
+
   mixins: [FluxMixin],
+
   handleAddChart: function(chartType) {
     this.getFlux().actions.addChart(chartType);
   },
+
   scrollToTop: function() {
     window.scroll(0,0);
   },
+  
   render: function() {
 
     var tooltipHome = (

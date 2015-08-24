@@ -1,4 +1,3 @@
-var css = require('!css!sass!autoprefixer!./css/main.scss');
 // => returns compiled css code from file.scss, resolves imports and url(...)s
 // require('!style!css!sass!./main.scss');
 require('!style!css!sass!autoprefixer!./css/main.scss');
@@ -51,10 +50,6 @@ var actions = {
     }.bind(this)
     requestManager.get(route, success)
   },
-
-  // updateChart: function(chartID) {
-  //   this.dispatch("UPDATE_CHART", chartID)
-  // },
 
   addChart: function(type) {
     var params = {chartType: type}

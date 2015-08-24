@@ -1,6 +1,5 @@
 import React from 'react'
 import Fluxxor from 'fluxxor'
-import { Button } from 'react-bootstrap'
 
 var BarChart = require("react-chartjs").Bar;
 var FluxMixin = Fluxxor.FluxMixin(React);
@@ -28,12 +27,8 @@ export default React.createClass({
     this.getFlux().actions.loadChartData(this.props.chartID);
   },
 
-  handleDeleteChart: function() {
-    this.getFlux().actions.deleteChart(this.props.chartID);
-  },
-
   render: function() {
-    console.log("renderBarChart")
+
     var chart;
 
     if(this.props.data){
@@ -41,7 +36,7 @@ export default React.createClass({
         <BarChart className="chart"
                   data={this.props.data}
                   options={options}
-            />
+        />
       )
     } else {
       chart = (<div className="loading"><img src="/img/loading.gif" /></div>)
@@ -53,5 +48,3 @@ export default React.createClass({
     )
   }
 })
-
-// redraw={this.props.chartParams.shouldRedraw}
