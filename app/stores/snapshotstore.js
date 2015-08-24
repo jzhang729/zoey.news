@@ -44,7 +44,6 @@ export default Fluxxor.createStore({
   },
 
   handleLoadCharts: function(newCharts) {
-    console.log("handleloadcharts")
     newCharts = newCharts.map(function(chart) {
       chart.startDate = 0
       chart.endDate = (this.dates.length -1)
@@ -57,7 +56,6 @@ export default Fluxxor.createStore({
   },
 
   loadChartData: function(payload, type) {
-    console.log("load chart data")
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
@@ -196,9 +194,6 @@ export default Fluxxor.createStore({
   },
 
   handleDeleteChart: function(deletedChartID) {
-    console.log("handledeletechart triggered")
-    console.log(this.charts)
-    console.log("deletedChartID: " + deletedChartID)
     var remainingCharts = this.charts.filter(function(chart) {
       return (chart.chartID != deletedChartID)
     })
