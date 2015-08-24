@@ -41,6 +41,10 @@ export default React.createClass({
     this.getFlux().actions.loadChartData(this.props.chartID);
   },
 
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return (this.props.data != nextProps.data)
+  },
+
   render: function() {
 
     var chart;

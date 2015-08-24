@@ -30,6 +30,10 @@ export default React.createClass({
     this.getFlux().actions.loadChartData(this.props.chartID);
   },
 
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return (this.props.data != nextProps.data)
+  },
+
   render: function() {
 
     var chart;
@@ -51,6 +55,3 @@ export default React.createClass({
     )
   }
 })
-
-// Experimenting with this code to control whether to redraw entire chart
-// redraw={this.props.chartParams.shouldRedraw}
