@@ -6,6 +6,10 @@ var FluxMixin = Fluxxor.FluxMixin(React)
 export default React.createClass({
   mixins: [FluxMixin],
 
+  handleRemovePublisher: function(publisherIndex) {
+    this.props.removePublisher(publisherIndex)
+  },
+
   render: function() {
 
     var ActivePublisherList = this.props.publishers.map(function(publisher, index){
@@ -14,7 +18,9 @@ export default React.createClass({
                            publishers={this.props.publishers}
                            domain={publisher.domain}
                            index={index}
-                           legend={this.props.legend}/>
+                           legend={this.props.legend}
+                           removePublisher={this.handleRemovePublisher}
+        />
       )
     }.bind(this))
 

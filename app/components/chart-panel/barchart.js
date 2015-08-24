@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   render: function() {
-    
+    console.log("renderBarChart")
     var chart;
 
     if(this.props.data){

@@ -52,9 +52,9 @@ var actions = {
     requestManager.get(route, success)
   },
 
-  updateChart: function(chartID) {
-    this.dispatch("UPDATE_CHART", chartID)
-  },
+  // updateChart: function(chartID) {
+  //   this.dispatch("UPDATE_CHART", chartID)
+  // },
 
   addChart: function(type) {
     var params = {chartType: type}
@@ -92,7 +92,7 @@ var actions = {
     requestManager.del(route, success)
   },
 
-  addKeyword: function(chartID, newKeyword) {
+  updateKeywords: function(chartID) {
     var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
     var params = {keywords: keywordsList.toString().trim()}
     var route = 'charts/' + chartID
@@ -104,18 +104,7 @@ var actions = {
     requestManager.put(route, params, success)
   },
 
-  removeKeyword: function(chartID, keywordIndex) {
-    var keywordsList = this.flux.store("SnapShotStore").getKeywords(chartID)
-    var params = {keywords: keywordsList.toString().trim()}
-    var route = 'charts/' + chartID
-    var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-    }.bind(this)
-    requestManager.put(route, params, success)
-  },
-
-  addPublisher: function(chartID, publisher) {
+  updatePublishers: function(chartID) {
     var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
     var publishersIDList = publishersList.map(function(publisher) {
       return publisher.id;
@@ -125,24 +114,6 @@ var actions = {
     var success = function(err, resp) {
       var dataRows = JSON.parse(resp.text);
       this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-    }.bind(this)
-
-    requestManager.put(route, params, success)
-  },
-
-  removePublisher: function(chartID, removedPublisherIndex) {
-    // create new string of publisher id's so we can send to DB
-    var publishersList = this.flux.store("SnapShotStore").getPublishers(chartID)
-    var publishersIDList = publishersList.map(function(publisher) {
-      return publisher.id;
-    })
-    publishersIDList.splice(removedPublisherIndex, 1)
-    var params = {publishers: publishersIDList.toString().trim()}
-    var route = 'charts/' + chartID
-    var success = function(err, resp) {
-      var dataRows = JSON.parse(resp.text);
-      this.dispatch("LOAD_CHART_DATA", {id: chartID, data: dataRows})
-      this.dispatch("REMOVE_PUBLISHER", {id: chartID, publisherIndex: removedPublisherIndex})
     }.bind(this)
     requestManager.put(route, params, success)
   },

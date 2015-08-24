@@ -12,8 +12,6 @@ export default Fluxxor.createStore({
     this.bindActions(
       "LOAD_CHART_DATA", this.loadChartData,
       "UPDATE_CHART", this.handleUpdateChart,
-      // "ADD_PUBLISHER", this.handleAddPublisher,
-      "REMOVE_PUBLISHER", this.handleRemovePublisher,
       "CHANGE_DATE_RANGE", this.handleChangeDateRange,
       "LOAD_CHARTS", this.handleLoadCharts,
       "DELETE_CHART", this.handleDeleteChart,
@@ -43,6 +41,7 @@ export default Fluxxor.createStore({
     return found
   },
   handleLoadCharts: function(newCharts) {
+    console.log("handleloadcharts")
     newCharts = newCharts.map(function(chart) {
       chart.startDate = 0
       chart.endDate = (this.dates.length -1)
@@ -54,6 +53,7 @@ export default Fluxxor.createStore({
     this.emit("change")
   },
   loadChartData: function(payload, type) {
+    console.log("load chart data")
     var id = payload.id
     var data = payload.data
     this._byChartID(id).datastore = data
@@ -177,16 +177,6 @@ export default Fluxxor.createStore({
     }.bind(this));
     this._byChartID(chartID).snapShot = newDataset
     this.emit("change");
-  },
-  // handleAddPublisher: function(payload, type) {
-  //   this._byChartID(payload.id).publishers.push(payload.data)
-  //   this.handleUpdateChart(payload.id)
-  // },
-  handleRemovePublisher: function(payload, type) {
-    var chartID = payload.id
-    var publisherIndex = payload.publisherIndex
-    this._byChartID(chartID).publishers.splice(publisherIndex, 1)
-    this.handleUpdateChart(chartID)
   },
   handleChangeDateRange: function(payload, type) {
     var chartID = payload.id

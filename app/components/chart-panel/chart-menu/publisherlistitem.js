@@ -8,9 +8,7 @@ export default React.createClass({
   mixins: [FluxMixin],
 
   handleRemovePublisher: function(publisherIndex) {
-    if (this.props.publishers.length > 1) {
-      this.getFlux().actions.removePublisher(this.props.chartID, publisherIndex);
-    }
+    this.props.removePublisher(publisherIndex)
   },
 
   render: function() {

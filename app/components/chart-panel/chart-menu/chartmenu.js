@@ -33,7 +33,7 @@ export default React.createClass({
           keywords: newKeywords,
           newKeyword: ""
         })
-        this.getFlux().actions.addKeyword(this.props.chartID, this.state.newKeyword.trim())
+        this.getFlux().actions.updateKeywords(this.props.chartID)
       } else {
         this.setState({newKeyword: ""})
       }
@@ -48,7 +48,7 @@ export default React.createClass({
       var newActivePublishers = this.props.publishers
       newActivePublishers.push(addedPublisher)
       this.setState({publishers: newActivePublishers})
-      this.getFlux().actions.addPublisher(this.props.chartID, addedPublisher)
+      this.getFlux().actions.updatePublishers(this.props.chartID)
     }
   },
 
@@ -57,7 +57,16 @@ export default React.createClass({
       var remainingKeywords = this.props.keywords
       remainingKeywords.splice(keywordIndex, 1)
       this.setState({keywords: remainingKeywords})
-      this.getFlux().actions.removeKeyword(this.props.chartID, keywordIndex);
+      this.getFlux().actions.updateKeywords(this.props.chartID);
+    }
+  },
+
+  removePublisher: function(publisherIndex) {
+    if (this.props.publishers.length > 1) {
+      var remainingPublishers = this.props.publishers
+      remainingPublishers.splice(publisherIndex, 1)
+      this.setState({publishers: remainingPublishers})
+      this.getFlux().actions.updatePublishers(this.props.chartID);
     }
   },
 
@@ -83,6 +92,7 @@ export default React.createClass({
                        chartID={this.props.chartID}
                        publisherList={this.props.publisherList}
                        publishers={this.state.publishers}
+                       removePublisher={this.removePublisher}
                        legend={true}
         />
         <AddPublisher chartID={this.props.chartID}
